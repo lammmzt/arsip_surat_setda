@@ -478,6 +478,9 @@
     }, 5000);
     </script>
 
+    <!-- render script -->
+    <?= $this->renderSection('script'); ?>
+
 </body>
 
 </html>

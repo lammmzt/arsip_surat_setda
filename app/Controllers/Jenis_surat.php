@@ -6,99 +6,99 @@ use Ramsey\Uuid\Uuid;
 
 class Jenis_surat extends BaseController
 {
-    public function index()
+    public function index() // menampilkan data jenis surat
     {
-        $jenisSuratModel = new jenisSuratModel();
-        $data['jenis_surat'] = $jenisSuratModel->findAll();
-        $data['title'] = 'Jenis Surat';
-        $data['active'] = 'jenis_surat';
-        $data['validation'] = \Config\Services::validation();
-        
-        return view('Admin/jenis_surat/index', $data);
+        $jenisSuratModel = new jenisSuratModel(); // membuat objek model jenis surat
+        $data['jenis_surat'] = $jenisSuratModel->findAll(); // mengambil semua data jenis surat
+        $data['title'] = 'Jenis Surat'; // set judul halaman
+        $data['active'] = 'jenis_surat'; // set active menu 
+        $data['validation'] = \Config\Services::validation(); // set validasi
+         
+        return view('Admin/jenis_surat/index', $data); // tampilkan view jenis surat
     }
 
-    public function tambah()
+    public function tambah() // menampilkan form tambah jenis surat
     {
-        $data['title'] = 'Tambah Jenis Surat';
-         $data['active'] = 'jenis_surat';
-        $data['validation'] = \Config\Services::validation();
+        $data['title'] = 'Tambah Jenis Surat'; // untuk set judul halaman
+         $data['active'] = 'jenis_surat';  // set active menu
+        $data['validation'] = \Config\Services::validation(); // set validasi
 
-        return view('Admin/jenis_surat/tambah', $data);
+        return view('Admin/jenis_surat/tambah', $data); // tampilkan view tambah jenis surat
     }
 
-    public function save()
+    public function save() // menyimpan data jenis surat
     {
-        $model = new jenisSuratModel();
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'nama_jenis_surat' => 'required|is_unique[jenis_surat.nama_jenis_surat]',
-            'kode_surat' => 'required',
-            'ket_jenis_surat' => 'required',
-            'template_jenis_surat' => 'required'
+        $model = new jenisSuratModel(); // membuat objek model jenis surat
+        $validation = \Config\Services::validation(); // membuat objek validasi
+        $validation->setRules([ // set rules validasi
+            'nama_jenis_surat' => 'required|is_unique[jenis_surat.nama_jenis_surat]', // nama jenis surat wajib diisi dan harus unik
+            'kode_surat' => 'required', // kode surat wajib diisi 
+            'ket_jenis_surat' => 'required', // keterangan jenis surat wajib diisi
+            'template_jenis_surat' => 'required' // template jenis surat wajib diisi
         ]);
-        if (!$validation->run($this->request->getPost())) {
+        if (!$validation->run($this->request->getPost())) { // jika validasi tidak terpenuhi
             // session()->setFlashdata('errors', $validation->getErrors()); 
-            session()->setFlashdata('errors', 'Data Jenis Surat gagal ditambahkan');
-            return redirect()->to('/Jenis_surat/Tambah');
+            session()->setFlashdata('errors', 'Data Jenis Surat gagal ditambahkan'); // set flashdata error
+            return redirect()->to('/Jenis_surat/Tambah'); // redirect ke halaman tambah jenis surat
         }
         $data = [
-            'id_jenis_surat' => Uuid::uuid4()->toString(),
-            'nama_jenis_surat' => $this->request->getPost('nama_jenis_surat'),
-            'kode_surat' => $this->request->getPost('kode_surat'),
-            'ket_jenis_surat' => $this->request->getPost('ket_jenis_surat'),
-            'template_jenis_surat' => $this->request->getPost('template_jenis_surat'),
-            'created_at' => date('Y-m-d H:i:s')
+            'id_jenis_surat' => Uuid::uuid4()->toString(), // generate id jenis surat
+            'nama_jenis_surat' => $this->request->getPost('nama_jenis_surat'), // mengambil data nama jenis surat
+            'kode_surat' => $this->request->getPost('kode_surat'), // mengambil data kode surat
+            'ket_jenis_surat' => $this->request->getPost('ket_jenis_surat'), // mengambil data keterangan jenis surat
+            'template_jenis_surat' => $this->request->getPost('template_jenis_surat'),    // mengambil data template jenis surat
+            'created_at' => date('Y-m-d H:i:s') // mengambil data template jenis surat
         ];
-        $model->insert($data);
-        session()->setFlashdata('success', 'Data Jenis Surat berhasil ditambahkan');
-        return redirect()->to('/Jenis_surat');
+        $model->insert($data); // insert data jenis surat
+        session()->setFlashdata('success', 'Data Jenis Surat berhasil ditambahkan'); // set flashdata success
+        return redirect()->to('/Jenis_surat'); // redirect ke halaman jenis surat
     }
 
-    public function edit($id)
+    public function edit($id) // menampilkan form edit jenis surat
     {
-        $model = new jenisSuratModel();
-        $data['jenis_surat'] = $model->find($id);
-        $data['title'] = 'Edit Jenis Surat';
-        $data['active'] = 'jenis_surat';
+        $model = new jenisSuratModel(); // membuat objek model jenis surat
+        $data['jenis_surat'] = $model->find($id); // mengambil data jenis surat berdasarkan id
+        $data['title'] = 'Edit Jenis Surat'; // set judul halaman
+        $data['active'] = 'jenis_surat'; // set active menu
 
         
-        return view('Admin/jenis_surat/edit', $data);
+        return view('Admin/jenis_surat/edit', $data); // tampilkan view edit jenis surat
     }
-
-    public function update()
+ 
+    public function update() // mengupdate data jenis surat
     {
-        $id = $this->request->getPost('id_jenis_surat');
-        $model = new jenisSuratModel();
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'nama_jenis_surat' => 'required',
-            'kode_surat' => 'required',
-            'ket_jenis_surat' => 'required',
-            'template_jenis_surat' => 'required'
+        $id = $this->request->getPost('id_jenis_surat'); // mengambil data id jenis surat
+        $model = new jenisSuratModel(); // membuat objek model jenis surat
+        $validation = \Config\Services::validation(); // membuat objek validasi
+        $validation->setRules([ // set rules validasi
+            'nama_jenis_surat' => 'required', // nama jenis surat wajib diisi
+            'kode_surat' => 'required', // kode surat wajib diisi
+            'ket_jenis_surat' => 'required', // keterangan jenis surat wajib diisi
+            'template_jenis_surat' => 'required' // template jenis surat wajib diisi
         ]);
-        if (!$validation->run($this->request->getPost())) {
+        if (!$validation->run($this->request->getPost())) { // jika validasi tidak terpenuhi 
             // session()->setFlashdata('errors', $validation->getErrors()); 
-            session()->setFlashdata('errors', 'Data Jenis Surat gagal diubah');
-            return redirect()->to('/Jenis_surat/edit/' . $id);
+            session()->setFlashdata('errors', 'Data Jenis Surat gagal diubah'); // set flashdata error
+            return redirect()->to('/Jenis_surat/edit/' . $id); // redirect ke halaman edit jenis surat
         }
-        $data = [
-            'nama_jenis_surat' => $this->request->getPost('nama_jenis_surat'),
-            'kode_surat' => $this->request->getPost('kode_surat'),
-            'ket_jenis_surat' => $this->request->getPost('ket_jenis_surat'),
-            'template_jenis_surat' => $this->request->getPost('template_jenis_surat'),
-            'updated_at' => date('Y-m-d H:i:s')
+        $data = [  // set data jenis surat
+            'nama_jenis_surat' => $this->request->getPost('nama_jenis_surat'), // mengambil data nama jenis surat
+            'kode_surat' => $this->request->getPost('kode_surat'), // mengambil data kode surat
+            'ket_jenis_surat' => $this->request->getPost('ket_jenis_surat'), // mengambil data keterangan jenis surat
+            'template_jenis_surat' => $this->request->getPost('template_jenis_surat'), // mengambil data template jenis surat
+            'updated_at' => date('Y-m-d H:i:s') // mengambil data template jenis surat
         ];
-        $model->update($id, $data);
-        session()->setFlashdata('success', 'Data Jenis Surat berhasil diubah');
-        return redirect()->to('/Jenis_surat');
+        $model->update($id, $data); // update data jenis surat
+        session()->setFlashdata('success', 'Data Jenis Surat berhasil diubah'); // set flashdata success
+        return redirect()->to('/Jenis_surat'); // redirect ke halaman jenis surat
     }
 
-    public function delete($id)
+    public function delete($id) // menghapus data jenis surat
     {
-        $model = new jenisSuratModel();
-        $model->delete($id);
-        session()->setFlashdata('success', 'Data Jenis Surat berhasil dihapus');
-        return redirect()->to('/Jenis_surat');
+        $model = new jenisSuratModel(); // membuat objek model jenis surat
+        $model->delete($id); // hapus data jenis surat
+        session()->setFlashdata('success', 'Data Jenis Surat berhasil dihapus'); // set flashdata success
+        return redirect()->to('/Jenis_surat'); // redirect ke halaman jenis surat
     }
     
 }

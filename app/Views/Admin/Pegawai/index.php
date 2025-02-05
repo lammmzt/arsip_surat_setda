@@ -4,15 +4,15 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Daftar User</h4>
+                <h4 class="card-title">Daftar Pegawai</h4>
             </div>
             <div class="header-title">
-                <a href="#" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#addUsers">
+                <a href="#" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#addpegawai">
                     <svg class="icon-24" width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M9.5 12.5537C12.2546 12.5537 14.4626 10.3171 14.4626 7.52684C14.4626 4.73663 12.2546 2.5 9.5 2.5C6.74543 2.5 4.53737 4.73663 4.53737 7.52684C4.53737 10.3171 6.74543 12.5537 9.5 12.5537ZM9.5 15.0152C5.45422 15.0152 2 15.6621 2 18.2464C2 20.8298 5.4332 21.5 9.5 21.5C13.5448 21.5 17 20.8531 17 18.2687C17 15.6844 13.5668 15.0152 9.5 15.0152ZM19.8979 9.58786H21.101C21.5962 9.58786 22 9.99731 22 10.4995C22 11.0016 21.5962 11.4111 21.101 11.4111H19.8979V12.5884C19.8979 13.0906 19.4952 13.5 18.999 13.5C18.5038 13.5 18.1 13.0906 18.1 12.5884V11.4111H16.899C16.4027 11.4111 16 11.0016 16 10.4995C16 9.99731 16.4027 9.58786 16.899 9.58786H18.1V8.41162C18.1 7.90945 18.5038 7.5 18.999 7.5C19.4952 7.5 19.8979 7.90945 19.8979 8.41162V9.58786Z"
                             fill="currentColor"></path>
-                    </svg> Tambah User
+                    </svg> Tambah Pegawai
                 </a>
             </div>
         </div>
@@ -62,10 +62,10 @@
                     <thead>
                         <tr class="ligth">
                             <th>#</th>
-                            <th>Username</th>
-                            <th>Nama User</th>
+                            <th>Nama Pegawai</th>
+                            <th>NIP</th>
+                            <th>Jabatan</th>
                             <th>Status</th>
-                            <th>Role</th>
                             <th style="min-width: 100px">Action</th>
                         </tr>
                     </thead>
@@ -73,23 +73,23 @@
                         <?php 
                         $no = 1;
                         ?>
-                        <?php foreach($users as $user): ?>
+                        <?php foreach($pegawai as $pgw): ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $user['username']; ?></td>
-                            <td><?= $user['nama_user']; ?></td>
+                            <td><?= $pgw['nama_pegawai']; ?></td>
+                            <td><?= $pgw['nip_pegawai']; ?></td>
+                            <td><?= $pgw['jabatan_pegawai']; ?></td>
                             <td>
-                                <?php if($user['status_user'] == 1): ?>
+                                <?php if($pgw['status_pegawai'] == 1): ?>
                                 <span class="badge bg-success">Aktif</span>
                                 <?php else: ?>
                                 <span class="badge bg-danger">Tidak Aktif</span>
                                 <?php endif; ?>
                             </td>
-                            <td><?= $user['role']; ?></td>
                             <td>
                                 <div class="flex align-items-center list-user-action">
                                     <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="modal" href="#"
-                                        data-bs-target="#editUsers<?= $user['id_user']; ?>">
+                                        data-bs-target="#editpegawai<?= $pgw['id_pegawai']; ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -109,7 +109,7 @@
                                     </a>
                                     <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Delete"
-                                        href="<?= base_url('Users/delete/'.$user['id_user']); ?>">
+                                        href="<?= base_url('Pegawai/delete/'.$pgw['id_pegawai']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
@@ -136,49 +136,53 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="addUsers" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="addUsersLabel" aria-hidden="true">
+<div class="modal fade" id="addpegawai" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="addpegawaiLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addUsersLabel">Tambah User</h5>
+                <h5 class="modal-title" id="addpegawaiLabel">Tambah Pegawai</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('Users/save'); ?>" method="post">
+                <form action="<?= base_url('Pegawai/save'); ?>" method="post">
                     <div class="form-group">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username"
-                            required value="<?= old('username'); ?>">
+                        <label for="nama_pegawai" class="form-label">Nama Pegawai</label>
+                        <input type="text" class="form-control" id="nama_pegawai" name="nama_pegawai"
+                            placeholder="Nama Pegawai" required value="<?= old('nama_pegawai'); ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="nip_pegawai" class="form-label">NIP</label>
+                        <input type="text" class="form-control" id="nip_pegawai" name="nip_pegawai" placeholder="NIP"
+                            required value="<?= old('nip_pegawai'); ?>">
+                        <label for="nip_pegawai" class="form-label">Kosongkan jika tidak ada NIP</label>
                     </div>
                     <div class="form-group mb-3">
-                        <label for=" password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                            required value="<?= old('password'); ?>">
+                        <label for="jabatan_pegawai" class="form-label">Jabatan</label>
+                        <input type="text" class="form-control" id="jabatan_pegawai" name="jabatan_pegawai"
+                            placeholder="Jabatan" required value="<?= old('jabatan_pegawai'); ?>">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="nama_user" class="form-label">Nama User</label>
-                        <input type="text" class="form-control" id="nama_user" name="nama_user" placeholder="Nama User"
-                            required value="<?= old('nama_user'); ?>">
+                        <label for="tempat_lahir_pegawai" class="form-label">Tempat Lahir</label>
+                        <input type="text" class="form-control" id="tempat_lahir_pegawai" name="tempat_lahir_pegawai"
+                            placeholder="Tempat Lahir" required value="<?= old('tempat_lahir_pegawai'); ?>">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="status_user" class="form-label">Status User</label>
-                        <select class="form-select" id="status_user" name="status_user" required>
-                            <option value="1">Aktif</option>
-                            <option value="0">Tidak Aktif</option>
-                        </select>
+                        <label for="tgl_lahir_pegawai" class="form-label">Tanggal Lahir</label>
+                        <input type="date" class="form-control" id="tgl_lahir_pegawai" name="tgl_lahir_pegawai"
+                            placeholder="Tanggal Lahir" required value="<?= old('tgl_lahir_pegawai'); ?>">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="alamat_user" class="form-label">Alamat User</label>
-                        <textarea class="form-control" id="alamat_user" name="alamat_user" rows="3"
-                            placeholder="Alamat User" required><?= old('alamat_user'); ?></textarea>
+                        <label for="alamat_pegawai" class="form-label">Alamat Pegawai</label>
+                        <textarea class="form-control" id="alamat_pegawai" name="alamat_pegawai" rows="3"
+                            placeholder="Alamat Pegawai" required><?= old('alamat_pegawai'); ?></textarea>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-select" id="role" name="role">
-                            <option value="Admin">Admin</option>
-                        </select>
+                        <label for="no_tlp_pegawai" class="form-label">No Telepon</label>
+                        <input type="text" class="form-control" id="no_tlp_pegawai" name="no_tlp_pegawai"
+                            placeholder="No Telepon" required value="<?= old('no_tlp_pegawai'); ?>">
                     </div>
+
                     <div class="text-start mt-3">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
@@ -190,49 +194,66 @@
 </div>
 
 <!-- edit -->
-<?php foreach($users as $user): ?>
-<div class="modal fade" id="editUsers<?= $user['id_user']; ?>" data-bs-backdrop="static" data-bs-keyboard="false"
-    tabindex="-1" aria-labelledby="editUsersLabel" aria-hidden="true">
+<?php foreach($pegawai as $pgw): ?>
+<div class="modal fade" id="editpegawai<?= $pgw['id_pegawai']; ?>" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="editpegawaiLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editUsersLabel">Edit User</h5>
+                <h5 class="modal-title" id="editpegawaiLabel">Edit Pegawai</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('Users/update'); ?>" method="post">
-                    <input type="hidden" name="id_user" value="<?= $user['id_user']; ?>">
+                <form action="<?= base_url('Pegawai/update'); ?>" method="post">
+                    <input type="hidden" name="id_pegawai" value="<?= $pgw['id_pegawai']; ?>">
                     <div class="form-group
-                        <?= ($validation->hasError('username')) ? 'has-error' : ''; ?>">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Username"
-                            required value="<?= $user['username']; ?>">
+                        <?= ($validation->hasError('nama_pegawai')) ? 'has-error' : ''; ?>">
+                        <label for="nama_pegawai" class="form-label">Nama Pegawai</label>
+                        <input type="text" class="form-control" id="nama_pegawai" name="nama_pegawai"
+                            placeholder="Nama Pegawai" required value="<?= $pgw['nama_pegawai']; ?>">
                         <div class="invalid-feedback">
-                            <?= $validation->getError('username'); ?>
+                            <?= $validation->getError('nama_pegawai'); ?>
+                        </div>
+                    </div>
+                    <div class="form-group <?= ($validation->hasError('nip_pegawai')) ? 'has-error' : ''; ?>">
+                        <label for="nip_pegawai" class="form-label">NIP</label>
+                        <input type="text" class="form-control" id="nip_pegawai" name="nip_pegawai" placeholder="NIP"
+                            required value="<?= $pgw['nip_pegawai']; ?>">
+                        <div class="invalid-feedback">
+                            <?= $validation->getError('nip_pegawai'); ?>
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="nama_user" class="form-label">Nama User</label>
-                        <input type="text" class="form-control" id="nama_user" name="nama_user" placeholder="Nama User"
-                            required value="<?= $user['nama_user']; ?>">
+                        <label for="jabatan_pegawai" class="form-label">Jabatan</label>
+                        <input type="text" class="form-control" id="jabatan_pegawai" name="jabatan_pegawai"
+                            placeholder="Jabatan" required value="<?= $pgw['jabatan_pegawai']; ?>">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="status_user" class="form-label">Status User</label>
-                        <select class="form-select" id="status_user" name="status_user" required>
-                            <option value="1" <?= ($user['status_user'] == 1) ? 'selected' : ''; ?>>Aktif</option>
-                            <option value="0" <?= ($user['status_user'] == 0) ? 'selected' : ''; ?>>Tidak Aktif</option>
-                        </select>
+                        <label for="tempat_lahir_pegawai" class="form-label">Tempat Lahir</label>
+                        <input type="text" class="form-control" id="tempat_lahir_pegawai" name="tempat_lahir_pegawai"
+                            placeholder="Tempat Lahir" required value="<?= $pgw['tempat_lahir_pegawai']; ?>">
+                    </div>
+                    <div class="form-group  mb-3">
+                        <label for="tgl_lahir_pegawai" class="form-label">Tanggal Lahir</label>
+                        <input type="date" class="form-control" id="tgl_lahir_pegawai" name="tgl_lahir_pegawai"
+                            placeholder="Tanggal Lahir" required value="<?= $pgw['tgl_lahir_pegawai']; ?>">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="alamat_user" class="form-label">Alamat User</label>
-                        <textarea class="form-control" id="alamat_user" name="alamat_user" rows="3"
-                            placeholder="Alamat User" required><?= $user['alamat_user']; ?></textarea>
+                        <label for="alamat_pegawai" class="form-label">Alamat Pegawai</label>
+                        <textarea class="form-control" id="alamat_pegawai" name="alamat_pegawai" rows="3"
+                            placeholder="Alamat Pegawai" required><?= $pgw['alamat_pegawai']; ?></textarea>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-select" id="role" name="role">
-                            <option value="Admin" <?= ($user['role'] == 'Admin') ? 'selected' : ''; ?>>Admin</option>
-                            <option value="Pegawai" <?= ($user['role'] == 'Pegawai') ? 'selected' : ''; ?>>Pegawai
+                        <label for="no_tlp_pegawai" class="form-label">No Telepon</label>
+                        <input type="text" class="form-control" id="no_tlp_pegawai" name="no_tlp_pegawai"
+                            placeholder="No Telepon" required value="<?= $pgw['no_tlp_pegawai']; ?>">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="status_pegawai" class="form-label">Status</label>
+                        <select class="form-select" id="status_pegawai" name="status_pegawai" required>
+                            <option value="">Pilih Status</option>
+                            <option value="1" <?= ($pgw['status_pegawai'] == 1) ? 'selected' : ''; ?>>Aktif</option>
+                            <option value="0" <?= ($pgw['status_pegawai'] == 0) ? 'selected' : ''; ?>>Tidak Aktif
                             </option>
                         </select>
                     </div>

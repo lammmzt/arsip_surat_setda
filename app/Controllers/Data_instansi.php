@@ -7,21 +7,21 @@ use Ramsey\Uuid\Uuid;
 
 class Data_instansi extends Controller
 {
-     public function index()
+    public function index() // menampilkan data instansi
     {
-        $data_instansiModel = new Data_instansiModel();
-        $data['title'] = 'Data Instansi';
-        $data['active'] = 'data_instansi';
-        $data['data_instansi'] = $data_instansiModel->first();
-        $data['validation'] = \Config\Services::validation();
-        
-        return view('Admin/data_instansi/index', $data);
+        $data_instansiModel = new Data_instansiModel(); // membuat objek model data instansi
+        $data['title'] = 'Data Instansi'; // set judul halaman
+        $data['active'] = 'data_instansi'; // set active menu
+        $data['data_instansi'] = $data_instansiModel->first(); // mengambil data instansi
+        $data['validation'] = \Config\Services::validation(); // set validasi
+         
+        return view('Admin/data_instansi/index', $data); // tampilkan view data instansi
     }
 
-    public function save()
+    public function save() // adalah fungsi untuk menyimpan data
     {
         // dd($this->request->getVar());
-        if(!$this->validate([
+        if(!$this->validate([ // validasi inputan
             'nama_instansi' => [
                 'rules' => 'required',
                 'errors' => [
@@ -58,25 +58,25 @@ class Data_instansi extends Controller
                     'required' => 'NIP Kepala Instansi harus diisi'
                 ]
             ]
-        ])){
-            session()->setFlashdata('errors', 'Data gagal diubah');
-            return redirect()->to('/Data_instansi')->withInput();
+        ])){ // jika validasi tidak terpenuhi
+            session()->setFlashdata('errors', 'Data gagal diubah'); // set flashdata error
+            return redirect()->to('/Data_instansi')->withInput(); // redirect ke halaman data instansi
         }
 
-        $data_instansiModel = new Data_instansiModel();
-        $check = $data_instansiModel->first();
-        // dd($check);
-        $logo_instansi = $this->request->getFile('logo_instansi');
+        $data_instansiModel = new Data_instansiModel(); // membuat objek model data instansi
+        $check = $data_instansiModel->first(); // mengambil data instansi
+        // dd($check);  
+        $logo_instansi = $this->request->getFile('logo_instansi'); // mengambil file logo instansi
     
-        if($check){
-            if($logo_instansi->getError() == 4){
-                $nama_logo_instansi = $check['logo_instansi'];
-            }else{
-                $nama_logo_instansi = $logo_instansi->getRandomName();
-                unlink('Assets/img/data_instansi/'.$check['logo_instansi']);
-                $logo_instansi->move('Assets/img/data_instansi', $nama_logo_instansi);
-            }
-            $data_instansiModel->update($check['id_data_instansi'], [
+        if($check){ // jika data instansi sudah ada
+            if($logo_instansi->getError() == 4){ // jika file logo instansi tidak diubah
+                $nama_logo_instansi = $check['logo_instansi']; // set nama logo instansi
+            }else{  // jika file logo instansi diubah
+                $nama_logo_instansi = $logo_instansi->getRandomName(); // set nama logo instansi
+                unlink('Assets/img/data_instansi/'.$check['logo_instansi']); // hapus file logo instansi
+                $logo_instansi->move('Assets/img/data_instansi', $nama_logo_instansi); // upload file logo instansi
+            } 
+            $data_instansiModel->update($check['id_data_instansi'], [ // update data instansi
                 'nama_instansi' => $this->request->getVar('nama_instansi'),
                 'alamat_instansi' => $this->request->getVar('alamat_instansi'),
                 'no_tlp_instansi' => $this->request->getVar('no_tlp_instansi'),
@@ -87,14 +87,14 @@ class Data_instansi extends Controller
                 'updated_at' => date('Y-m-d H:i:s'),
             ]);
         }else{
-            if($logo_instansi->getError() == 4){
-                $nama_logo_instansi = '';
+            if($logo_instansi->getError() == 4){ // jika file logo instansi tidak diupload
+                $nama_logo_instansi = ''; // set nama logo instansi
             }else{
-                $nama_logo_instansi = $logo_instansi->getRandomName();
-                $logo_instansi->move('Assets/img/data_instansi', $nama_logo_instansi);
+                $nama_logo_instansi = $logo_instansi->getRandomName(); // set nama logo instansi
+                $logo_instansi->move('Assets/img/data_instansi', $nama_logo_instansi); // upload file logo instansi
             }
-            $id_data_instansi = Uuid::uuid4()->toString();
-            $data_instansiModel->insert([
+            $id_data_instansi = Uuid::uuid4()->toString(); // generate id data instansi
+            $data_instansiModel->insert([ // insert data instansi
                 'id_data_instansi' => $id_data_instansi,
                 'nama_instansi' => $this->request->getVar('nama_instansi'),
                 'alamat_instansi' => $this->request->getVar('alamat_instansi'),
@@ -108,8 +108,8 @@ class Data_instansi extends Controller
             ]);
         }
         
-        session()->setFlashdata('pesan', 'Data berhasil diubah');
-        return redirect()->to('/Data_instansi');
+        session()->setFlashdata('pesan', 'Data berhasil diubah'); // set flashdata success
+        return redirect()->to('/Data_instansi'); // redirect ke halaman data instansi
 
     }
 
