@@ -68,7 +68,6 @@ class Pegawai extends BaseController
             'password' => password_hash($username, PASSWORD_DEFAULT),
             'nama_user' => ucwords($nama_pegawai),
             'status_user' => '1',
-            'alamat_user' => $this->request->getPost('alamat_pegawai'),
             'role' => 'Pegawai',
             'created_at' => date('Y-m-d H:i:s')
         ];
@@ -132,6 +131,10 @@ class Pegawai extends BaseController
             $data_user['nama_user'] = ucwords($this->request->getPost('nama_pegawai')); // set nama user
             $userModel->update($data_pegawai['id_user'], $data_user);   // update data user
         }
+        // update nama pegawai
+        $data_user['nama_user'] = ucwords($this->request->getPost('nama_pegawai')); // set nama user
+        $data_user['status_user'] = $this->request->getPost('status_pegawai'); // set status user
+        $userModel->update($data_pegawai['id_user'], $data_user); // update data user
         $data = [   // set data pegawai
             'nama_pegawai' => ucwords($this->request->getPost('nama_pegawai')),
             'nip_pegawai' => $this->request->getPost('nip_pegawai'),

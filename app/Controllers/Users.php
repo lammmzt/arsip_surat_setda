@@ -26,7 +26,6 @@ class Users extends BaseController
             'password' => 'required',
             'nama_user' => 'required',
             'status_user' => 'required',
-            'alamat_user' => 'required',
             'role' => 'required'
         ]);
         if (!$validation->run($this->request->getPost())) { // jika validasi tidak terpenuhi
@@ -40,7 +39,6 @@ class Users extends BaseController
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             'nama_user' => ucwords($this->request->getPost('nama_user')),
             'status_user' => $this->request->getPost('status_user'),
-            'alamat_user' => $this->request->getPost('alamat_user'),
             'role' => $this->request->getPost('role'),
             'created_at' => date('Y-m-d H:i:s')
         ];
@@ -60,7 +58,6 @@ class Users extends BaseController
                 'username' => 'required',
                 'nama_user' => 'required',
                 'status_user' => 'required',
-                'alamat_user' => 'required',
                 'role' => 'required'
             ]);
         } else { // jika username berbeda dengan username sebelumnya
@@ -68,7 +65,6 @@ class Users extends BaseController
                 'username' => 'required|is_unique[users.username]',
                 'nama_user' => 'required',
                 'status_user' => 'required',
-                'alamat_user' => 'required',
                 'role' => 'required'
             ]);
         }
@@ -82,7 +78,6 @@ class Users extends BaseController
             'username' => $this->request->getPost('username'),
             'nama_user' => ucwords($this->request->getPost('nama_user')),
             'status_user' => $this->request->getPost('status_user'),
-            'alamat_user' => $this->request->getPost('alamat_user'),
             'role' => $this->request->getPost('role'),
             'updated_at' => date('Y-m-d H:i:s')
         ];

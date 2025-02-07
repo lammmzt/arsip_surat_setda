@@ -169,11 +169,6 @@
                         </select>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="alamat_user" class="form-label">Alamat User</label>
-                        <textarea class="form-control" id="alamat_user" name="alamat_user" rows="3"
-                            placeholder="Alamat User" required><?= old('alamat_user'); ?></textarea>
-                    </div>
-                    <div class="form-group mb-3">
                         <label for="role" class="form-label">Role</label>
                         <select class="form-select" id="role" name="role">
                             <option value="Admin">Admin</option>
@@ -222,11 +217,6 @@
                             <option value="1" <?= ($user['status_user'] == 1) ? 'selected' : ''; ?>>Aktif</option>
                             <option value="0" <?= ($user['status_user'] == 0) ? 'selected' : ''; ?>>Tidak Aktif</option>
                         </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="alamat_user" class="form-label">Alamat User</label>
-                        <textarea class="form-control" id="alamat_user" name="alamat_user" rows="3"
-                            placeholder="Alamat User" required><?= $user['alamat_user']; ?></textarea>
                     </div>
                     <div class="form-group mb-3">
                         <label for="role" class="form-label">Role</label>

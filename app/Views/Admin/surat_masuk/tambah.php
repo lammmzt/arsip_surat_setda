@@ -31,7 +31,7 @@
                         <use xlink:href="#check-circle-fill" />
                     </svg>
                     <div>
-                        <?= session()->getFlashdata('success'); ?>
+                        <strong>Berhasil!</strong> <?= session()->getFlashdata('success'); ?>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -41,7 +41,7 @@
                         <use xlink:href="#exclamation-triangle-fill" />
                     </svg>
                     <div>
-                        <?= session()->getFlashdata('errors'); ?>
+                        <strong>Terjadi Kesalahan!</strong>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -50,25 +50,32 @@
                 <form action="<?= base_url('Surat_masuk/save'); ?>" method="post" enctype="multipart/form-data"
                     class="needs-validation" novalidate>
                     <?= csrf_field(); ?>
-                    <div class="mb-3">
-                        <label for="pengirim_surat_masuk" class="form-label">Pengirim Surat</label>
-                        <input type="text" class="form-control" id="pengirim_surat_masuk" name="pengirim_surat_masuk"
-                            value="<?= old('pengirim_surat_masuk'); ?>" required autofocus placeholder="Pengirim Surat">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="pengirim_surat_masuk" class="form-label">Pengirim Surat</label>
+                            <input type="text" class="form-control" id="pengirim_surat_masuk"
+                                name="pengirim_surat_masuk" value="<?= old('pengirim_surat_masuk'); ?>" required
+                                autofocus placeholder="Pengirim Surat">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="perihal_surat_masuk" class="form-label">Perihal Surat</label>
+                            <input type="text" class="form-control" id="perihal_surat_masuk" name="perihal_surat_masuk"
+                                value="<?= old('perihal_surat_masuk'); ?>" required placeholder="Perihal Surat">
+                        </div>
+
                     </div>
-                    <div class="mb-3">
-                        <label for="perihal_surat_masuk" class="form-label">Perihal Surat</label>
-                        <input type="text" class="form-control" id="perihal_surat_masuk" name="perihal_surat_masuk"
-                            value="<?= old('perihal_surat_masuk'); ?>" required placeholder="Perihal Surat">
-                    </div>
-                    <div class="mb-3">
-                        <label for="no_surat_masuk" class="form-label">Nomor Surat</label>
-                        <input type="text" class="form-control" id="no_surat_masuk" name="no_surat_masuk"
-                            value="<?= old('no_surat_masuk'); ?>" required placeholder="Nomor Surat">
-                    </div>
-                    <div class="mb-3">
-                        <label for="tgl_surat_masuk" class="form-label">Tanggal Surat</label>
-                        <input type="date" class="form-control" id="tgl_surat_masuk" name="tgl_surat_masuk"
-                            value="<?= old('tgl_surat_masuk'); ?>" required placeholder="Tanggal Surat">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="no_surat_masuk" class="form-label">Nomor Surat</label>
+                            <input type="text" class="form-control" id="no_surat_masuk" name="no_surat_masuk"
+                                value="<?= old('no_surat_masuk'); ?>" required placeholder="Nomor Surat">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tgl_surat_masuk" class="form-label">Tanggal Surat</label>
+                            <input type="date" class="form-control" id="tgl_surat_masuk" name="tgl_surat_masuk"
+                                value="<?= old('tgl_surat_masuk'); ?>" required placeholder="Tanggal Surat">
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label for="ket_surat_masuk" class="form-label ">Keterangan Surat</label>
@@ -96,16 +103,50 @@
                             style="display: none;">
                     </div>
 
-                    <hr>
+                    <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
                     <!-- tambah disposisi -->
-                    <div class="mb-3">
-                        <label for="disposisi_surat_masuk" class="form-label">Disposisi Surat</label>
-                        <select class="form-select" id="disposisi_surat_masuk" name="disposisi_surat_masuk" required>
-                            <option selected>Pilih Disposisi</option>
-                            <?php foreach($disposisi as $d): ?>
-                            <option value="<?= $d['id_disposisi']; ?>"><?= $d['nama_disposisi']; ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                    <h5 class="card-title mb-2">Tambah Disposisi</h5>
+                    <div class="row mb-3">
+                        <div class="col-md-9">
+                            <label for="pegawai_disposisi" class="form-label">Pegawai Disposisi</label>
+                            <select class="form-select select2" id="pegawai_disposisi" name="pegawai_disposisi" required
+                                style="width: 100%;">
+                                <option selected>Pilih Pegawai</option>
+                                <?php foreach($pegawai as $p): ?>
+                                <option value="<?= $p['id_pegawai']; ?>" <?= old('pegawai_disposisi') == $p['id_pegawai'] ?
+                                    'selected' : ''; ?>><?= $p['nama_pegawai']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <!-- button plus -->
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="button" class="btn btn-primary " id="tambah_disposisi">
+                                <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M7.33 2H16.66C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2ZM12.82 12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83Z"
+                                        fill="currentColor"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- table -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="5%" class="text-center">#</th>
+                                    <th scope="col">Pegawai</th>
+                                    <th scope="col">Ket</th>
+                                    <th scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="disposisi">
+                                <tr class="text-center" id="belum_disposisi">
+                                    <td colspan="4" class="text-center">Belum ada disposisi</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="text-start mt-4">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -181,6 +222,34 @@ $(document).ready(function() {
             $('#pdf-preview').attr('src', URL.createObjectURL(event.target.files[0]));
         }
     });
+});
+var i = 0;
+$('#tambah_disposisi').click(function() {
+    var pegawai = $('#pegawai_disposisi').val();
+    var nama_pegawai = $('#pegawai_disposisi option:selected').text();
+    if (pegawai == 'Pilih Pegawai') {
+        alert('Pilih Pegawai');
+    } else {
+        $('#belum_disposisi').remove();
+        i++;
+        $('#disposisi').append('<tr>' +
+            '<td>' + i + '</td>' +
+            '<td>' + nama_pegawai + '<input type="hidden" name="pegawai_disposisi[]" value="' + pegawai +
+            '"></td>' +
+            '<td><input type="text" class="form-control" name="ket_disposisi[]" style="min-width: 200px;" required></td>' +
+            '<td><button type="button" class="btn btn-danger hapus_disposisi">Hapus</button></td>' +
+            '</tr>');
+
+    }
+});
+$(document).on('click', '.hapus_disposisi', function() {
+    $(this).closest('tr').remove();
+    if ($('#disposisi tr').length == 0) {
+        $('#disposisi').append('<tr class="text-center" id="belum_disposisi">' +
+            '<td colspan="4" class="text-center">Belum ada disposisi</td>' +
+            '</tr>');
+    }
+    i--;
 });
 </script>
 <?= $this->endSection('script'); ?>

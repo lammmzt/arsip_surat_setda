@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Models\suratMasukModel;
 use App\Models\usersModel;
+use App\Models\pegawaiModel;
 use Ramsey\Uuid\Uuid;
 
 class Surat_masuk extends BaseController
@@ -20,9 +21,11 @@ class Surat_masuk extends BaseController
 
     public function tambah() // menampilkan form tambah surat masuk
     { 
+        $pegawaiModel = new pegawaiModel(); // membuat objek model pegawai
         $data['title'] = 'Tambah Surat Masuk'; // untuk set judul halaman
-         $data['active'] = 'surat_masuk'; // set active menu  
+        $data['active'] = 'surat_masuk'; // set active menu  
         $data['validation'] = \Config\Services::validation(); // set validasi
+        $data['pegawai'] = $pegawaiModel->where('status_pegawai', '1')->findAll(); // mengambil semua data pegawai yang statusnya aktif
 
         return view('Admin/surat_masuk/tambah', $data); // tampilkan view tambah surat masuk
     }
