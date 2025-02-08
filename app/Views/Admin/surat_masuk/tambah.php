@@ -86,8 +86,10 @@
                         <label for="tipe_file_surat_masuk" class="form-label">Tipe File</label>
                         <select class="form-select" id="tipe_file_surat_masuk" name="tipe_file_surat_masuk" required>
                             <option selected>Pilih Tipe File</option>
-                            <option value="img">IMG</option>
-                            <option value="pdf">PDF</option>
+                            <option value="img" <?= old('tipe_file_surat_masuk') == 'img' ? 'selected' : ''; ?>>IMG
+                            </option>
+                            <option value="pdf" <?= old('tipe_file_surat_masuk') == 'pdf' ? 'selected' : ''; ?>>PDF
+                            </option>
                         </select>
                     </div>
                     <div class="mb-3" id="file_surat_masuk_container" style="display: none;">
@@ -104,49 +106,64 @@
                     </div>
 
                     <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
-                    <!-- tambah disposisi -->
-                    <h5 class="card-title mb-2">Tambah Disposisi</h5>
-                    <div class="row mb-3">
-                        <div class="col-md-9">
-                            <label for="pegawai_disposisi" class="form-label">Pegawai Disposisi</label>
-                            <select class="form-select select2" id="pegawai_disposisi" name="pegawai_disposisi" required
-                                style="width: 100%;">
-                                <option selected>Pilih Pegawai</option>
-                                <?php foreach($pegawai as $p): ?>
-                                <option value="<?= $p['id_pegawai']; ?>" <?= old('pegawai_disposisi') == $p['id_pegawai'] ?
+                    <!-- acordion -->
+                    <div class="accordion accordion-flush bg-white" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed bg-white" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                    aria-controls="collapseOne">
+                                    <h4 class="card-title">Disposisi</h4>
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse bg-white"
+                                aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                <div class="accordion-body bg-white">
+                                    <div class="row mb-3">
+                                        <div class="col-md-9">
+                                            <label for="pegawai_disposisi" class="form-label">Pegawai Disposisi</label>
+                                            <select class="form-select select2" id="pegawai_disposisi"
+                                                name="pegawai_disposisi" required style="width: 100%;">
+                                                <option selected>Pilih Pegawai</option>
+                                                <?php foreach($pegawai as $p): ?>
+                                                <option value="<?= $p['id_pegawai']; ?>" <?= old('pegawai_disposisi') == $p['id_pegawai'] ?
                                     'selected' : ''; ?>><?= $p['nama_pegawai']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <!-- button plus -->
+                                        <div class="col-md-3 d-flex align-items-end">
+                                            <button type="button" class="btn btn-primary " id="tambah_disposisi">
+                                                <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M7.33 2H16.66C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2ZM12.82 12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83Z"
+                                                        fill="currentColor"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- table -->
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" width="5%" class="text-center">#</th>
+                                                    <th scope="col">Pegawai</th>
+                                                    <th scope="col">Ket</th>
+                                                    <th scope="col">Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="disposisi">
+                                                <tr class="text-center" id="belum_disposisi">
+                                                    <td colspan="4" class="text-center">Belum ada disposisi</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <!-- button plus -->
-                        <div class="col-md-3 d-flex align-items-end">
-                            <button type="button" class="btn btn-primary " id="tambah_disposisi">
-                                <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M7.33 2H16.66C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2ZM12.82 12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83Z"
-                                        fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- table -->
-                    <div class="table-responsive">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th scope="col" width="5%" class="text-center">#</th>
-                                    <th scope="col">Pegawai</th>
-                                    <th scope="col">Ket</th>
-                                    <th scope="col">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="disposisi">
-                                <tr class="text-center" id="belum_disposisi">
-                                    <td colspan="4" class="text-center">Belum ada disposisi</td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                     <div class="text-start mt-4">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -223,33 +240,84 @@ $(document).ready(function() {
         }
     });
 });
-var i = 0;
-$('#tambah_disposisi').click(function() {
-    var pegawai = $('#pegawai_disposisi').val();
-    var nama_pegawai = $('#pegawai_disposisi option:selected').text();
-    if (pegawai == 'Pilih Pegawai') {
-        alert('Pilih Pegawai');
-    } else {
-        $('#belum_disposisi').remove();
-        i++;
-        $('#disposisi').append('<tr>' +
-            '<td>' + i + '</td>' +
-            '<td>' + nama_pegawai + '<input type="hidden" name="pegawai_disposisi[]" value="' + pegawai +
-            '"></td>' +
-            '<td><input type="text" class="form-control" name="ket_disposisi[]" style="min-width: 200px;" required></td>' +
-            '<td><button type="button" class="btn btn-danger hapus_disposisi">Hapus</button></td>' +
-            '</tr>');
+var data_disposisi_pegawai = [];
 
-    }
-});
-$(document).on('click', '.hapus_disposisi', function() {
-    $(this).closest('tr').remove();
-    if ($('#disposisi tr').length == 0) {
+// fungsi untuk meampilkan data pegawai yang akan di disposisi
+function render_disposisi_pegawai() {
+    console.log(data_disposisi_pegawai);
+    $('#disposisi').empty();
+    if (data_disposisi_pegawai.length == 0) {
         $('#disposisi').append('<tr class="text-center" id="belum_disposisi">' +
             '<td colspan="4" class="text-center">Belum ada disposisi</td>' +
             '</tr>');
+    } else {
+        $('#belum_disposisi').remove();
+        for (var i = 0; i < data_disposisi_pegawai.length; i++) {
+            $('#disposisi').append('<tr>' +
+                '<td>' + (i + 1) + '</td>' +
+                '<td>' + data_disposisi_pegawai[i].nama_pegawai +
+                '<input type="hidden" style="min-width: 100px" name="id_pegawai[]" value="' +
+                data_disposisi_pegawai[i].id_pegawai +
+                '"></td>' +
+                '<td> <input type="text" style="min-width: 100px" class="form-control ket_disposisi" name="ket_disposisi[]" data-id="' +
+                data_disposisi_pegawai[i].id_pegawai + '" value="' + data_disposisi_pegawai[i].ket_disposisi +
+                '"></td>' +
+                '<td><button type="button" class="btn btn-danger hapus_disposisi" data-id="' +
+                data_disposisi_pegawai[i].id_pegawai + '">Hapus</button></td>' +
+                '</tr>');
+        }
     }
-    i--;
+}
+
+render_disposisi_pegawai();
+
+// fungsi untuk menambahkan data pegawai yang akan di disposisi
+$('#tambah_disposisi').click(function() {
+    var id_pegawai = $('#pegawai_disposisi').val();
+    var nama_pegawai = $('#pegawai_disposisi option:selected').text();
+    if (id_pegawai == 'Pilih Pegawai') {
+        alert('Pilih Pegawai');
+    } else {
+        // jika data pegawai sudah ada
+        for (var i = 0; i < data_disposisi_pegawai.length; i++) {
+            if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
+                alert('Pegawai sudah ada');
+                return false;
+            }
+        }
+        var data = {
+            id_pegawai: id_pegawai,
+            nama_pegawai: nama_pegawai,
+            ket_disposisi: ''
+        };
+        data_disposisi_pegawai.push(data);
+        render_disposisi_pegawai();
+    }
+});
+
+
+// fungsi untuk menghapus data pegawai yang akan di disposisi
+$(document).on('click', '.hapus_disposisi', function() {
+    var id_pegawai = $(this).data('id');
+    for (var i = 0; i < data_disposisi_pegawai.length; i++) {
+        if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
+            data_disposisi_pegawai.splice(i, 1);
+        }
+    }
+    render_disposisi_pegawai();
+});
+
+// fungsi untuk menguabah daa ket disposisi
+$(document).on('focusout', '.ket_disposisi', function() {
+    var id_pegawai = $(this).data('id');
+    // alert(id_pegawai);
+    var ket_disposisi = $(this).val();
+    for (var i = 0; i < data_disposisi_pegawai.length; i++) {
+        if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
+            data_disposisi_pegawai[i].ket_disposisi = ket_disposisi;
+        }
+    }
+    render_disposisi_pegawai();
 });
 </script>
 <?= $this->endSection('script'); ?>

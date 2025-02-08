@@ -81,9 +81,9 @@
                             <td><?= $pgw['jabatan_pegawai']; ?></td>
                             <td>
                                 <?php if($pgw['status_pegawai'] == 1): ?>
-                                <span class="badge bg-success">Aktif</span>
+                                <span class="badge bg-success  p-2">Aktif</span>
                                 <?php else: ?>
-                                <span class="badge bg-danger">Tidak Aktif</span>
+                                <span class="badge bg-danger  p-2">Tidak Aktif</span>
                                 <?php endif; ?>
                             </td>
                             <td>
@@ -145,7 +145,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('Pegawai/save'); ?>" method="post">
+                <form action="<?= base_url('Pegawai/save'); ?>" method="post" class="needs-validation" novalidate>
                     <div class="form-group">
                         <label for="nama_pegawai" class="form-label">Nama Pegawai</label>
                         <input type="text" class="form-control" id="nama_pegawai" name="nama_pegawai"
@@ -204,7 +204,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('Pegawai/update'); ?>" method="post">
+                <form action="<?= base_url('Pegawai/update'); ?>" method="post" class="needs-validation" novalidate>
                     <input type="hidden" name="id_pegawai" value="<?= $pgw['id_pegawai']; ?>">
                     <div class="form-group
                         <?= ($validation->hasError('nama_pegawai')) ? 'has-error' : ''; ?>">

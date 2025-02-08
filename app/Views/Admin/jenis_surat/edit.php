@@ -47,7 +47,8 @@
                 <?php endif; ?>
             </div>
             <div class="mt-2 mx-3">
-                <form action="<?= base_url('Jenis_surat/update'); ?>" method="post">
+                <form action="<?= base_url('Jenis_surat/update'); ?>" method="post" enctype="multipart/form-data"
+                    class="needs-validation" novalidate>
                     <?= csrf_field(); ?>
                     <input type="hidden" name="id_jenis_surat" value="<?= $jenis_surat['id_jenis_surat']; ?>">
                     <div class="mb-3">

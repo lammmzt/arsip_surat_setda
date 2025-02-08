@@ -73,7 +73,12 @@ class Users extends BaseController
             session()->setFlashdata('errors', 'Data User gagal diubah');
             return redirect()->to('/Users')->withInput();
         }
-        
+        $password = $this->request->getPost('password'); // mengambil data password
+        if ($password) { // jika password diisi
+            $new_pass = password_hash($password, PASSWORD_DEFAULT); // enkripsi password
+        } else { // jika password tidak diisi
+            $new_pass = $users['password']; // password tetap sama
+        }
         $data = [ // set data users
             'username' => $this->request->getPost('username'),
             'nama_user' => ucwords($this->request->getPost('nama_user')),

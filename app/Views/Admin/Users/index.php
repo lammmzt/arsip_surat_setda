@@ -80,9 +80,9 @@
                             <td><?= $user['nama_user']; ?></td>
                             <td>
                                 <?php if($user['status_user'] == 1): ?>
-                                <span class="badge bg-success">Aktif</span>
+                                <span class="badge bg-success p-2">Aktif</span>
                                 <?php else: ?>
-                                <span class="badge bg-danger">Tidak Aktif</span>
+                                <span class="badge bg-danger p-2">Tidak Aktif</span>
                                 <?php endif; ?>
                             </td>
                             <td><?= $user['role']; ?></td>
@@ -145,7 +145,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('Users/save'); ?>" method="post">
+                <form action="<?= base_url('Users/save'); ?>" method="post" class="needs-validation" novalidate>
                     <div class="form-group">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Username"
@@ -195,7 +195,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('Users/update'); ?>" method="post">
+                <form action="<?= base_url('Users/update'); ?>" method="post" class="needs-validation" novalidate>
                     <input type="hidden" name="id_user" value="<?= $user['id_user']; ?>">
                     <div class="form-group
                         <?= ($validation->hasError('username')) ? 'has-error' : ''; ?>">
@@ -205,6 +205,11 @@
                         <div class="invalid-feedback">
                             <?= $validation->getError('username'); ?>
                         </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for=" password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Masukan password baru jika ingin diubah">
                     </div>
                     <div class="form-group mb-3">
                         <label for="nama_user" class="form-label">Nama User</label>

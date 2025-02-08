@@ -145,6 +145,7 @@ class Pegawai extends BaseController
             'jabatan_pegawai' => $this->request->getPost('jabatan_pegawai'),
             'updated_at' => date('Y-m-d H:i:s'),
             'status_pegawai' => $this->request->getPost('status_pegawai'),
+            'updated_at' => date('Y-m-d H:i:s')
         ];  
         $model->update($id, $data); // update data pegawai
         session()->setFlashdata('success', 'Data Pegawai berhasil diubah'); // set flashdata success
