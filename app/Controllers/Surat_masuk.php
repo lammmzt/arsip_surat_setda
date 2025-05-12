@@ -58,6 +58,7 @@ class Surat_masuk extends BaseController
         $id_surat_masuk = 'SM-' . date('YmdHis') . '-' . rand(10, 100); // generate id surat masuk
         $model->insert([ // insert data surat masuk
             'id_surat_masuk' => $id_surat_masuk, // set id surat masuk
+            'id_user' => session()->get('id_user'), // set id users
             'pengirim_surat_masuk' => $this->request->getPost('pengirim_surat_masuk'), // mengambil data pengirim surat
             'perihal_surat_masuk' => $this->request->getPost('perihal_surat_masuk'), // mengambil data perihal surat
             'no_surat_masuk' => $this->request->getPost('no_surat_masuk'), // mengambil data no surat

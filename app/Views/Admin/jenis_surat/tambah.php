@@ -1,5 +1,14 @@
 <?= $this->extend('Templates/index') ?>
 <?= $this->section('konten') ?>
+<style>
+#cke_editor1 {
+    max-width: 1150px;
+    /* Lebar F4 dalam px */
+    /* Biar editor selalu di tengah */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Opsional: biar kayak lembar dokumen */
+}
+</style>
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
@@ -67,6 +76,37 @@
                         <div class="form-text">Contoh kode surat: 800</div>
                     </div>
                     <div class="mb-3">
+                        <label for="kode_surat" class="form-label">Detail Jenis Surat</label>
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h4 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Referensi Data
+                                    </button>
+                                </h4>
+                                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                                    data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <?php 
+                                    foreach($referensi as $ref): ?>
+                                        <!-- checkbox -->
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="<?= $ref['id_referensi_jenis_surat']; ?>"
+                                                name="detail_jenis_surat[]"
+                                                value="<?= $ref['id_referensi_jenis_surat']; ?>">
+                                            <label class="form-check-label"
+                                                for="<?= $ref['id_referensi_jenis_surat']; ?>"><?= $ref['kode_referensi_jenis_surat']; ?></label>
+                                        </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
                         <label for="template_jenis_surat" class="form-label">Template Jenis Surat</label>
                         <textarea id="editor1" name="template_jenis_surat" rows="10" cols="80"
                             placeholder="Masukkan template surat"><?= old('template_jenis_surat'); ?></textarea>
@@ -83,7 +123,8 @@
 </div>
 <script style="text/javascript">
 CKEDITOR.replace('editor1', {
-    height: 250,
+    // height: 250,
+    width: '100%',
     baseFloatZIndex: 10005,
     //clipboard_handleImages: false,
     extraPlugins: 'image2,uploadimage',
@@ -102,6 +143,8 @@ CKEDITOR.replace('editor1', {
 
     // Reduce the list of block elements listed in the Format drop-down to the most commonly used.
     format_tags: 'p;h1;h2;h3;pre',
+    fontSize_defaultLabel: '20',
+    font_defaultLabel: 'Times New Roman',
     // Simplify the Image and Link dialog windows. The "Advanced" tab is not needed in most cases.
     //removeDialogTabs: 'image:advanced;link:advanced',
     toolbarGroups: [{

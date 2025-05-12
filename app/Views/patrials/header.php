@@ -285,7 +285,7 @@
                              <hr class="dropdown-divider">
                          </li>
                          <li><a class="dropdown-item"
-                                 href="<?= base_url('Assets/hope-ui-html-2.0/html/'); ?>/dashboard/auth/sign-in.html">Logout</a>
+                                 href="<?= base_url('Auth/logout'); ?>/dashboard/auth/sign-in.html">Logout</a>
                          </li>
                      </ul>
                  </li>

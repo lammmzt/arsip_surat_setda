@@ -4,10 +4,10 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Daftar Jenis Surat</h4>
+                <h4 class="card-title">Daftar Surat Keluar</h4>
             </div>
             <div class="header-title">
-                <a href="<?= base_url('Jenis_surat/tambah'); ?>" class="btn btn-primary">
+                <a href="<?= base_url('Surat_keluar/tambah'); ?>" class="btn btn-primary">
                     <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M7.33 2H16.66C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2ZM12.82 12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83Z"
@@ -62,9 +62,10 @@
                     <thead>
                         <tr class="ligth">
                             <th>#</th>
-                            <th>Nama Jenis SUrat</th>
-                            <th>Kode Surat</th>
-                            <th>Ket</th>
+                            <th>Tanggal</th>
+                            <th>Nomor</th>
+                            <th>Pembuat</th>
+                            <th>Status</th>
                             <th style="min-width: 100px">Action</th>
                         </tr>
                     </thead>
@@ -72,17 +73,23 @@
                         <?php 
                         $no = 1;
                         ?>
-                        <?php foreach($jenis_surat as $jns): ?>
+                        <?php foreach($surat_keluar as $jns): ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $jns['nama_jenis_surat']; ?></td>
-                            <td><?= $jns['kode_surat']; ?></td>
-                            <td><?= $jns['ket_jenis_surat']; ?></td>
+                            <td><?= $jns['tanggal_surat_keluar']; ?></td>
+                            <td><?= $jns['nomor_surat_keluar']; ?></td>
+                            <td><?= $jns['no_surat_keluar']; ?></td>
+                            <td>
+                                <?php if($jns['status_surat_keluar'] == 1): ?>
+                                <span class="badge bg-success">Aktif</span>
+                                <?php else: ?>
+                                <span class="badge bg-danger">Tidak Aktif</span>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <div class="flex align-items-center list-user-action">
-                                    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Edit"
-                                        href="<?= base_url('Jenis_surat/edit/'.$jns['id_jenis_surat']); ?>">
+                                    <a class="btn btn-sm btn-icon btn-warning"
+                                        href="<?= base_url('Surat_keluar/edit/'.$jns['id_surat_keluar']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -100,23 +107,18 @@
                                             </svg>
                                         </span>
                                     </a>
-                                    <a class="btn btn-sm btn-icon btn-secondary" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Duplicate Template"
-                                        href="<?= base_url('Jenis_surat/Duplicated/'.$jns['id_jenis_surat']); ?>">
+                                    <!-- detail -->
+                                    <a class="btn btn-sm btn-icon btn-info"
+                                        href="<?= base_url('Surat_keluar/detail/'.$jns['id_surat_keluar']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M15.7161 16.2234H8.49609" stroke="currentColor"
-                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                </path>
-                                                <path d="M15.7161 12.0369H8.49609" stroke="currentColor"
-                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                </path>
-                                                <path d="M11.2521 7.86011H8.49707" stroke="currentColor"
-                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                </path>
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M15.909 2.74976C15.909 2.74976 8.23198 2.75376 8.21998 2.75376C5.45998 2.77076 3.75098 4.58676 3.75098 7.35676V16.5528C3.75098 19.3368 5.47298 21.1598 8.25698 21.1598C8.25698 21.1598 15.933 21.1568 15.946 21.1568C18.706 21.1398 20.416 19.3228 20.416 16.5528V7.35676C20.416 4.57276 18.693 2.74976 15.909 2.74976Z"
+                                                    d="M15.1614 12.0531C15.1614 13.7991 13.7454 15.2141 11.9994 15.2141C10.2534 15.2141 8.83838 13.7991 8.83838 12.0531C8.83838 10.3061 10.2534 8.89111 11.9994 8.89111C13.7454 8.89111 15.1614 10.3061 15.1614 12.0531Z"
+                                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round"></path>
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M11.998 19.355C15.806 19.355 19.289 16.617 21.25 12.053C19.289 7.48898 15.806 4.75098 11.998 4.75098H12.002C8.194 4.75098 4.711 7.48898 2.75 12.053C4.711 16.617 8.194 19.355 12.002 19.355H11.998Z"
                                                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                                     stroke-linejoin="round"></path>
                                             </svg>
@@ -124,7 +126,7 @@
                                     </a>
                                     <!-- <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Delete"
-                                        href="<?= base_url('Jenis_surat/delete/'.$jns['id_jenis_surat']); ?>">
+                                        href="<?= base_url('Surat_keluar/delete/'.$jns['id_surat_keluar']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
