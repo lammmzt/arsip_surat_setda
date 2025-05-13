@@ -469,13 +469,22 @@
 
     <!-- Page level custom scripts -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="text/javascript">
     $(document).ready(function() {
         // data tables
         $('.data_tables').DataTable();
     });
 
+    function sweetalert(icon, title, text, type) {
+        Swal.fire({
+            icon: icon,
+            title: title,
+            text: text,
+            showConfirmButton: true,
+            timer: 1500
+        });
+    }
     // hapus alert setelah 5 detik
     setTimeout(function() {
         $('.alert').remove();

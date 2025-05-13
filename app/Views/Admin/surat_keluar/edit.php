@@ -4,8 +4,16 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Ubah Surat Masuk</h4>
+                <h4 class="card-title">Edit Surat Keluar</h4>
             </div>
+            <a href="<?= base_url('Surat_keluar'); ?>" class="btn btn-secondary btn-sm">
+                <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M10.2998 18.2988L4.2498 12.2748L10.2998 6.24976" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </a>
         </div>
         <div class="card-body px-0">
 
@@ -47,133 +55,288 @@
                 <?php endif; ?>
             </div>
             <div class="mt-2 mx-3">
-                <form action="<?= base_url('Surat_masuk/update'); ?>" method="post" enctype="multipart/form-data"
-                    class="needs-validation" novalidate>
+                <!-- <div class="row mb-3">
+                    <form action="<?= base_url('Surat_keluar/tambah'); ?>" method="post" enctype="multipart/form-data"
+                        class="needs-validation" novalidate id="form_filter">
+                        <div class="col-md-6">
+                            <label for="id_jenis_surat" class="form-label">Jenis Surat</label>
+                            <select class="form-select select2" id="id_jenis_surat" name="id_jenis_surat" required
+                                style="width: 100%;">
+                                <option selected>Pilih Jenis Surat</option>
+                                <?php foreach($jenis_surat as $js): ?>
+                                <option value="<?= $js['id_jenis_surat']; ?>" <?= $id_jenis_surat == $js['id_jenis_surat'] ?
+                                    'selected' : ''; ?>><?= $js['nama_jenis_surat']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                    </form>
+                </div> -->
+                <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;">
+                <form action="<?= base_url('Surat_keluar/updateDataIsian'); ?>" method="post"
+                    enctype="multipart/form-data" class="needs-validation" novalidate>
                     <?= csrf_field(); ?>
-                    <input type="hidden" name="id_surat_masuk" value="<?= $surat_masuk['id_surat_masuk']; ?>">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="pengirim_surat_masuk" class="form-label">Pengirim Surat</label>
-                            <input type="text" class="form-control" id="pengirim_surat_masuk"
-                                name="pengirim_surat_masuk"
-                                value="<?= (old('pengirim_surat_masuk')) ? old('pengirim_surat_masuk') : $surat_masuk['pengirim_surat_masuk']; ?>"
-                                required autofocus placeholder="Pengirim Surat">
+                    <div class="row">
+                        <?php 
+                        if($dataDetailJenisSurat != null):
+                            
+                            foreach($dataDetailJenisSurat as $djs): 
+                        ?>
+                        <?php 
+                        // hapus {} di kode_referensi_jenis_surat
+                        $id_kode_referensi_jenis_surat = str_replace(['{', '}'], '', $djs['kode_referensi_jenis_surat']);
+                        // dd($id_kode_referensi_jenis_surat);
+                        if($djs['tipe_referensi_jenis_surat'] == 'input'):
+                        ?>
+                        <div class="col-md-6 mt-3">
+                            <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
+                                <?= $djs['nama_referensi_jenis_surat']; ?></label>
+                            <input type="text" class="form-control" id="<?= $id_kode_referensi_jenis_surat ?>"
+                                name="<?= $djs['kode_referensi_jenis_surat']; ?>"
+                                value="<?= old($djs['kode_referensi_jenis_surat']); ?>" required
+                                placeholder="<?= $djs['nama_referensi_jenis_surat']; ?>">
                         </div>
-                        <div class="col-md-6">
-                            <label for="perihal_surat_masuk" class="form-label">Perihal Surat</label>
-                            <input type="text" class="form-control" id="perihal_surat_masuk" name="perihal_surat_masuk"
-                                value="<?= (old('perihal_surat_masuk')) ? old('perihal_surat_masuk') : $surat_masuk['perihal_surat_masuk']; ?>"
-                                required placeholder="Perihal Surat">
+                        <?php
+                        elseif($djs['tipe_referensi_jenis_surat'] == 'number'):
+                        ?>
+                        <div class="col-md-6 mt-3">
+                            <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
+                                <?= $djs['nama_referensi_jenis_surat']; ?></label>
+                            <input type="number" class="form-control" id="<?= $id_kode_referensi_jenis_surat ?>"
+                                name="<?= $djs['kode_referensi_jenis_surat']; ?>"
+                                value="<?= old($djs['kode_referensi_jenis_surat']); ?>" required
+                                placeholder="<?= $djs['nama_referensi_jenis_surat']; ?>">
                         </div>
-
+                        <?php
+                        elseif($djs['tipe_referensi_jenis_surat'] == 'textarea'):
+                        ?>
+                        <div class="col-md-6 mt-3">
+                            <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
+                                <?= $djs['nama_referensi_jenis_surat']; ?></label>
+                            <textarea class="form-control" id="<?= $id_kode_referensi_jenis_surat ?>"
+                                name="<?= $djs['kode_referensi_jenis_surat']; ?>" required
+                                placeholder="<?= $djs['nama_referensi_jenis_surat']; ?>"><?= old($djs   ['kode_referensi_jenis_surat']); ?></textarea>
+                        </div>
+                        <?php
+                        elseif($djs['tipe_referensi_jenis_surat'] == 'date'):
+                        ?>
+                        <div class="col-md-6 mt-3">
+                            <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
+                                <?= $djs['nama_referensi_jenis_surat']; ?></label>
+                            <input type="date" class="form-control" id="<?= $id_kode_referensi_jenis_surat ?>"
+                                name="<?= $djs['kode_referensi_jenis_surat']; ?>"
+                                value="<?= old($djs['kode_referensi_jenis_surat']); ?>" required
+                                placeholder="<?= $djs['nama_referensi_jenis_surat']; ?>">
+                        </div>
+                        <?php
+                        elseif($djs['tipe_referensi_jenis_surat'] == 'datetime'):
+                        ?>
+                        <div class="col-md-6 mt-3">
+                            <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
+                                <?= $djs['nama_referensi_jenis_surat']; ?></label>
+                            <input type="datetime-local" class="form-control" id="<?= $id_kode_referensi_jenis_surat ?>"
+                                name="<?= $djs['kode_referensi_jenis_surat']; ?>"
+                                value="<?= old($djs['kode_referensi_jenis_surat']); ?>" required
+                                placeholder="<?= $djs['nama_referensi_jenis_surat']; ?>">
+                        </div>
+                        <?php
+                        elseif($djs['tipe_referensi_jenis_surat'] == 'time'):
+                        ?>
+                        <div class="col-md-6 mt-3">
+                            <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
+                                <?= $djs['nama_referensi_jenis_surat']; ?></label>
+                            <input type="time" class="form-control" id="<?= $id_kode_referensi_jenis_surat ?>"
+                                name="<?= $djs['kode_referensi_jenis_surat']; ?>"
+                                value="<?= old($djs['kode_referensi_jenis_surat']); ?>" required
+                                placeholder="<?= $djs['nama_referensi_jenis_surat']; ?>">
+                        </div>
+                        <?php
+                        elseif($djs['tipe_referensi_jenis_surat'] == 'ckeditor'):
+                        ?>
+                        <div class="col-md-6 mt-3">
+                            <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
+                                <?= $djs['nama_referensi_jenis_surat']; ?></label>
+                            <textarea class="form-control" id="<?= $id_kode_referensi_jenis_surat ?>"
+                                name="<?= $djs['kode_referensi_jenis_surat']; ?>" required
+                                placeholder="<?= $djs['nama_referensi_jenis_surat']; ?>"><?= old($djs   ['kode_referensi_jenis_surat']); ?></textarea>
+                            <script>
+                            CKEDITOR.replace('<?= $djs['kode_referensi_jenis_surat']; ?>');
+                            </script>
+                        </div>
+                        <?php
+                        else:
+                            continue;
+                        endif;
+                        endforeach;
+                    
+                    ?>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="no_surat_masuk" class="form-label">Nomor Surat</label>
-                            <input type="text" class="form-control" id="no_surat_masuk" name="no_surat_masuk"
-                                value="<?= (old('no_surat_masuk')) ? old('no_surat_masuk') : $surat_masuk['no_surat_masuk']; ?>"
-                                required placeholder="Nomor Surat">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="tgl_surat_masuk" class="form-label">Tanggal Surat</label>
-                            <input type="date" class="form-control" id="tgl_surat_masuk" name="tgl_surat_masuk"
-                                value="<?= (old('tgl_surat_masuk')) ? old('tgl_surat_masuk') : $surat_masuk['tgl_surat_masuk']; ?>"
-                                required placeholder="Tanggal Surat">
-                        </div>
+                    <input type="hidden" name="id_surat_keluar" value="<?= $surat_keluar['id_surat_keluar']; ?>"
+                        id="id_surat_keluar">
+                    <div class="col-md-12">
+                        <label for="keterangan_surat_keluar" class="form-label">Keterangan</label>
+                        <textarea class="form-control" id="keterangan_surat_keluar" name="keterangan_surat_keluar"
+                            placeholder="Keterangan Surat"><?= $surat_keluar['keterangan_surat_keluar']; ?></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label for="ket_surat_masuk" class="form-label ">Keterangan Surat</label>
-                        <textarea class="form-control" id="ket_surat_masuk" name="ket_surat_masuk" required
-                            rows="3"><?= (old('ket_surat_masuk')) ? old('ket_surat_masuk') : $surat_masuk['ket_surat_masuk']; ?></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="tipe_file_surat_masuk" class="form-label">Tipe File</label>
-                        <select class="form-select" id="tipe_file_surat_masuk" name="tipe_file_surat_masuk" required>
+                    <input type="hidden" name="id_jenis_surat" value="<?= $id_jenis_surat; ?>">
+                    <div class="mt-3">
+                        <label for="tipe_lampiran_surat_keluar" class="form-label">Lampiran</label>
+                        <select class="form-select" id="tipe_lampiran_surat_keluar" name="tipe_lampiran_surat_keluar">
                             <option selected>Pilih Tipe File</option>
                             <option value="img"
-                                <?= $surat_masuk['tipe_file_surat_masuk'] == 'img' ? 'selected' : ''; ?>>IMG</option>
+                                <?= $surat_keluar['tipe_lampiran_surat_keluar'] == 'img' ? 'selected' : ''; ?>>Gambar
+                            </option>
                             <option value="pdf"
-                                <?= $surat_masuk['tipe_file_surat_masuk'] == 'pdf' ? 'selected' : ''; ?>>PDF</option>
+                                <?= $surat_keluar['tipe_lampiran_surat_keluar'] == 'pdf' ? 'selected' : ''; ?>>PDF
+                            </option>
                         </select>
                     </div>
-                    <div class="mb-3" id="file_surat_masuk_container" style="display: none;">
-                        <label for="file_surat_masuk" class="form-label">File Surat</label>
-                        <input type="file" class="form-control" id="file_surat_masuk" name="file_surat_masuk"
-                            value="<?= old('file_surat_masuk'); ?>" placeholder="File Surat">
+                    <div class="mt-3" id="file_lampiran_container" style="display: none;">
+                        <label for="file_lampiran" class="form-label">File Surat</label>
+                        <input type="file" class="form-control" id="file_lampiran" name="file_lampiran"
+                            value="<?= old('file_lampiran'); ?>" placeholder="File Surat">
                     </div>
                     <!-- preview  -->
-                    <div class="mb-3" id="preview" style="display: none;">
-                        <label for="preview" class="form-label">Preview</label>
+                    <div class="mt-3" id="preview" style="display: none;">
+                        <label for="preview" class="form-label">Preview Lampiran</label>
                         <img src="" id="img-preview" class="img-fluid" alt="preview" style="display: none;">
                         <embed src="" id="pdf-preview" type="application/pdf" width="100%" height="600px"
                             style="display: none;">
                     </div>
-
-                    <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
-                    <!-- acordion -->
-                    <div class="accordion accordion-flush bg-white" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingOne">
-                                <button class="accordion-button collapsed bg-white" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                                    aria-controls="collapseOne">
-                                    <h4 class="card-title">Disposisi</h4>
-                                </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse bg-white"
-                                aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body bg-white">
-                                    <div class="row mb-3">
-                                        <div class="col-md-9">
-                                            <label for="pegawai_disposisi" class="form-label">Pegawai Disposisi</label>
-                                            <select class="form-select select2" id="pegawai_disposisi"
-                                                name="pegawai_disposisi" required style="width: 100%;">
-                                                <option selected>Pilih Pegawai</option>
-                                                <?php foreach($pegawai as $p): ?>
-                                                <option value="<?= $p['id_pegawai']; ?>" <?= old('pegawai_disposisi') == $p['id_pegawai'] ?
-                                    'selected' : ''; ?>><?= $p['nama_pegawai']; ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                        </div>
-                                        <!-- button plus -->
-                                        <div class="col-md-3 d-flex align-items-end">
-                                            <button type="button" class="btn btn-primary " id="tambah_disposisi">
-                                                <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                        d="M7.33 2H16.66C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2ZM12.82 12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83Z"
-                                                        fill="currentColor"></path>
-                                                </svg>
-                                            </button>
-                                        </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+                <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
+                <!-- acordion -->
+                <div class="accordion accordion-flush bg-white" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <h4 class="card-title">Penerima Surat</h4>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse bg-white" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body bg-white">
+                                <div class="row mb-3">
+                                    <div class="col-md-3 mt-3">
+                                        <label for="jenis_penerima" class="form-label">Jenis Penerima</label>
+                                        <select class="form-select" id="jenis_penerima" name="jenis_penerima" required
+                                            style="width: 100%;">
+                                            <option selected>Pilih penerima</option>
+                                            <option value="Pegawai">Internal</option>
+                                            <option value="External">External</option>
+                                        </select>
                                     </div>
-                                    <!-- table -->
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col" width="5%" class="text-center">#</th>
-                                                    <th scope="col">Pegawai</th>
-                                                    <th scope="col">Ket</th>
-                                                    <th scope="col">Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="disposisi">
-                                                <tr class="text-center" id="belum_disposisi">
-                                                    <td colspan="4" class="text-center">Belum ada disposisi</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="col-md-6 mt-3">
+                                        <label for="id_penerima" class="form-label">Penerima</label>
+                                        <select class="form-select select2" id="id_penerima" name="id_penerima" required
+                                            style="width: 100%;">
+                                            <option selected>Pilih penerima</option>
+                                        </select>
+                                    </div>
+                                    <!-- button plus -->
+                                    <div class="col-md-3 mt-3 d-flex align-items-end">
+                                        <button type="button" class="btn btn-primary " id="tambahPenerima">
+                                            <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M7.33 2H16.66C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2ZM12.82 12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83Z"
+                                                    fill="currentColor"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- table -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" width="5%" class="text-center">#</th>
+                                                <th scope="col">penerima</th>
+                                                <th scope="col">Ket</th>
+                                                <th scope="col">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="penerima">
+                                            <tr class="text-center" id="belum_penerima">
+                                                <td colspan="4" class="text-center">Belum ada penerima</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- preview  -->
+                <div class="mt-2" id="preview" style="display: none;">
+                    <label for="preview" class="form-label">Preview Lampiran</label>
+                    <img src="" id="img-preview" class="img-fluid" alt="preview" style="display: none;">
+                    <embed src="" id="pdf-preview" type="application/pdf" width="100%" height="600px"
+                        style="display: none;">
+                </div>
+
+                <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
+                <!-- acordion -->
+                <div class="accordion accordion-flush bg-white" id="accordionExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#prevHasilSurat" aria-expanded="true" aria-controls="prevHasilSurat">
+                                <h4 class="card-title">Preview Hasil</h4>
+                            </button>
+                        </h2>
+                        <div id="prevHasilSurat" class="accordion-collapse collapse bg-white"
+                            aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body bg-white">
+                                <div class="row mb-3">
+                                    <div class="col-md-12 mt-1">
+                                        <label for="preview_hasil_surat" class="form-label">Preview Hasil
+                                            Surat</label>
+                                        <textarea class="form-control" id="preview_hasil_surat"
+                                            name="preview_hasil_surat" required
+                                            placeholder="Preview Hasil Surat"><?= $template; ?></textarea>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="text-start mt-4">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
-                        <a href="<?= base_url('Surat_masuk'); ?>" class="btn btn-secondary">Kembali</a>
+                </div>
+                <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
+                <!-- kiri slect status kanan update -->
+                <form action="<?= base_url('Surat_keluar/updateStatusSuratKeluar'); ?>" method="post"
+                    enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="id_surat_keluar" value="<?= $surat_keluar['id_surat_keluar']; ?>">
+                    <div class="row mb-3">
+                        <div class="col-md-3 mt-3">
+                            <label for="status_surat_keluar" class="form-label">Proses Surat</label>
+                            <select class="form-select" name="status_surat_keluar" required style="width: 100%;">
+                                <option selected>Pilih Proses
+                                <option value="1" <?= $surat_keluar['status_surat_keluar'] == '1' ? 'selected' : ''; ?>>
+                                    Draft
+                                </option>
+                                <option value="2" <?= $surat_keluar['status_surat_keluar'] == '0' ? 'selected' : ''; ?>>
+                                    Non
+                                    Persetujuan & TTD
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-9 mt-3">
+                            <button type="submit" class="btn btn-primary mt-4 float-end">Update</button>
+                        </div>
                     </div>
                 </form>
+                <?php 
+                    else:
+                    ?>
+                <p class="">Tidak ada data detail jenis surat</p>
+                <?php 
+                    endif;
+                    ?>
             </div>
         </div>
     </div>
@@ -183,182 +346,297 @@
 <?= $this->section('script'); ?>
 <script style="text/javascript">
 $(document).ready(function() {
-    var data_disposisi = <?= json_encode($disposisi); ?>;
-    // console.log(data_disposisi);
-    // insert data disposisi
-    for (var i = 0; i < data_disposisi.length; i++) {
-        var data = {
-            id_pegawai: data_disposisi[i].id_pegawai,
-            nama_pegawai: data_disposisi[i].nama_pegawai,
-            ket_disposisi: data_disposisi[i].ket_disposisi
-        };
-        data_disposisi_pegawai.push(data);
-    }
-    render_disposisi_pegawai();
-    changeTipeFile('<?= $surat_masuk['tipe_file_surat_masuk']; ?>',
-        '<?= base_url('Assets/file_surat_masuk/' . $surat_masuk['file_surat_masuk']); ?>');
-    changePreview('<?= base_url('Assets/file_surat_masuk/' . $surat_masuk['file_surat_masuk']); ?>',
-        '<?= $surat_masuk['tipe_file_surat_masuk']; ?>');
-});
+    // when change select id_jenis_surat submit form_filter
+    $('#id_jenis_surat').change(function() {
+        $('#form_filter').submit();
+    });
 
-// fungsi untuk mengubah tipe file
-function changeTipeFile(tipe, file) {
-    if (tipe == 'img') {
-        $('#file_surat_masuk_container').attr('style', 'display: block');
-        $('#file_surat_masuk').attr('type', 'file');
-        $('#file_surat_masuk').attr('accept', 'image/*');
-        $('#file_surat_masuk').attr('name', 'file_surat_masuk');
-        $('#file_surat_masuk').attr('value', '');
-        $('#file_surat_masuk').attr('class', 'form-control');
-        $('#file_surat_masuk').attr('placeholder', 'File Surat');
-        $('#file_surat_masuk').attr('style', 'display: block');
-        $('#preview').attr('style', 'display: none');
-        $('#pdf-preview').attr('src', '');
-        $('#img-preview').attr('src', (file == null) ? '' : file);
-    } else if (tipe == 'pdf') {
-        $('#file_surat_masuk_container').attr('style', 'display: block');
-        $('#file_surat_masuk').attr('type', 'file');
-        $('#file_surat_masuk').attr('accept', 'application/pdf');
-        $('#file_surat_masuk').attr('name', 'file_surat_masuk');
-        $('#file_surat_masuk').attr('value', '');
-        $('#file_surat_masuk').attr('class', 'form-control');
-        $('#file_surat_masuk').attr('placeholder', 'File Surat');
-        $('#file_surat_masuk').attr('style', 'display: block');
-        $('#preview').attr('style', 'display: none');
-        $('#pdf-preview').attr('src', '');
-        $('#img-preview').attr('src', (file == null) ? '' : file);
-    } else {
-        $('#file_surat_masuk_container').attr('style', 'display: none');
-        $('#file_surat_masuk').attr('type', 'hidden');
-        $('#file_surat_masuk').attr('name', '');
-        $('#file_surat_masuk').attr('required', '');
-        $('#file_surat_masuk').attr('value', '');
-        $('#file_surat_masuk').attr('class', '');
-        $('#file_surat_masuk').attr('placeholder', '');
-        $('#file_surat_masuk').attr('style', 'display: none');
-        $('#preview').attr('style', 'display: none');
-        $('#img-preview').attr('src', '');
-        $('#pdf-preview').attr('src', '');
+    var file_lampiran = <?= json_encode($surat_keluar['lampiran_surat_keluar']); ?>;
+    var tipe_lampiran = <?= json_encode($surat_keluar['tipe_lampiran_surat_keluar']); ?>;
+    // console.log(file_lampiran, tipe_lampiran);
+    if (file_lampiran != null) {
+        $('#file_lampiran').attr('style', 'display: block');
+        $('#file_lampiran').attr('value', file_lampiran);
+        $('#preview').attr('style', 'display: block');
+        if (tipe_lampiran == 'img') {
+            $('#img-preview').attr('style', 'display: block');
+            $('#img-preview').attr('src', '<?= base_url('Assets/file_lampiran_surat_keluar/') ?>' +
+                file_lampiran);
+            $('#pdf-preview').attr('style', 'display: none');
+            $('#pdf-preview').attr('src', '');
+        } else if (tipe_lampiran == 'pdf') {
+            $('#pdf-preview').attr('style', 'display: block');
+            $('#pdf-preview').attr('src', '<?= base_url('Assets/file_lampiran_surat_keluar/') ?>' +
+                file_lampiran);
+            $('#img-preview').attr('style', 'display: none');
+            $('#img-preview').attr('src', '');
+        }
     }
+
+    function chnageTipe(tipe) {
+
+        if (tipe == 'img') {
+            $('#file_lampiran_container').attr('style', 'display: block');
+            $('#file_lampiran').attr('type', 'file');
+            $('#file_lampiran').attr('accept', 'image/*');
+            $('#file_lampiran').attr('name', 'file_lampiran');
+            $('#file_lampiran').attr('required', 'required');
+            $('#file_lampiran').attr('value', '');
+            $('#file_lampiran').attr('class', 'form-control');
+            $('#file_lampiran').attr('placeholder', 'File Surat');
+            $('#file_lampiran').attr('style', 'display: block');
+            $('#preview').attr('style', 'display: none');
+            $('#pdf-preview').attr('src', '');
+            $('#img-preview').attr('src', '');
+        } else if (tipe == 'pdf') {
+            $('#file_lampiran_container').attr('style', 'display: block');
+            $('#file_lampiran').attr('type', 'file');
+            $('#file_lampiran').attr('accept', 'application/pdf');
+            $('#file_lampiran').attr('name', 'file_lampiran');
+            $('#file_lampiran').attr('required', 'required');
+            $('#file_lampiran').attr('value', '');
+            $('#file_lampiran').attr('class', 'form-control');
+            $('#file_lampiran').attr('placeholder', 'File Surat');
+            $('#file_lampiran').attr('style', 'display: block');
+            $('#preview').attr('style', 'display: none');
+            $('#pdf-preview').attr('src', '');
+            $('#img-preview').attr('src', '');
+        } else {
+            $('#file_lampiran_container').attr('style', 'display: none');
+            $('#file_lampiran').attr('type', 'hidden');
+            $('#file_lampiran').attr('name', '');
+            $('#file_lampiran').attr('required', '');
+            $('#file_lampiran').attr('value', '');
+            $('#file_lampiran').attr('class', '');
+            $('#file_lampiran').attr('placeholder', '');
+            $('#file_lampiran').attr('style', 'display: none');
+            $('#preview').attr('style', 'display: none');
+            $('#img-preview').attr('src', '');
+            $('#pdf-preview').attr('src', '');
+        }
+    }
+    $('#tipe_lampiran_surat_keluar').change(function() {
+        var tipe = $(this).val();
+        chnageTipe(tipe);
+    });
+    $('#file_lampiran').change(function() {
+        var file = $(this).val();
+        var tipe = $('#tipe_lampiran_surat_keluar').val();
+        $('#preview').attr('style', 'display: block');
+        if (tipe == 'img') {
+            $('#pdf-preview').attr('style', 'display: none');
+            $('#pdf-preview').attr('src', '');
+            $('#img-preview').attr('style', 'display: block');
+            $('#img-preview').attr('src', URL.createObjectURL(event.target.files[0]));
+        }
+        if (tipe == 'pdf') {
+            $('#img-preview').attr('style', 'display: none');
+            $('#pdf-preview').attr('style', 'display: block');
+            $('#img-preview').attr('src', '');
+            $('#pdf-preview').attr('src', URL.createObjectURL(event.target.files[0]));
+        }
+    });
+});
+var data_penerima_penerima = [];
+
+function generatePenerima() {
+    // ajax from fetchDetialSuratKeluar
+    $.ajax({
+        url: '<?= base_url('Surat_keluar/fetchDetialSuratKeluar'); ?>',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            id_surat_keluar: $('#id_surat_keluar').val()
+        },
+        success: function(data) {
+            // console.log(data);
+            if (data.error == false) {
+                // alert('data penerima berhasil di ambil');
+                data_penerima_penerima = data.data;
+                render_penerima();
+                // console.log(data_penerima_penerima);
+            } else {
+                alert(data.message);
+            }
+        }
+    });
 }
 
-// fungsi mengubah tampilan file
-function changePreview(file, tipe) {
-    console.log(file, tipe);
-    $('#preview').attr('style', 'display: block');
-    if (tipe == 'img') {
-        $('#img-preview').attr('src', file);
-        $('#img-preview').attr('style', 'display: block');
-        $('#pdf-preview').attr('style', 'display: none');
-    } else if (tipe == 'pdf') {
-        $('#pdf-preview').attr('src', file);
-        $('#pdf-preview').attr('style', 'display: block');
-        $('#img-preview').attr('style', 'display: none');
-    }
-}
+generatePenerima();
 
-// ketika tipe file surat masuk diubah
-$('#tipe_file_surat_masuk').change(function() {
-    var tipe = $(this).val();
-    changeTipeFile(tipe, null);
-    // alert(tipe);
-});
-
-// ketika file surat masuk diubah
-$('#file_surat_masuk').change(function() {
-    var file = $(this).val();
-    var tipe = $('#tipe_file_surat_masuk').val();
-    $('#preview').attr('style', 'display: block');
-    if (tipe == 'img') {
-        $('#pdf-preview').attr('style', 'display: none');
-        $('#pdf-preview').attr('src', '');
-        $('#img-preview').attr('style', 'display: block');
-        $('#img-preview').attr('src', URL.createObjectURL(event.target.files[0]));
-    }
-    if (tipe == 'pdf') {
-        $('#img-preview').attr('style', 'display: none');
-        $('#pdf-preview').attr('style', 'display: block');
-        $('#img-preview').attr('src', '');
-        $('#pdf-preview').attr('src', URL.createObjectURL(event.target.files[0]));
-    }
-});
-var data_disposisi_pegawai = [];
-
-// fungsi untuk meampilkan data pegawai yang akan di disposisi
-function render_disposisi_pegawai() {
-    console.log(data_disposisi_pegawai);
-    $('#disposisi').empty();
-    if (data_disposisi_pegawai.length == 0) {
-        $('#disposisi').append('<tr class="text-center" id="belum_disposisi">' +
-            '<td colspan="4" class="text-center">Belum ada disposisi</td>' +
+// fungsi untuk meampilkan data penerima yang akan di penerima
+function render_penerima() {
+    // console.log(data_penerima_penerima);
+    $('#penerima').empty();
+    if (data_penerima_penerima.length == 0) {
+        $('#penerima').append('<tr class="text-center" id="belum_penerima">' +
+            '<td colspan="4" class="text-center">Belum ada penerima</td>' +
             '</tr>');
     } else {
-        $('#belum_disposisi').remove();
-        for (var i = 0; i < data_disposisi_pegawai.length; i++) {
-            $('#disposisi').append('<tr>' +
+        $('#belum_penerima').remove();
+        for (var i = 0; i < data_penerima_penerima.length; i++) {
+            // console.log(data_penerima_penerima[i].id_detail_surat_keluar);
+            $('#penerima').append('<tr>' +
                 '<td>' + (i + 1) + '</td>' +
-                '<td>' + data_disposisi_pegawai[i].nama_pegawai +
-                '<input type="hidden" style="min-width: 100px" name="id_pegawai[]" value="' +
-                data_disposisi_pegawai[i].id_pegawai +
+                '<td>' + data_penerima_penerima[i].nama_user +
+                '<input type="hidden" style="min-width: 100px" name="id_user[]" value="' +
+                data_penerima_penerima[i].id_detail_surat_keluar +
                 '"></td>' +
-                '<td> <input type="text" style="min-width: 100px" class="form-control ket_disposisi" name="ket_disposisi[]" data-id="' +
-                data_disposisi_pegawai[i].id_pegawai + '" value="' + data_disposisi_pegawai[i].ket_disposisi +
+                '<td> <input type="text" style="min-width: 100px" class="form-control keterangan_detail_surat_keluar" name="keterangan_detail_surat_keluar[]" data-id="' +
+                data_penerima_penerima[i].id_detail_surat_keluar + '" value="' + data_penerima_penerima[i]
+                .keterangan_detail_surat_keluar +
                 '"></td>' +
-                '<td><button type="button" class="btn btn-danger hapus_disposisi" data-id="' +
-                data_disposisi_pegawai[i].id_pegawai + '">Hapus</button></td>' +
+                '<td><button type="button" class="btn btn-danger hapus_penerima" data-id="' +
+                data_penerima_penerima[i].id_detail_surat_keluar + '">Hapus</button></td>' +
                 '</tr>');
         }
     }
 }
 
+render_penerima();
 
-// fungsi untuk menambahkan data pegawai yang akan di disposisi
-$('#tambah_disposisi').click(function() {
-    var id_pegawai = $('#pegawai_disposisi').val();
-    var nama_pegawai = $('#pegawai_disposisi option:selected').text();
-    if (id_pegawai == 'Pilih Pegawai') {
-        alert('Pilih Pegawai');
+// change select jenis_penerima
+$('#jenis_penerima').change(function() {
+    var jenis_penerima = $(this).val();
+    if (jenis_penerima == 'Pegawai' || jenis_penerima == 'External') {
+        $('#id_penerima').empty();
+        $('#id_penerima').append('<option selected>Pilih penerima</option>');
+        $.ajax({
+            url: '<?= base_url('Surat_keluar/getJenisPenerima'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                jenis_penerima: jenis_penerima
+            },
+            success: function(data) {
+                // console.log(data);
+                if (data.error == false) {
+                    // alert('data penerima berhasil di ambil');
+                    for (var i = 0; i < data.data.length; i++) {
+                        $('#id_penerima').append('<option value="' + data.data[i].id_user +
+                            '">' + data.data[i].nama_user + '</option>');
+                    }
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
     } else {
-        // jika data pegawai sudah ada
-        for (var i = 0; i < data_disposisi_pegawai.length; i++) {
-            if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
-                alert('Pegawai sudah ada');
+        $('#id_penerima').empty();
+        $('#id_penerima').append('<option selected>Pilih penerima</option>');
+    }
+});
+
+// fungsi untuk menambahkan data penerima yang akan di penerima
+$('#tambahPenerima').click(function() {
+    var id_penerima = $('#id_penerima').val();
+    var nama_penerima = $('#id_penerima option:selected').text();
+    // console.log(id_penerima, nama_penerima, id_surat_keluar);
+    if (id_penerima == 'Pilih penerima') {
+        alert('Pilih penerima');
+    } else {
+        // jika data penerima sudah ada
+        for (var i = 0; i < data_penerima_penerima.length; i++) {
+            if (data_penerima_penerima[i].id_user == id_penerima) {
+                alert('penerima sudah ada');
                 return false;
             }
         }
-        var data = {
-            id_pegawai: id_pegawai,
-            nama_pegawai: nama_pegawai,
-            ket_disposisi: ''
-        };
-        data_disposisi_pegawai.push(data);
-        render_disposisi_pegawai();
+        $.ajax({
+            url: '<?= base_url('Surat_keluar/addDetailSurat'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id_surat_keluar: $('#id_surat_keluar').val(),
+                id_user: id_penerima,
+                keterangan_detail_surat_keluar: '',
+            },
+            success: function(data) {
+                // console.log(data);
+                if (data.error == false) {
+                    generatePenerima();
+                    sweetalert('success', 'Berhasil', 'Penerima berhasil ditambahkan');
+                    $('#id_penerima').val('Pilih penerima');
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                alert('Terjadi kesalahan');
+            }
+        });
     }
 });
 
 
-// fungsi untuk menghapus data pegawai yang akan di disposisi
-$(document).on('click', '.hapus_disposisi', function() {
-    var id_pegawai = $(this).data('id');
-    for (var i = 0; i < data_disposisi_pegawai.length; i++) {
-        if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
-            data_disposisi_pegawai.splice(i, 1);
+// fungsi untuk menghapus data penerima yang akan di penerima
+$(document).on('click', '.hapus_penerima', function() {
+    var id_penerima = $(this).data('id');
+    $.ajax({
+        url: '<?= base_url('Surat_keluar/deleteDetailSuratKeluar'); ?>',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            id_detail_surat_keluar: id_penerima
+        },
+        success: function(data) {
+            // console.log(data);
+            if (data.error == false) {
+                sweetalert('success', 'Berhasil', 'Penerima berhasil dihapus');
+                generatePenerima();
+            } else {
+                alert(data.message);
+            }
         }
-    }
-    render_disposisi_pegawai();
+    });
+    render_penerima();
 });
 
-// fungsi untuk menguabah daa ket disposisi
-$(document).on('focusout', '.ket_disposisi', function() {
-    var id_pegawai = $(this).data('id');
-    // alert(id_pegawai);
-    var ket_disposisi = $(this).val();
-    for (var i = 0; i < data_disposisi_pegawai.length; i++) {
-        if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
-            data_disposisi_pegawai[i].ket_disposisi = ket_disposisi;
+// fungsi untuk menguabah daa ket penerima
+$(document).on('focusout', '.keterangan_detail_surat_keluar', function() {
+    var id_penerima = $(this).data('id');
+    // alert(id_penerima);
+    var keterangan_detail_surat_keluar = $(this).val();
+    $.ajax({
+        url: '<?= base_url('Surat_keluar/updateKeteranganDetailSuratKeluar'); ?>',
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            id_detail_surat_keluar: id_penerima,
+            keterangan_detail_surat_keluar: keterangan_detail_surat_keluar
+        },
+        success: function(data) {
+            // console.log(data);
+            if (data.error == false) {
+                sweetalert('success', 'Berhasil', 'Penerima berhasil diubah');
+            } else {
+                alert(data.message);
+            }
         }
-    }
-    render_disposisi_pegawai();
+    });
+});
+
+// ubah data isian_surat_keluar
+var data_isian_surat = <?= json_encode($surat_keluar['isian_surat_keluar']); ?>;
+// console.log(data_isian_surat);   
+
+// masukan value ke dalam input berdasarkan id
+data_isian_surat = JSON.parse(data_isian_surat);
+for (var key in data_isian_surat) {
+    $('#' + key).val(data_isian_surat[key]);
+}
+
+// preview hasil surat ckeditor preview_hasil_surat
+
+CKEDITOR.replace('preview_hasil_surat', {
+    height: '1000px',
+    width: '100%',
+    baseFloatZIndex: 10005,
+    // tidak bisa mengedit
+    readOnly: true,
+    // hilangkan buttons
+    removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor,HorizontalRule,SpecialChar,PageBreak,Iframe,About,Save,',
 });
 </script>
 <?= $this->endSection('script'); ?>

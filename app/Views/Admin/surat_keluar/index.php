@@ -65,6 +65,7 @@
                             <th>Tanggal</th>
                             <th>Nomor</th>
                             <th>Pembuat</th>
+                            <th>Keterangan</th>
                             <th>Status</th>
                             <th style="min-width: 100px">Action</th>
                         </tr>
@@ -76,20 +77,29 @@
                         <?php foreach($surat_keluar as $jns): ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $jns['tanggal_surat_keluar']; ?></td>
-                            <td><?= $jns['nomor_surat_keluar']; ?></td>
-                            <td><?= $jns['no_surat_keluar']; ?></td>
+                            <td><?= ($jns['tanggal_surat_keluar'] != null) ? date('d-m-Y', strtotime($jns['tanggal_surat_keluar'])) : '-'; ?>
+                            </td>
+                            <td><?=  ($jns['nomor_surat_keluar'] != null) ? $jns['nomor_surat_keluar'] : '-'; ?></td>
+                            <td><?= $jns['nama_user']; ?></td>
+                            <td><?= ($jns['keterangan_surat_keluar'] != null) ? $jns['keterangan_surat_keluar'] : '-'; ?>
                             <td>
-                                <?php if($jns['status_surat_keluar'] == 1): ?>
-                                <span class="badge bg-success">Aktif</span>
+                                <?php if($jns['status_surat_keluar'] == '1'): ?>
+                                <span class="badge bg-secondary">Draf</span>
+                                <?php elseif($jns['status_surat_keluar'] == '2'): ?>
+                                <span class="badge bg-warning">Persetujuan & TTD</span>
+                                <?php elseif($jns['status_surat_keluar'] == '3'): ?>
+                                <span class="badge bg-success">Final</span>
+                                <?php elseif($jns['status_surat_keluar'] == '4'): ?>
+                                <span class="badge bg-danger">Revisi</span>
                                 <?php else: ?>
-                                <span class="badge bg-danger">Tidak Aktif</span>
+                                <span class="badge bg-danger">Ditolak</span>
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <div class="flex align-items-center list-user-action">
-                                    <a class="btn btn-sm btn-icon btn-warning"
-                                        href="<?= base_url('Surat_keluar/edit/'.$jns['id_surat_keluar']); ?>">
+                                    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Proses"
+                                        href="<?= base_url('Surat_keluar/proses/'.$jns['id_surat_keluar']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -108,7 +118,8 @@
                                         </span>
                                     </a>
                                     <!-- detail -->
-                                    <a class="btn btn-sm btn-icon btn-info"
+                                    <a class="btn btn-sm btn-icon btn-info" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Detail"
                                         href="<?= base_url('Surat_keluar/detail/'.$jns['id_surat_keluar']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
@@ -121,6 +132,63 @@
                                                     d="M11.998 19.355C15.806 19.355 19.289 16.617 21.25 12.053C19.289 7.48898 15.806 4.75098 11.998 4.75098H12.002C8.194 4.75098 4.711 7.48898 2.75 12.053C4.711 16.617 8.194 19.355 12.002 19.355H11.998Z"
                                                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                                     stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                    <!-- preview -->
+                                    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Preview Surat"
+                                        href="<?= base_url('Surat_keluar/preview/'.$jns['id_surat_keluar']); ?>"
+                                        target="_blank">
+
+                                        <span class="btn-inner">
+                                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <mask maskUnits="userSpaceOnUse" x="3" y="0" width="18" height="24"
+                                                    fill="black">
+                                                    <rect fill="white" x="3" width="18" height="24"></rect>
+                                                    <path
+                                                        d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z">
+                                                    </path>
+                                                </mask>
+                                                <path
+                                                    d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z"
+                                                    stroke="#fff" stroke-width="2" mask="url(#path-1-outside-1)">
+                                                </path>
+                                                <mask mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="0"
+                                                    width="18" height="24">
+                                                    <mask mask-type="luminance" maskUnits="userSpaceOnUse" x="3" y="0"
+                                                        width="18" height="24" fill="black">
+                                                        <rect fill="white" x="3" width="18" height="24"></rect>
+                                                        <path
+                                                            d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z">
+                                                        </path>
+                                                    </mask>
+                                                    <path
+                                                        d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z"
+                                                        fill="#fff"></path>
+                                                    <path
+                                                        d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z"
+                                                        stroke="#fff" stroke-width="2" mask="url(#path-2-outside-2)">
+                                                    </path>
+                                                </mask>
+                                                <path d="M14 6V0L21 8H16C14.8954 8 14 7.10457 14 6Z" stroke="#fff">
+                                                </path>
+                                                <mask fill="white">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M7 14.5945L8.99429 12.1334C9.12172 11.9761 9.34898 11.9549 9.50189 12.0859C9.6548 12.217 9.67546 12.4507 9.54804 12.6079L7.93828 14.5945L9.54804 16.581C9.67546 16.7383 9.6548 16.972 9.50189 17.103C9.34898 17.2341 9.12172 17.2128 8.99429 17.0556L7 14.5945Z">
+                                                    </path>
+                                                </mask>
+                                                <path d="M15.7161 16.2234H8.49609" stroke="currentColor"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                                <path d="M15.7161 12.0369H8.49609" stroke="currentColor"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+                                                <path d="M11.2521 7.86011H8.49707" stroke="currentColor"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                                </path>
+
                                             </svg>
                                         </span>
                                     </a>
