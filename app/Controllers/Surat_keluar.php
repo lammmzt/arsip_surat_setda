@@ -494,7 +494,6 @@ class Surat_keluar extends BaseController
         $isian['nama_instansi'] = $dataInstansi['nama_instansi'];
         $isian['nama_kepala_instansi'] = $dataInstansi['nama_kepala_instansi'];
         $isian['nip_kepala_instansi'] = $dataInstansi['nip_kepala_instansi'];
-        $isian['ttd_kepala'] = '<img src="' . base_url('Assets/ttd_surat/coba_ttd.png') . '" width="150px">';
     
         // Ganti {placeholder} di template
         foreach ($isian as $key => $val) {
