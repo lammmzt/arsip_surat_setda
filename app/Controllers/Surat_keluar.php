@@ -514,7 +514,7 @@ class Surat_keluar extends BaseController
         }
         
         $template = str_replace('{' . 'tempat_penerima' . '}', 'Tempat', $template); // ganti {tempat_penerima} dengan kosong
-        $data['title'] = 'Edit Surat keluar'; // untuk set judul halaman
+        $data['title'] = 'Persetujuan Surat keluar'; // untuk set judul halaman
         $data['active'] = 'Surat_keluar'; // set active menu  
         $data['jenis_surat'] = $jenisSuratModel->findAll(); // mengambil semua data jenis surat yang statusnya aktif
         $data['data_jenis_surat'] = $data_jenis_surat; // set jenis surat keluar
