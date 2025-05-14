@@ -589,7 +589,7 @@ class Surat_keluar extends BaseController
                 $template = str_replace('{' . $key . '}', $val, $template);
             }
             // dd($template);
-            
+            $nama_file = 'Assets/ttd_surat/' . $id_surat_keluar . '.png'; // set nama file surat keluar
             if (file_exists($nama_file)) { // jika file sudah ada
                 unlink($nama_file); // hapus file
             }
