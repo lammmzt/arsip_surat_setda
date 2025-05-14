@@ -27,9 +27,15 @@ class Database extends Config
     public array $default = [
         'DSN'          => '',
         'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => '',
+
+        // 'username'     => 'root',
+        // 'password'     => '',
+        // 'database'     => 'arsip_surat',
+
+        'username'     => 'arsip-surat',
+        'password'     => 'arsip-surat321',
         'database'     => 'arsip_surat',
+
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
