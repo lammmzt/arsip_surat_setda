@@ -29,9 +29,10 @@ class detailSuratKeluar extends Model
     public function getDetailSuratKeluarByIdSuratKeluar($id_surat_keluar)
     {
         return $this
-            ->select('detail_surat_keluar.*, surat_keluar.nomor_surat_keluar, surat_keluar.keterangan_surat_keluar, surat_keluar.isian_surat_keluar, surat_keluar.created_at, surat_keluar.updated_at, users.nama_user')
+            ->select('detail_surat_keluar.*, surat_keluar.nomor_surat_keluar, surat_keluar.keterangan_surat_keluar, surat_keluar.isian_surat_keluar, surat_keluar.tanggal_surat_keluar, surat_keluar.created_at, surat_keluar.updated_at, users.nama_user,jenis_surat.nama_jenis_surat, jenis_surat.kode_surat,')
             ->join('surat_keluar', 'detail_surat_keluar.id_surat_keluar = surat_keluar.id_surat_keluar')
             ->join('users', 'users.id_user = detail_surat_keluar.id_user')
+            ->join('jenis_surat', 'jenis_surat.id_jenis_surat = surat_keluar.id_jenis_surat')
             ->where(['detail_surat_keluar.id_surat_keluar' => $id_surat_keluar])
             ->findAll();
     }

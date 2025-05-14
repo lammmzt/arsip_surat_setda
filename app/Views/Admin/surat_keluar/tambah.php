@@ -68,6 +68,11 @@
                     class="needs-validation" novalidate>
                     <?= csrf_field(); ?>
                     <div class="row">
+                        <div class="col-md-6 mt-3">
+                            <label for="judul_surat_keluar" class="form-label">Judul Surat</label>
+                            <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
+                                value="<?= old('judul_surat_keluar'); ?>" required placeholder="Judul Surat">
+                        </div>
                         <?php 
                         if($dataDetailJenisSurat != null):
                             
@@ -197,7 +202,7 @@
                                 <button class="accordion-button collapsed bg-white" type="button"
                                     data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
                                     aria-controls="collapseOne">
-                                    <h4 class="card-title">Penerima Surat</h4>
+                                    <h5 class="card-title">Penerima Surat</h5>
                                 </button>
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse bg-white"

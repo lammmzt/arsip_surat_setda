@@ -7,6 +7,8 @@
                 <h4 class="card-title">Daftar User</h4>
             </div>
             <div class="header-title">
+                <?php 
+                if(session()->get('role') == 'Kadin'): ?>
                 <a href="#" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#addUsers">
                     <svg class="icon-24" width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -14,6 +16,7 @@
                             fill="currentColor"></path>
                     </svg> Tambah User
                 </a>
+                <?php endif;?>
             </div>
         </div>
         <div class="card-body px-0">
@@ -172,6 +175,7 @@
                         <label for="role" class="form-label">Role</label>
                         <select class="form-select" id="role" name="role">
                             <option value="Admin">Admin</option>
+                            <option value="Kadin">Kepala Dinas</option>
                         </select>
                     </div>
                     <div class="text-start mt-3">
@@ -230,6 +234,8 @@
                             <option value="Pegawai" <?= ($user['role'] == 'Pegawai') ? 'selected' : ''; ?>>Pegawai
                             </option>
                             <option value="External" <?= ($user['role'] == 'External') ? 'selected' : ''; ?>>External
+                            </option>
+                            <option value="Kadin" <?= ($user['role'] == 'Kadin') ? 'selected' : ''; ?>>Kepala Dinas
                             </option>
                         </select>
                     </div>

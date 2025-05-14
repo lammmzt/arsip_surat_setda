@@ -9,9 +9,14 @@ class Users extends BaseController
     public function index() // menampilkan data users
     {
         $usersModel = new usersModel();  // membuat objek model users
+        if(session()->get('role') == 'Kadin') { // jika session role kosong
+            $data_user = $usersModel->like('role', 'Kadin')->orlike('role', 'Admin')->findAll(); // mengambil data users
+        }else {
+            $data_user = $usersModel->where('role !=', 'Kadin')->orwhere('role !=', 'Admin')->findAll(); // mengambil data users
+        }
         $data['title'] = 'Users'; // set judul halaman
         $data['active'] = 'Users'; // set active menu
-        $data['users'] = $usersModel->findAll(); // mengambil semua data users
+        $data['users'] =  $data_user; // set data users
         $data['validation'] = \Config\Services::validation(); // set validasi
         
         return view('Admin/Users/index', $data);
@@ -97,6 +102,26 @@ class Users extends BaseController
         $model->delete($id); // delete data users
         session()->setFlashdata('success', 'Data User berhasil dihapus'); 
         return redirect()->to('/Users'); // redirect ke halaman users
+    }
+
+    public function verifPassword() // verifikasi password
+    {
+        $model = new usersModel(); // membuat objek model users
+        $id = session()->get('id_user'); // mengambil data id user dari session
+        $users = $model->find($id); // mengambil data users berdasarkan id
+        if (password_verify($this->request->getPost('password'), $users['password'])) { // jika password sesuai
+            return $this->response->setJSON([
+                'error' => false,
+                'status' => '200',
+                'data' => 'Password sesuai',
+            ]);
+        } else { // jika password tidak sesuai
+            return $this->response->setJSON([
+                'error' => true,
+                'status' => '400',
+                'data' => 'Password tidak sesuai',
+            ]);
+        }
     }
 }
 ?>

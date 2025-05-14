@@ -76,9 +76,9 @@
                     id="id_surat_keluar">
                 <div class="row">
                     <div class="col-md-6 mt-3">
-                        <label for="judul_surat_keluar" class="form-label">Judul Surat Keluar</label>
-                        <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
-                            value="<?= $surat_keluar['judul_surat_keluar']; ?>" placeholder="No Surat" readonly>
+                        <label for="nama_jenis_surat" class="form-label">Nama jenis surat</label>
+                        <input type="text" class="form-control" id="nama_jenis_surat" name="nama_jenis_surat"
+                            value="<?= $surat_keluar['nama_jenis_surat']; ?>" placeholder="No Surat" readonly>
                     </div>
                     <div class="col-md-6 mt-3">
                         <label for="nama_user" class="form-label">Konseptor</label>
@@ -88,8 +88,7 @@
                     <div class="col-md-6 mt-3">
                         <label for="nomor_surat_keluar" class="form-label">No Surat</label>
                         <input type="text" class="form-control" id="nomor_surat_keluar" name="nomor_surat_keluar"
-                            value="<?= $surat_keluar['kode_surat'].'/'.$surat_keluar['nomor_surat_keluar']; ?>"
-                            placeholder="No Surat" readonly>
+                            value="<?= $surat_keluar['nomor_surat_keluar']; ?>" placeholder="No Surat" readonly>
                     </div>
                     <div class="col-md-6 mt-3">
                         <label for="tanggal_surat_keluar" class="form-label">Tanggal Surat</label>
@@ -191,41 +190,14 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col" width="5%" class="text-center">#</th>
-                                                <th scope="col">Penerima</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Aksi</th>
+                                                <th scope="col">penerima</th>
+                                                <th scope="col">Ket</th>
                                             </tr>
                                         </thead>
                                         <tbody id="penerima">
-                                            <?php 
-                                            if($detail_surat_keluar):
-                                                $no = 1;
-                                                foreach($detail_surat_keluar as $row): ?>
-                                            <tr>
-                                                <th scope="row" class="text-center"><?= $no++; ?></th>
-                                                <td><?= $row['nama_user']; ?></td>
-                                                <td>
-                                                    <?php if($row['status_detail_surat_keluar'] == '1'): ?>
-                                                    <span class="badge bg-success">Dibaca</span>
-                                                    <?php else: ?>
-                                                    <span class="badge bg-danger">Belum Dibaca</span>
-                                                    <?php endif; ?>
-
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#detailDisposisi<?= $row['id_detail_surat_keluar']; ?>">
-                                                        Detail
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <?php endforeach; ?>
-                                            <?php else: ?>
                                             <tr class="text-center" id="belum_penerima">
                                                 <td colspan="4" class="text-center">Belum ada penerima</td>
                                             </tr>
-                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -233,94 +205,72 @@
                         </div>
                     </div>
                 </div>
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<?php if($detail_surat_keluar):
-    foreach($detail_surat_keluar as $row): ?>
-<div class="modal fade" id="detailDisposisi<?= $row['id_detail_surat_keluar']; ?>" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detail Disposisi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="id_detail_surat_keluar" class="form-label">No. Surat</label>
-                    <input type="text" class="form-control" id="id_detail_surat_keluar" name="id_detail_surat_keluar"
-                        value="<?= $row['kode_surat'].'/'.$row['nomor_surat_keluar']; ?>" placeholder="No Surat"
-                        readonly>
-                </div>
-                <div class="accordion accordion-flush bg-white" id="detailDisposisi">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#detailDisposisibody" aria-expanded="true"
-                                aria-controls="detailDisposisibody">
-                                <h5 class="card-title">Timeline</h5>
-                            </button>
-                        </h2>
-                        <div id="detailDisposisibody" class="accordion-collapse collapse bg-white"
-                            aria-labelledby="headingOne" data-bs-parent="#detailDisposisi">
-                            <div class="accordion-body bg-white">
-                                <div
-                                    class="iq-timeline m-0 d-flex align-items-center justify-content-between position-relative">
-                                    <ul class="list-inline p-0 m-0 w-100">
-                                        <li>
-                                            <div class="time">
-                                                <span><?= date('Y-m-d', strtotime($row['tanggal_surat_keluar'])); ?></span>
-                                            </div>
-                                            <div class="content">
-                                                <div class="timeline-dots new-timeline-dots"></div>
-                                                <h6 class="mb-1"><?= $surat_keluar['nama_user']; ?></h6>
-                                                <div class="d-inline-block w-100">
-                                                    <p>
-                                                        <?= $row['keterangan_surat_keluar']; ?> dikirim ke
-                                                        <?= $row['nama_user']; ?>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <?php if($row['status_detail_surat_keluar'] == '1'): ?>
-                                        <li>
-                                            <div class="time bg-success">
-                                                <span><?= date('Y-m-d', strtotime($row['updated_at'])); ?></span>
-                                            </div>
-                                            <div class="content">
-                                                <div class="timeline-dots new-timeline-dots border-success"></div>
-                                                <h6 class="mb-1"><?= $row['nama_user']; ?></h6>
-                                                <div class="d-inline-block w-100">
-                                                    <p>
-                                                        <?= $row['keterangan_detail_surat_keluar']; ?> dibaca oleh
-                                                        <?= $row['nama_user']; ?>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <?php endif; ?>
-                                    </ul>
-                                </div>
-                            </div>
+                <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
+                <!-- kiri slect status kanan update -->
+                <form action="<?= base_url('Surat_keluar/aproveSurat'); ?>" method="post" enctype="multipart/form-data"
+                    class="needs-validation" novalidate id="form_aprove">
+                    <?= csrf_field(); ?>
+                    <div class="col-md-12 mt-3">
+                        <label for="catatan_persetujuan_surat_keluar" class="form-label">Catatan</label>
+                        <textarea class="form-control" id="catatan_persetujuan_surat_keluar"
+                            name="catatan_persetujuan_surat_keluar"
+                            placeholder="Catatan"><?= $surat_keluar['catatan_persetujuan_surat_keluar']; ?></textarea>
+                    </div>
+                    <input type="hidden" name="id_surat_keluar" value="<?= $surat_keluar['id_surat_keluar']; ?>">
+                    <div class="row mb-3">
+                        <div class="col-md-3 mt-3">
+                            <label for="status_surat_keluar" class="form-label">Proses Surat</label>
+                            <select class="form-select" name="status_surat_keluar" required style="width: 100%;"
+                                id="status_surat_keluar">
+                                <option selected>Pilih Proses
+                                <option value="2" <?= $surat_keluar['status_surat_keluar'] == '2' ? 'selected' : ''; ?>>
+                                    Persetujuan & TTD
+                                </option>
+                                <option value="3" <?= $surat_keluar['status_surat_keluar'] == '3' ? 'selected' : ''; ?>>
+                                    Selesai
+                                </option>
+                                <option value="0" <?= $surat_keluar['status_surat_keluar'] == '0' ? 'selected' : ''; ?>>
+                                    Revisi
+                                </option>
+                            </select>
+                        </div>
+                        <div class="col-md-9 mt-3">
+                            <button type="submit" class="btn btn-primary mt-4 float-end">Update</button>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </form>
+
+
             </div>
         </div>
     </div>
 </div>
-<?php 
-endforeach; 
-endif;
-?>
+<div class="modal fade" id="konfirmasiPaass" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="konfirmasiPaassLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="konfirmasiPaassLabel">
+                    Konfirmasi Password </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" id="form_konfirmasi" class="needs-validation" novalidate method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="text" class="form-control" id="password" name="password"
+                            placeholder="Masukan password" required value="">
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="btn_konfirmasi">Konfirmasi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <?= $this->endSection('konten'); ?>
 <?= $this->section('script'); ?>
 <script style="text/javascript">
@@ -429,9 +379,7 @@ for (var key in data_isian_surat) {
 }
 
 // preview hasil surat ckeditor preview_hasil_surat
-var judul_surat = <?= json_encode($surat_keluar['judul_surat_keluar']); ?> +
-    ' ' + <?= json_encode($surat_keluar['nomor_surat_keluar']); ?> +
-    ' ' + <?= json_encode($surat_keluar['tanggal_surat_keluar']); ?>;
+
 CKEDITOR.replace('preview_hasil_surat', {
     height: '1000px',
     width: '100%',
@@ -440,8 +388,55 @@ CKEDITOR.replace('preview_hasil_surat', {
     readOnly: true,
     // hilangkan buttons
     removeButtons: 'Cut,Copy,Paste,Undo,Redo,Anchor,HorizontalRule,SpecialChar,PageBreak,Iframe,About,Save,',
-    // judul print preview
-    title: judul_surat,
+});
+
+// when submit form aprove dan jika select status_surat_keluar = 3
+$('#form_aprove').submit(function(e) {
+    e.preventDefault();
+    var status_surat_keluar = $('#status_surat_keluar').val();
+    if (status_surat_keluar == '3') {
+        $('#konfirmasiPaass').modal('show');
+    } else {
+        this.submit();
+    }
+});
+
+// when button konfirmasiPaass clicked
+$('#btn_konfirmasi').click(function(e) {
+    e.preventDefault();
+    var password = $('#password').val();
+    $.ajax({
+        url: '<?= base_url('Users/verifPassword'); ?>',
+        type: 'POST',
+        data: {
+            password: password,
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.error == false) {
+                $('#konfirmasiPaass').modal('hide');
+                $.ajax({
+                    url: '<?= base_url('Surat_keluar/aproveSurat'); ?>',
+                    type: 'POST',
+                    data: $('#form_aprove').serialize(),
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.error == false) {
+                            sweetalert('success', 'Berhasil', response.data);
+                            setTimeout(function() {
+                                window.location.href =
+                                    '<?= base_url('Surat_keluar'); ?>';
+                            }, 2000);
+                        } else {
+                            sweetalert('error', 'Gagal', response.data);
+                        }
+                    }
+                });
+            } else {
+                sweetalert('error', 'Password Salah', 'Password yang anda masukan salah');
+            }
+        }
+    });
 });
 </script>
 <?= $this->endSection('script'); ?>

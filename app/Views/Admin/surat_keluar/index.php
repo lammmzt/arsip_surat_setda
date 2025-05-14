@@ -7,6 +7,9 @@
                 <h4 class="card-title">Daftar Surat Keluar</h4>
             </div>
             <div class="header-title">
+                <?php 
+               if(session()->get('role') == 'Admin') :
+                ?>
                 <a href="<?= base_url('Surat_keluar/tambah'); ?>" class="btn btn-primary">
                     <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -14,6 +17,7 @@
                             fill="currentColor"></path>
                     </svg> Tambah
                 </a>
+                <?php endif; ?>
             </div>
         </div>
         <div class="card-body px-0">
@@ -62,6 +66,7 @@
                     <thead>
                         <tr class="ligth">
                             <th>#</th>
+                            <th>Judul</th>
                             <th>Tanggal</th>
                             <th>Nomor</th>
                             <th>Pembuat</th>
@@ -77,9 +82,10 @@
                         <?php foreach($surat_keluar as $jns): ?>
                         <tr>
                             <td><?= $no++; ?></td>
+                            <td><?= ($jns['judul_surat_keluar'] != null) ? $jns['judul_surat_keluar'] : '-'; ?></td>
                             <td><?= ($jns['tanggal_surat_keluar'] != null) ? date('d-m-Y', strtotime($jns['tanggal_surat_keluar'])) : '-'; ?>
                             </td>
-                            <td><?=  ($jns['nomor_surat_keluar'] != null) ? $jns['nomor_surat_keluar'] : '-'; ?></td>
+                            <td><?=  ($jns['nomor_surat_keluar'] != null) ? $jns['kode_surat'].'/'.$jns['nomor_surat_keluar'] : '-'; ?>
                             <td><?= $jns['nama_user']; ?></td>
                             <td><?= ($jns['keterangan_surat_keluar'] != null) ? $jns['keterangan_surat_keluar'] : '-'; ?>
                             <td>
@@ -92,13 +98,17 @@
                                 <?php elseif($jns['status_surat_keluar'] == '4'): ?>
                                 <span class="badge bg-danger">Revisi</span>
                                 <?php else: ?>
-                                <span class="badge bg-danger">Ditolak</span>
+                                <span class="badge bg-danger">Revisi</span>
                                 <?php endif; ?>
                             </td>
                             <td>
                                 <div class="flex align-items-center list-user-action">
+                                    <?php 
+                                    if(session()->get('role') == 'Admin') :
+                                        if($jns['status_surat_keluar'] == '1' || $jns['status_surat_keluar'] == '0') :
+                                    ?>
                                     <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Proses"
+                                        data-bs-placement="top" title="Proses Draf"
                                         href="<?= base_url('Surat_keluar/proses/'.$jns['id_surat_keluar']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
@@ -117,6 +127,31 @@
                                             </svg>
                                         </span>
                                     </a>
+                                    <?php 
+                                    endif; 
+                                    else:
+                                        if($jns['status_surat_keluar'] == '2') :
+                                    ?>
+                                    <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Proses Persetujuan"
+                                        href="<?= base_url('Surat_keluar/proses_persetujuan/'.$jns['id_surat_keluar']); ?>">
+                                        <span class="btn-inner">
+                                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M11.9846 21.606C11.9846 21.606 19.6566 19.283 19.6566 12.879C19.6566 6.474 19.9346 5.974 19.3196 5.358C18.7036 4.742 12.9906 2.75 11.9846 2.75C10.9786 2.75 5.26557 4.742 4.65057 5.358C4.03457 5.974 4.31257 6.474 4.31257 12.879C4.31257 19.283 11.9846 21.606 11.9846 21.606Z"
+                                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round"></path>
+                                                <path d="M9.38574 11.8746L11.2777 13.7696L15.1757 9.86963"
+                                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                                    stroke-linejoin="round"></path>
+                                            </svg>
+                                        </span>
+                                    </a>
+                                    <?php 
+                                    endif;
+                                    endif;
+                                    ?>
                                     <!-- detail -->
                                     <a class="btn btn-sm btn-icon btn-info" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Detail"

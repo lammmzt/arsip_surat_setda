@@ -84,12 +84,16 @@
                 <li>
                     <hr class="hr-horizontal">
                 </li>
+
                 <li class="nav-item static-item">
                     <a class="nav-link static-item disabled" href="#" tabindex="-1">
                         <span class="default-icon">Master Data</span>
                         <span class="mini-icon">-</span>
                     </a>
                 </li>
+                <?php 
+                if(session()->get('role') == 'Admin' ) :
+                ?>
                 <li class="nav-item">
                     <a class="nav-link <?= $active == 'data_instansi' ? 'active' : ''; ?>"
                         href="<?= base_url('Data_instansi'); ?>">
@@ -208,6 +212,10 @@
                         <span class="item-name">Data External</span>
                     </a>
                 </li>
+                <?php 
+                endif;
+                if(session()->get('role') == 'Kadin' || session()->get('role') == 'Admin' ) :
+                ?>
                 <!-- data users -->
                 <li class="nav-item">
                     <a class="nav-link <?= $active == 'Users' ? 'active' : ''; ?>" href="<?= base_url('Users'); ?>">
@@ -303,6 +311,9 @@
                         </li>
                     </ul>
                 </li>
+                <?php
+                endif;
+                ?>
                 <li>
                     <hr class="hr-horizontal">
                 </li>

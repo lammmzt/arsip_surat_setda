@@ -76,6 +76,11 @@
                     enctype="multipart/form-data" class="needs-validation" novalidate>
                     <?= csrf_field(); ?>
                     <div class="row">
+                        <div class="col-md-6 mt-3">
+                            <label for="judul_surat_keluar" class="form-label">Judul Surat</label>
+                            <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
+                                value="<?= $surat_keluar['judul_surat_keluar']; ?>" required placeholder="Judul Surat">
+                        </div>
                         <?php 
                         if($dataDetailJenisSurat != null):
                             
@@ -191,9 +196,9 @@
                         </select>
                     </div>
                     <div class="mt-3" id="file_lampiran_container" style="display: none;">
-                        <label for="file_lampiran" class="form-label">File Surat</label>
+                        <label for="file_lampiran" class="form-label">File Lampiran</label>
                         <input type="file" class="form-control" id="file_lampiran" name="file_lampiran"
-                            value="<?= old('file_lampiran'); ?>" placeholder="File Surat">
+                            value="<?= old('file_lampiran'); ?>" placeholder="File Lampiran">
                     </div>
                     <!-- preview  -->
                     <div class="mt-3" id="preview" style="display: none;">
@@ -213,7 +218,7 @@
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <h4 class="card-title">Penerima Surat</h4>
+                                <h5 class="card-title">Penerima Surat</h5>
                             </button>
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse bg-white" aria-labelledby="headingOne"
@@ -286,7 +291,7 @@
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#prevHasilSurat" aria-expanded="true" aria-controls="prevHasilSurat">
-                                <h4 class="card-title">Preview Hasil</h4>
+                                <h5 class="card-title">Preview Hasil</h5>
                             </button>
                         </h2>
                         <div id="prevHasilSurat" class="accordion-collapse collapse bg-white"
@@ -319,9 +324,11 @@
                                 <option value="1" <?= $surat_keluar['status_surat_keluar'] == '1' ? 'selected' : ''; ?>>
                                     Draft
                                 </option>
-                                <option value="2" <?= $surat_keluar['status_surat_keluar'] == '0' ? 'selected' : ''; ?>>
-                                    Non
+                                <option value="2" <?= $surat_keluar['status_surat_keluar'] == '2' ? 'selected' : ''; ?>>
                                     Persetujuan & TTD
+                                </option>
+                                <option value="0" <?= $surat_keluar['status_surat_keluar'] == '0' ? 'selected' : ''; ?>>
+                                    Revisi
                                 </option>
                             </select>
                         </div>
