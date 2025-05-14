@@ -480,7 +480,7 @@ class Surat_keluar extends BaseController
         $id_jenis_surat = $data_surat_keluar['id_jenis_surat']; // set id jenis surat keluar
         $data_jenis_surat = $jenisSuratModel->find($id_jenis_surat); // mengambil data jenis surat keluar berdasarkan id
         $dataDetailJenisSurat = $detailJenisSuratModel->geDetailByJenisSurat($id_jenis_surat); // mengambil data detail jenis surat keluar berdasarkan id
-        
+        $dataDetailSurat =$detailSuratKeluar->getDetailSuratKeluarByIdSuratKeluar($id);
     
         $dataInstansi = $dataInstansiModel->first();
     
@@ -501,6 +501,20 @@ class Surat_keluar extends BaseController
             $template = str_replace('{' . $key . '}', $val, $template);
         }
 
+        
+        // tambahkan data tersebut kedalam template surat
+        if($dataDetailSurat != null || $dataDetailSurat != ''){ // jika ada data detail surat keluar
+            $list = '<ol>';
+            foreach ($dataDetailSurat as $key => $value) { // loop data detail surat keluar
+                $list .= '<li style="padding: 2px;">' . $value['nama_user'] . '</li>'; // masukkan ke dalam list
+            }
+            $list .= '</ol>';
+            $template = str_replace('{' . 'nama_penerima' . '}', $list, $template); // ganti {nama_penerima} dengan list
+        }else{
+            $template = str_replace('{' . 'nama_penerima' . '}', '', $template); // ganti {nama_penerima} dengan kosong
+        }
+        
+        $template = str_replace('{' . 'tempat_penerima' . '}', 'Tempat', $template); // ganti {tempat_penerima} dengan kosong
         $data['title'] = 'Edit Surat keluar'; // untuk set judul halaman
         $data['active'] = 'Surat_keluar'; // set active menu  
         $data['jenis_surat'] = $jenisSuratModel->findAll(); // mengambil semua data jenis surat yang statusnya aktif
@@ -508,7 +522,7 @@ class Surat_keluar extends BaseController
         $data['surat_keluar'] = $data_surat_keluar; // set data surat keluar
         $data['data_instansi'] = $dataInstansi; // set data instansi
         $data['template'] = $template; // set template surat
-        $data['detail_surat_keluar'] = $detailSuratKeluar->getDetailSuratKeluar($id); // mengambil data detail surat keluar berdasarkan id
+        $data['detail_surat_keluar'] = $dataDetailSurat; // mengambil data detail surat keluar berdasarkan id
         $data['dataDetailJenisSurat'] = $dataDetailJenisSurat; // set data detail jenis surat keluar
         $data['id_jenis_surat'] = $id_jenis_surat; // set id jenis surat keluar
         $data['validation'] = \Config\Services::validation(); // set validasi
@@ -562,7 +576,6 @@ class Surat_keluar extends BaseController
             $isian['nama_instansi'] = $dataInstansi['nama_instansi'];
             $isian['nama_kepala_instansi'] = $dataInstansi['nama_kepala_instansi'];
             $isian['nip_kepala_instansi'] = $dataInstansi['nip_kepala_instansi'];
-            $isian['ttd_kepala'] = '<img src="' . base_url('Assets/ttd_surat/'. $id_surat_keluar . '.png') . '" width="120px">';
             $isian['nomor_surat'] = $no_surat_keluar; // set no surat keluar
             $isian['tanggal_surat'] = $tanggal_surat_keluar; // set tanggal surat keluar
             $url = base_url('Surat_keluar/preview/' . $id_surat_keluar); // set url surat keluar

@@ -186,20 +186,42 @@
 
                                 <!-- table -->
                                 <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" width="5%" class="text-center">#</th>
-                                                <th scope="col">penerima</th>
-                                                <th scope="col">Ket</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="penerima">
-                                            <tr class="text-center" id="belum_penerima">
-                                                <td colspan="4" class="text-center">Belum ada penerima</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" width="5%" class="text-center">#</th>
+                                                    <th scope="col">Penerima</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="penerima">
+                                                <?php 
+                                            if($detail_surat_keluar):
+                                                $no = 1;
+                                                foreach($detail_surat_keluar as $row): ?>
+                                                <tr>
+                                                    <th scope="row" class="text-center"><?= $no++; ?></th>
+                                                    <td><?= $row['nama_user']; ?></td>
+                                                    <td>
+                                                        <?php if($row['status_detail_surat_keluar'] == '1'): ?>
+                                                        <span class="badge bg-success">Dibaca</span>
+                                                        <?php else: ?>
+                                                        <span class="badge bg-danger">Belum Dibaca</span>
+                                                        <?php endif; ?>
+
+                                                    </td>
+
+                                                </tr>
+                                                <?php endforeach; ?>
+                                                <?php else: ?>
+                                                <tr class="text-center" id="belum_penerima">
+                                                    <td colspan="4" class="text-center">Belum ada penerima</td>
+                                                </tr>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
