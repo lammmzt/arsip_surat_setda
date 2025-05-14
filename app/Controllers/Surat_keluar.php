@@ -577,6 +577,7 @@ class Surat_keluar extends BaseController
             $isian['nip_kepala_instansi'] = $dataInstansi['nip_kepala_instansi'];
             $isian['nomor_surat'] = $no_surat_keluar; // set no surat keluar
             $isian['tanggal_surat'] = $tanggal_surat_keluar; // set tanggal surat keluar
+            $isian['ttd_kepala'] = '<img src="' . base_url('Assets/ttd_surat/'. $id_surat_keluar . '.png') . '" width="120px">';
             $url = base_url('Surat_keluar/preview/' . $id_surat_keluar); // set url surat keluar
             // Ganti {placeholder} di template
             foreach ($isian as $key => $val) {
@@ -588,7 +589,7 @@ class Surat_keluar extends BaseController
                 $template = str_replace('{' . $key . '}', $val, $template);
             }
             // dd($template);
-            $nama_file = 'Assets/ttd_surat/' . $id_surat_keluar . '.png'; // set nama file surat keluar
+            
             if (file_exists($nama_file)) { // jika file sudah ada
                 unlink($nama_file); // hapus file
             }
