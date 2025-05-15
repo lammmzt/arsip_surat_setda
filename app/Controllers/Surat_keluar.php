@@ -511,7 +511,7 @@ class Surat_keluar extends BaseController
         
         // tambahkan data tersebut kedalam template surat
         if($dataDetailSurat != null || $dataDetailSurat != ''){ // jika ada data detail surat keluar
-            $list = '<ol>';
+            $list = '<ol style="margin: 0px; padding: 0px;">';
             foreach ($dataDetailSurat as $key => $value) { // loop data detail surat keluar
                 $list .= '<li style="padding: 2px;">' . $value['nama_user'] . '</li>'; // masukkan ke dalam list
             }
