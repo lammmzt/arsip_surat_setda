@@ -269,7 +269,8 @@ class Surat_keluar extends BaseController
         $id_jenis_surat = $data_surat_keluar['id_jenis_surat']; // set id jenis surat keluar
         $data_jenis_surat = $jenisSuratModel->find($id_jenis_surat); // mengambil data jenis surat keluar berdasarkan id
         $dataDetailJenisSurat = $detailJenisSuratModel->geDetailByJenisSurat($id_jenis_surat); // mengambil data detail jenis surat keluar berdasarkan id
-        
+        $bulan_indo = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']; // array bulan indo
+            
     
         $dataInstansi = $dataInstansiModel->first();
     
@@ -286,6 +287,9 @@ class Surat_keluar extends BaseController
     
         // Ganti {placeholder} di template
         foreach ($isian as $key => $val) {
+            if (strpos($key, 'tanggal') !== false) { // jika ada {} pada key
+                    $val = date('d', strtotime($val)) . ' ' . $bulan_indo[date('n', strtotime($val)) - 1] . ' ' . date('Y', strtotime($val)); // format tanggal surat keluar
+            }
             $template = str_replace('{' . $key . '}', $val, $template);
         }
         if($data_surat_keluar['final_dokumen_surat_keluar'] != null ){
@@ -483,7 +487,8 @@ class Surat_keluar extends BaseController
         $dataDetailSurat =$detailSuratKeluar->getDetailSuratKeluarByIdSuratKeluar($id);
     
         $dataInstansi = $dataInstansiModel->first();
-    
+        $bulan_indo = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']; // array bulan indo
+            
         // Ambil template surat
         $template = $data_surat_keluar['template_jenis_surat'];
     
@@ -497,6 +502,9 @@ class Surat_keluar extends BaseController
     
         // Ganti {placeholder} di template
         foreach ($isian as $key => $val) {
+            if (strpos($key, 'tanggal') !== false) { // jika ada {} pada key
+                $val = date('d', strtotime($val)) . ' ' . $bulan_indo[date('n', strtotime($val)) - 1] . ' ' . date('Y', strtotime($val)); // format tanggal surat keluar
+            }
             $template = str_replace('{' . $key . '}', $val, $template);
         }
 
