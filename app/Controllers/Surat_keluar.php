@@ -321,7 +321,8 @@ class Surat_keluar extends BaseController
         $dataInstansi = $dataInstansiModel->first();
         $data_surat_keluar = $suratKeluarModel->getSuratkeluar($id)->first();
         $id_jenis_surat = $data_surat_keluar['id_jenis_surat'];
-    
+        $dataDetailJenisSurat = $detailJenisSuratModel->geDetailByJenisSurat($id_jenis_surat); // mengambil data detail jenis surat keluar berdasarkan id
+        
         // Ambil template surat
         $template = $data_surat_keluar['template_jenis_surat'];
     
@@ -337,8 +338,19 @@ class Surat_keluar extends BaseController
         foreach ($isian as $key => $val) {
             $template = str_replace('{' . $key . '}', $val, $template);
         }
-    
+        
         $template = str_replace('<style>', '<style>body{font-family: "Times New Roman", Times, serif !important; font-size: 12px !important;}', $template);
+        
+        if($dataDetailSurat != null || $dataDetailSurat != ''){ // jika ada data detail surat keluar
+            $list = '<ol style="margin: 0px; padding: 0px;">';
+            foreach ($dataDetailSurat as $key => $value) { // loop data detail surat keluar
+                $list .= '<li style="padding: 1px;">' . $value['nama_user'] . '</li>'; // masukkan ke dalam list
+            }
+            $list .= '</ol>';
+            $template = str_replace('{' . 'nama_penerima' . '}', $list, $template); // ganti {nama_penerima} dengan list
+        }else{
+            $template = str_replace('{' . 'nama_penerima' . '}', '', $template); // ganti {nama_penerima} dengan kosong
+        }
         // Buat PDF dari HTML
         $mpdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4']);
         $mpdf->WriteHTML($template);
@@ -388,9 +400,9 @@ class Surat_keluar extends BaseController
 
         // tambahkan data tersebut kedalam template surat
         if($dataDetailSurat != null || $dataDetailSurat != ''){ // jika ada data detail surat keluar
-            $list = '<ol>';
+            $list = '<ol style="margin: 0px; padding: 0px;">';
             foreach ($dataDetailSurat as $key => $value) { // loop data detail surat keluar
-                $list .= '<li style="padding: 2px;">' . $value['nama_user'] . '</li>'; // masukkan ke dalam list
+                $list .= '<li style="padding: 1px;">' . $value['nama_user'] . '</li>'; // masukkan ke dalam list
             }
             $list .= '</ol>';
             $template = str_replace('{' . 'nama_penerima' . '}', $list, $template); // ganti {nama_penerima} dengan list
