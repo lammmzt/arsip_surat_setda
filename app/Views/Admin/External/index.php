@@ -62,6 +62,7 @@
                     <thead>
                         <tr class="ligth">
                             <th>#</th>
+                            <th>Username</th>
                             <th>Nama external</th>
                             <th>Kota</th>
                             <th>Alamat</th>
@@ -76,6 +77,7 @@
                         <?php foreach($external as $ext): ?>
                         <tr>
                             <td><?= $no++; ?></td>
+                            <td><?= $ext['username']; ?></td>
                             <td><?= $ext['nama_external']; ?></td>
                             <td><?= $ext['kota_external']; ?></td>
                             <td><?= $ext['alamat_external']; ?></td>
@@ -107,7 +109,7 @@
                                             </svg>
                                         </span>
                                     </a>
-                                    <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
+                                    <!-- <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Delete"
                                         href="<?= base_url('External/delete/'.$ext['id_external']); ?>">
                                         <span class="btn-inner">
@@ -125,7 +127,7 @@
                                                     stroke-linejoin="round"></path>
                                             </svg>
                                         </span>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </td>
                         </tr>
@@ -204,6 +206,11 @@
                         <div class="invalid-feedback">
                             <?= $validation->getError('nama_external'); ?>
                         </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for=" password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                            value="<?= old('password'); ?>">
                     </div>
                     <div class="form-group <?= ($validation->hasError('kota_external')) ? 'has-error' : ''; ?>">
                         <label for="kota_external" class="form-label">Kota</label>

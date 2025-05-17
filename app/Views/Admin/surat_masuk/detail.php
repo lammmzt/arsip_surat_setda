@@ -221,8 +221,11 @@
                                                 <div class="timeline-dots new-timeline-dots"></div>
                                                 <h6 class="mb-1">Admin Dinas</h6>
                                                 <div class="d-inline-block w-100">
-                                                    <p>
-                                                        <?= $row['ket_disposisi']; ?>
+                                                    <p style="text-align: justify;">
+                                                        Disposisi dengan Nomor <?= $row['id_disposisi']; ?>
+                                                        dengan prihal
+                                                        <?= $row['perihal_surat_masuk']; ?> dikirimkan kepada: <b>
+                                                            <?= $row['nama_pegawai']; ?> </b>
                                                     </p>
                                                 </div>
                                             </div>
@@ -236,8 +239,10 @@
                                                 <div class="timeline-dots new-timeline-dots border-success"></div>
                                                 <h6 class="mb-1"><?= $row['nama_pegawai']; ?></h6>
                                                 <div class="d-inline-block w-100">
-                                                    <p>
-                                                        <?= $row['jawaban_disposisi']; ?>
+                                                    <p style="text-align: justify;">
+                                                        Disposisi dengan Nomor <?= $row['id_disposisi']; ?> telah
+                                                        dibaca oleh <?= $row['nama_pegawai']; ?> dengan balasan: <b>
+                                                            <?= $row['jawaban_disposisi']; ?>.</b>
                                                     </p>
                                                 </div>
                                             </div>

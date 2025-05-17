@@ -5,7 +5,7 @@ use App\Models\suratKeluarModel;
 use App\Models\usersModel;
 use App\Models\jenisSuratModel;
 use App\Models\detailJenisSuratModel;
-use App\Models\detailSuratKeluar;
+use App\Models\detailSuratKeluarModel;
 use App\Models\externalModel;
 use App\Models\Data_instansiModel;
 use Ramsey\Uuid\Uuid;
@@ -25,9 +25,12 @@ class Surat_keluar extends BaseController
         $suratKeluarModel = new suratKeluarModel(); // membuat objek model surat keluar
         if(session()->get('role') == 'Kadin') { // jika session role kosong
             $data_surat_keluar = $suratKeluarModel->getSuratkeluar()->where('surat_keluar.status_surat_keluar !=', '1')->findAll(); // mengambil data surat keluar
+            
         }else {
             $data_surat_keluar = $suratKeluarModel->getSuratkeluar()->findAll(); // mengambil data surat keluar
+            
         }
+        // dd($jml_surat_keluar);
         $data['surat_keluar'] = $data_surat_keluar; // mengambil semua data surat keluar
         $data['title'] = 'Surat keluar'; // set judul halaman 
         $data['active'] = 'Surat_keluar'; // set active menu
@@ -85,7 +88,7 @@ class Surat_keluar extends BaseController
     public function save() // menyimpan data surat keluar
     {
         $model = new suratKeluarModel(); // membuat objek model surat keluar
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail jenis surat
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
         $validation = \Config\Services::validation(); // membuat objek validasi
         // dd($this->request->getPost());
         // upload file surat 
@@ -151,7 +154,7 @@ class Surat_keluar extends BaseController
         $jenisSuratModel = new jenisSuratModel(); // membuat objek model jenis surat
         $detailJenisSuratModel = new detailJenisSuratModel(); // membuat objek model detail jenis surat
         $suratKeluarModel = new suratKeluarModel(); // membuat objek model surat keluar
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail jenis surat
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
         $dataInstansiModel = new Data_instansiModel();
         $data_surat_keluar = $suratKeluarModel->getSuratkeluar($id)->first(); // mengambil data surat keluar berdasarkan id
         
@@ -198,7 +201,7 @@ class Surat_keluar extends BaseController
     public function updateDataIsian() // menyimpan data surat keluar
     {
         $model = new suratKeluarModel(); // membuat objek model surat keluar
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail jenis surat
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
         $validation = \Config\Services::validation(); // membuat objek validasi
         // dd($this->request->getPost());
         // upload file surat 
@@ -262,7 +265,7 @@ class Surat_keluar extends BaseController
         $jenisSuratModel = new jenisSuratModel(); // membuat objek model jenis surat
         $detailJenisSuratModel = new detailJenisSuratModel(); // membuat objek model detail jenis surat
         $suratKeluarModel = new suratKeluarModel(); // membuat objek model surat keluar
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail jenis surat
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
         $dataInstansiModel = new Data_instansiModel();
         $data_surat_keluar = $suratKeluarModel->getSuratkeluar($id)->first(); // mengambil data surat keluar berdasarkan id
         
@@ -315,7 +318,7 @@ class Surat_keluar extends BaseController
         $jenisSuratModel = new jenisSuratModel();
         $detailJenisSuratModel = new detailJenisSuratModel();
         $suratKeluarModel = new suratKeluarModel();
-        $detailSuratKeluar = new detailSuratKeluar();
+        $detailSuratKeluar = new detailSuratKeluarModel();
         $dataInstansiModel = new Data_instansiModel();
     
         $dataInstansi = $dataInstansiModel->first();
@@ -367,7 +370,7 @@ class Surat_keluar extends BaseController
         $jenisSuratModel = new jenisSuratModel(); // membuat objek model jenis surat
         $detailJenisSuratModel = new detailJenisSuratModel(); // membuat objek model detail jenis surat
         $suratKeluarModel = new suratKeluarModel(); // membuat objek model surat keluar
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail jenis surat
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
         $dataInstansiModel = new Data_instansiModel();
         $data_surat_keluar = $suratKeluarModel->getSuratkeluar($id)->first(); // mengambil data surat keluar berdasarkan id
         
@@ -429,7 +432,7 @@ class Surat_keluar extends BaseController
     
     public function fetchDetialSuratKeluar() // menampilkan data detail surat keluar
     {
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail surat keluar
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail surat keluar
         $id_surat_keluar = $this->request->getPost('id_surat_keluar'); // mengambil id surat keluar
         $data = $detailSuratKeluar->getDetailSuratKeluarByIdSuratKeluar($id_surat_keluar); // mengambil data detail surat keluar berdasarkan id
         return $this->response->setJSON([ // set response json
@@ -440,7 +443,7 @@ class Surat_keluar extends BaseController
     }
 
     public function addDetailSurat(){
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail surat keluar
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail surat keluar
         $data = [
             'id_surat_keluar' => $this->request->getPost('id_surat_keluar'), // mengambil id surat keluar
             'id_user' => $this->request->getPost('id_user'), // mengambil id user
@@ -458,7 +461,7 @@ class Surat_keluar extends BaseController
     
     public function updateKeteranganDetailSuratKeluar(){
         $id_detail_surat_keluar = $this->request->getPost('id_detail_surat_keluar'); // mengambil id detail surat keluar
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail surat keluar
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail surat keluar
         $data = [
             'keterangan_detail_surat_keluar' => $this->request->getPost('keterangan_detail_surat_keluar'), // mengambil keterangan detail surat keluar
             'updated_at' => date('Y-m-d H:i:s') // set tanggal diubah
@@ -474,7 +477,7 @@ class Surat_keluar extends BaseController
     public function deleteDetailSuratKeluar() // menghapus data detail surat keluar
     {
         $id_detail_surat_keluar = $this->request->getPost('id_detail_surat_keluar'); // mengambil id detail surat keluar
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail surat keluar
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail surat keluar
         $detailSuratKeluar->delete($id_detail_surat_keluar); // hapus data detail surat keluar berdasarkan id
         return $this->response->setJSON([ // set response json
             'error' => false, // set error
@@ -489,7 +492,7 @@ class Surat_keluar extends BaseController
         $jenisSuratModel = new jenisSuratModel(); // membuat objek model jenis surat
         $detailJenisSuratModel = new detailJenisSuratModel(); // membuat objek model detail jenis surat
         $suratKeluarModel = new suratKeluarModel(); // membuat objek model surat keluar
-        $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail jenis surat
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
         $dataInstansiModel = new Data_instansiModel();
         $data_surat_keluar = $suratKeluarModel->getSuratkeluar($id)->first(); // mengambil data surat keluar berdasarkan id
         
@@ -566,7 +569,7 @@ class Surat_keluar extends BaseController
         }else{
             $jenisSuratModel = new jenisSuratModel(); // membuat objek model jenis surat
             $detailJenisSuratModel = new detailJenisSuratModel(); // membuat objek model detail jenis surat
-            $detailSuratKeluar = new detailSuratKeluar(); // membuat objek model detail jenis surat
+            $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
             $dataInstansiModel = new Data_instansiModel();
             $bulan_indo = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']; // array bulan indo
             
@@ -649,5 +652,134 @@ class Surat_keluar extends BaseController
             ]);
         }
     }
+
+
+    // ============================ USER ============================
+    public function SuratUser(){
+        $suratKeluarModel = new suratKeluarModel(); // membuat objek model surat keluar
+        $detailSuratKeluarModel = new detailSuratKeluarModel(); // membuat objek model detail surat keluar
+
+        $data_surat_keluar = $detailSuratKeluarModel->getSuratKeluarByUser(session()->get('id_user'))->orderBy('detail_surat_keluar.created_at', 'DESC')->findAll(); // mengambil data surat keluar
+       
+        $data['surat_keluar'] = $data_surat_keluar; // mengambil semua data surat keluar
+        $data['title'] = 'Surat'; // set judul halaman 
+        $data['active'] = 'Surat'; // set active menu
+        $data['validation'] = \Config\Services::validation(); // set validasi
+        
+        return view('User/Surat/index', $data); // tampilkan view surat keluar
+    }
+
+    public function detailUser($id) // menampilkan form edit surat keluar
+    {
+        $jenisSuratModel = new jenisSuratModel(); // membuat objek model jenis surat
+        $detailJenisSuratModel = new detailJenisSuratModel(); // membuat objek model detail jenis surat
+        $suratKeluarModel = new suratKeluarModel(); // membuat objek model surat keluar
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
+        $dataInstansiModel = new Data_instansiModel();
+        $dataDetailSurat = $detailSuratKeluar->getDetailSuratKeluar($id); // mengambil data detail surat keluar berdasarkan id
+        if($dataDetailSurat == null || $dataDetailSurat == ''){ // jika data detail surat keluar tidak ada
+            return redirect()->to('Surat'); // redirect ke halaman surat keluar
+        }
+        $data_surat_keluar = $suratKeluarModel->getSuratkeluar($dataDetailSurat['id_surat_keluar'])->first(); // mengambil data surat keluar berdasarkan id
+        if($dataDetailSurat['status_detail_surat_keluar'] == '0'){ // jika status detail surat keluar 1
+            $detailSuratKeluar->update($id, ['status_detail_surat_keluar' => '1', 'updated_at' => date('Y-m-d H:i:s')]); // update status detail surat keluar
+        }
+        $id_jenis_surat = $data_surat_keluar['id_jenis_surat']; // set id jenis surat keluar
+        $data_jenis_surat = $jenisSuratModel->find($id_jenis_surat); // mengambil data jenis surat keluar berdasarkan id
+        $dataDetailJenisSurat = $detailJenisSuratModel->geDetailByJenisSurat($id_jenis_surat); // mengambil data detail jenis surat keluar berdasarkan id
+        
+    
+        $dataInstansi = $dataInstansiModel->first();
+    
+        // Ambil template surat
+        $template = $data_surat_keluar['template_jenis_surat'];
+    
+        // Ambil isian surat keluar (format JSON)
+        $isian = json_decode($data_surat_keluar['isian_surat_keluar'], true);
+        // Gabungkan dengan data instansi
+        $isian['nama_instansi'] = $dataInstansi['nama_instansi'];
+        $isian['nama_kepala_instansi'] = $dataInstansi['nama_kepala_instansi'];
+        $isian['nip_kepala_instansi'] = $dataInstansi['nip_kepala_instansi'];
+    
+        // Ganti {placeholder} di template
+        foreach ($isian as $key => $val) {
+            $template = str_replace('{' . $key . '}', $val, $template);
+        }
+        if($data_surat_keluar['final_dokumen_surat_keluar'] != null ){
+            $template = $data_surat_keluar['final_dokumen_surat_keluar'];
+        }
+
+        $template = str_replace('{' . 'nama_penerima' . '}', $dataDetailSurat['nama_user'], $template); // ganti {nama_penerima} dengan kosong
+        $template = str_replace('{' . 'tempat_penerima' . '}', 'Tempat', $template); // ganti {tempat_penerima} dengan kosong
+        
+        $data['title'] = 'Detail Surat'; // untuk set judul halaman
+        $data['active'] = 'Surat'; // set active menu  
+        $data['jenis_surat'] = $jenisSuratModel->findAll(); // mengambil semua data jenis surat yang statusnya aktif
+        $data['data_jenis_surat'] = $data_jenis_surat; // set jenis surat keluar
+        $data['surat_keluar'] = $data_surat_keluar; // set data surat keluar
+        $data['data_instansi'] = $dataInstansi; // set data instansi
+        $data['template'] = $template; // set template surat
+        $data['detail_surat_keluar'] = $dataDetailSurat; // mengambil data detail surat keluar berdasarkan id
+        $data['dataDetailJenisSurat'] = $dataDetailJenisSurat; // set data detail jenis surat keluar
+        $data['id_jenis_surat'] = $id_jenis_surat; // set id jenis surat keluar
+        $data['validation'] = \Config\Services::validation(); // set validasi
+        // dd($data);
+        // dd($data);
+        return view('User/Surat/detail', $data); // tampilkan view edit surat keluar
+    }
+
+    public function previewUser($id) // menampilkan preview surat keluar
+    {
+        $jenisSuratModel = new jenisSuratModel(); // membuat objek model jenis surat
+        $detailJenisSuratModel = new detailJenisSuratModel(); // membuat objek model detail jenis surat
+        $suratKeluarModel = new suratKeluarModel(); // membuat objek model surat keluar
+        $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
+        $dataInstansiModel = new Data_instansiModel();
+        $dataDetailSurat = $detailSuratKeluar->getDetailSuratKeluar($id); // mengambil data detail surat keluar berdasarkan id
+        $data_surat_keluar = $suratKeluarModel->getSuratkeluar($dataDetailSurat['id_surat_keluar'])->first(); // mengambil data surat keluar berdasarkan id
+        
+        $id_jenis_surat = $data_surat_keluar['id_jenis_surat']; // set id jenis surat keluar
+        $data_jenis_surat = $jenisSuratModel->find($id_jenis_surat); // mengambil data jenis surat keluar berdasarkan id
+        $dataDetailJenisSurat = $detailJenisSuratModel->geDetailByJenisSurat($id_jenis_surat); // mengambil data detail jenis surat keluar berdasarkan id
+        
+    
+        $dataInstansi = $dataInstansiModel->first();
+    
+        // Ambil template surat
+        $template = $data_surat_keluar['template_jenis_surat'];
+    
+        // Ambil isian surat keluar (format JSON)
+        $isian = json_decode($data_surat_keluar['isian_surat_keluar'], true);
+        // Gabungkan dengan data instansi
+        $isian['nama_instansi'] = $dataInstansi['nama_instansi'];
+        $isian['nama_kepala_instansi'] = $dataInstansi['nama_kepala_instansi'];
+        $isian['nip_kepala_instansi'] = $dataInstansi['nip_kepala_instansi'];
+    
+        // Ganti {placeholder} di template
+        foreach ($isian as $key => $val) {
+            $template = str_replace('{' . $key . '}', $val, $template);
+        }
+        if($data_surat_keluar['final_dokumen_surat_keluar'] != null ){
+            $template = $data_surat_keluar['final_dokumen_surat_keluar'];
+        }
+
+        $template = str_replace('{' . 'nama_penerima' . '}', $dataDetailSurat['nama_user'], $template); // ganti {nama_penerima} dengan kosong
+        $template = str_replace('{' . 'tempat_penerima' . '}', 'Tempat', $template); // ganti {tempat_penerima} dengan kosong
+        
+        $data['title'] = 'Detail Surat keluar'; // untuk set judul halaman
+        $data['active'] = 'Surat_keluar'; // set active menu  
+        $data['jenis_surat'] = $jenisSuratModel->findAll(); // mengambil semua data jenis surat yang statusnya aktif
+        $data['data_jenis_surat'] = $data_jenis_surat; // set jenis surat keluar
+        $data['surat_keluar'] = $data_surat_keluar; // set data surat keluar
+        $data['data_instansi'] = $dataInstansi; // set data instansi
+        $data['template'] = $template; // set template surat
+        $data['detail_surat_keluar'] = $dataDetailSurat; // mengambil data detail surat keluar berdasarkan id
+        $data['dataDetailJenisSurat'] = $dataDetailJenisSurat; // set data detail jenis surat keluar
+        $data['id_jenis_surat'] = $id_jenis_surat; // set id jenis surat keluar
+        $data['validation'] = \Config\Services::validation(); // set validasi
+        // dd($data);
+        return view('User/Surat/print_prev', $data); // tampilkan view edit surat keluar
+    }
+    
 }
 ?>

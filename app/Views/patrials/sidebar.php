@@ -1,7 +1,25 @@
 <?php 
     use App\Models\Data_instansiModel;
+    use App\Models\SuratKeluarModel;
+    use App\Models\SuratMasukModel;
+    use App\Models\detailSuratKeluarModel;
+    use App\Models\pegawaiModel;
+    use App\Models\disposisiModel;
     $instansi = new Data_instansiModel();
+    $suratKeluarModel = new SuratKeluarModel();
+    $suratMasukModel = new SuratMasukModel();
+    $pegawaiModel = new pegawaiModel();
+    $disposisiModel = new disposisiModel();
+    $detailSuratKeluarModel = new detailSuratKeluarModel();
     $data_instansi = $instansi->first();
+    if(session()->get('role') == 'Admin' ) {
+        $jml_surat_keluar = $suratKeluarModel->getSuratkeluar()->where('surat_keluar.status_surat_keluar !=', '3')->countAllResults(); // menghitung jumlah surat keluar
+    } elseif(session()->get('role') == 'Kadin' ) {
+        $jml_surat_keluar = $suratKeluarModel->getSuratkeluar()->where('surat_keluar.status_surat_keluar =', '2')->countAllResults(); // menghitung jumlah surat keluar
+    } else{
+        $jml_surat_keluar = $detailSuratKeluarModel->getSuratKeluarByUser(session()->get('id_user'))->where('detail_surat_keluar.status_detail_surat_keluar', '0')->countAllResults();
+    }
+    $jml_surat_keluar =(isset($jml_surat_keluar)) ? $jml_surat_keluar : 0;
 ?>
 <aside class="sidebar sidebar-default sidebar-white sidebar-base navs-rounded-all ">
     <div class="sidebar-header d-flex align-items-center justify-content-start">
@@ -84,16 +102,15 @@
                 <li>
                     <hr class="hr-horizontal">
                 </li>
-
+                <?php 
+                if(session()->get('role') == 'Admin'):
+                ?>
                 <li class="nav-item static-item">
                     <a class="nav-link static-item disabled" href="#" tabindex="-1">
                         <span class="default-icon">Master Data</span>
                         <span class="mini-icon">-</span>
                     </a>
                 </li>
-                <?php 
-                if(session()->get('role') == 'Admin' ) :
-                ?>
                 <li class="nav-item">
                     <a class="nav-link <?= $active == 'data_instansi' ? 'active' : ''; ?>"
                         href="<?= base_url('Data_instansi'); ?>">
@@ -212,10 +229,17 @@
                         <span class="item-name">Data External</span>
                     </a>
                 </li>
-                <?php 
+
+                <?php
                 endif;
-                if(session()->get('role') == 'Kadin' || session()->get('role') == 'Admin' ) :
+                if(session()->get('role') == 'Kadin' ):
                 ?>
+                <li class="nav-item static-item">
+                    <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                        <span class="default-icon">Master Data</span>
+                        <span class="mini-icon">-</span>
+                    </a>
+                </li>
                 <!-- data users -->
                 <li class="nav-item">
                     <a class="nav-link <?= $active == 'Users' ? 'active' : ''; ?>" href="<?= base_url('Users'); ?>">
@@ -249,9 +273,14 @@
                 <li>
                     <hr class="hr-horizontal">
                 </li>
+                <?php 
+                endif;
+                if(session()->get('role') == 'Admin'  || session()->get('role') == 'Kadin' ):
+                ?>
+
                 <li class="nav-item static-item">
                     <a class="nav-link static-item disabled" href="#" tabindex="-1">
-                        <span class="default-icon">Admin</span>
+                        <span class="default-icon">Surat Dianas </span>
                         <span class="mini-icon">-</span>
                     </a>
                 </li>
@@ -305,10 +334,103 @@
                                         </g>
                                     </svg>
                                 </i>
+
                                 <i class="sidenav-mini-icon"></i>
-                                <span class="item-name">Surat Keluar</span>
+                                <span class="item-name">Surat Keluar
+                                    <?php 
+                                if($jml_surat_keluar > 0) :
+                                ?>
+                                    <span class="badge bg-danger item-name">
+                                        <?= $jml_surat_keluar; ?>
+                                    </span>
+                                    <?php
+                                endif;
+                                ?>
+                                </span>
                             </a>
                         </li>
+                    </ul>
+                </li>
+                <?php
+                endif;
+                if(session()->get('role') == 'Pegawai' || session()->get('role') == 'External' ):
+                ?><li class="nav-item static-item">
+                    <a class="nav-link static-item disabled" href="#" tabindex="-1">
+                        <span class="default-icon">Surat Dinas</span>
+                        <span class="mini-icon">-</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-user" role="button"
+                        aria-expanded="false" aria-controls="sidebar-user">
+                        <i class="icon">
+                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path opacity="0.4"
+                                    d="M22 15.94C22 18.73 19.76 20.99 16.97 21H16.96H7.05C4.27 21 2 18.75 2 15.96V15.95C2 15.95 2.006 11.524 2.014 9.298C2.015 8.88 2.495 8.646 2.822 8.906C5.198 10.791 9.447 14.228 9.5 14.273C10.21 14.842 11.11 15.163 12.03 15.163C12.95 15.163 13.85 14.842 14.56 14.262C14.613 14.227 18.767 10.893 21.179 8.977C21.507 8.716 21.989 8.95 21.99 9.367C22 11.576 22 15.94 22 15.94Z"
+                                    fill="currentColor"></path>
+                                <path
+                                    d="M21.4759 5.67351C20.6099 4.04151 18.9059 2.99951 17.0299 2.99951H7.04988C5.17388 2.99951 3.46988 4.04151 2.60388 5.67351C2.40988 6.03851 2.50188 6.49351 2.82488 6.75151L10.2499 12.6905C10.7699 13.1105 11.3999 13.3195 12.0299 13.3195C12.0339 13.3195 12.0369 13.3195 12.0399 13.3195C12.0429 13.3195 12.0469 13.3195 12.0499 13.3195C12.6799 13.3195 13.3099 13.1105 13.8299 12.6905L21.2549 6.75151C21.5779 6.49351 21.6699 6.03851 21.4759 5.67351Z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </i>
+                        <span class="item-name">Surat</span>
+                        <i class="right-icon">
+                            <svg class="icon-18" xmlns="http://www.w3.org/2000/svg" width="18" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </i>
+                    </a>
+                    <ul class="sub-nav collapse" id="sidebar-user" data-bs-parent="#sidebar-menu">
+                        <li class="nav-item">
+                            <a class="nav-link <?= $active == 'Surat' ? 'active' : ''; ?>"
+                                href="<?= base_url('Surat'); ?>">
+                                <i class="icon">
+                                    <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10"
+                                        viewBox="0 0 24 24" fill="currentColor">
+                                        <g>
+                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                        </g>
+                                    </svg>
+                                </i>
+                                <i class="sidenav-mini-icon"></i>
+                                <span class="item-name">Surat Masuk
+                                    <?php 
+                                if($jml_surat_keluar > 0) :
+                                ?>
+                                    <span class="badge bg-danger item-name">
+                                        <?= $jml_surat_keluar; ?>
+                                    </span>
+                                    <?php
+                                endif;
+                                ?>
+                                </span>
+                            </a>
+                        </li>
+                        <?php 
+                        if(session()->get('role') == 'Pegawai' ):
+                        ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?= $active == 'Disposisi' ? 'active' : ''; ?>"
+                                href="<?= base_url('Disposisi'); ?>">
+                                <i class="icon">
+                                    <svg class="icon-10" xmlns="http://www.w3.org/2000/svg" width="10"
+                                        viewBox="0 0 24 24" fill="currentColor">
+                                        <g>
+                                            <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+                                        </g>
+                                    </svg>
+                                </i>
+                                <i class="sidenav-mini-icon"></i>
+                                <span class="item-name">Disposisi</span>
+                            </a>
+                        </li>
+                        <?php
+                        endif;
+                        ?>
+
                     </ul>
                 </li>
                 <?php

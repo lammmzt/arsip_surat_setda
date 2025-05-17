@@ -171,7 +171,6 @@ class Surat_masuk extends BaseController
         return redirect()->to('/surat_masuk'); // redirect ke halaman surat masuk
     }
 
-
     public function detail($id) // menampilkan form edit surat masuk
     {
         $model = new suratMasukModel(); // membuat objek model surat masuk
@@ -187,5 +186,74 @@ class Surat_masuk extends BaseController
         return view('Admin/surat_masuk/detail', $data); // tampilkan view edit surat masuk
     }
 
+    public function suratUSer() // menampilkan data surat masuk
+    { 
+        $suratMasukModel = new suratMasukModel(); // membuat objek model surat masuk
+        $disposisiModel = new disposisiModel(); // membuat objek model disposisi
+        $pegawaiModel = new pegawaiModel(); // membuat objek model pegawai
+        $data_pegawai = $pegawaiModel->getPegwaiByIdUser(session()->get('id_user')); // mengambil data pegawai berdasarkan id user
+        if($data_pegawai != null) { // jika data pegawai tidak kosong
+            $id_pegawai = $data_pegawai['id_pegawai']; // set id pegawai
+        } else {
+            $id_pegawai = 0; // set id pegawai 0
+        }
+        $data_disposisi = $disposisiModel->getDisposisiByIdPegawai($id_pegawai)->orderBy('disposisi.created_at', 'DESC')->findAll(); // mengambil data disposisi berdasarkan id pegawai
+        // dd($jml_surat_keluar);
+        $data['surat_masuk'] = $data_disposisi; // mengambil semua data surat masuk
+        $data['title'] = 'Disposisi'; // set judul halaman 
+        $data['active'] = 'Disposisi'; // set active menu
+        $data['validation'] = \Config\Services::validation(); // set validasi
+        
+        return view('User/Disposisi/index', $data); // tampilkan view surat masuk
+    }
+
+    public function detailUser($id) // menampilkan form edit surat masuk
+    {
+        $model = new suratMasukModel(); // membuat objek model surat masuk
+        $disposisiModel = new disposisiModel(); // membuat objek model disposisi
+        $pegawaiModel = new pegawaiModel(); // membuat objek model pegawai
+        $data_disposisi = $disposisiModel->getDisposisiById($id); // mengambil data disposisi berdasarkan id
+        if($data_disposisi == null) { // jika data disposisi tidak ada
+            session()->setFlashdata('errors', 'Data Disposisi tidak ditemukan'); // set flashdata error
+            return redirect()->to('/Disposisi'); // redirect ke halaman surat masuk
+        }
+        // if($data_disposisi['status_disposisi'] == '0') { // jika status disposisi sudah dibaca
+        //     $disposisiModel->update($id, [ // update status disposisi
+        //         'status_disposisi' => '1', // set status disposisi
+        //         'updated_at' => date('Y-m-d H:i:s') // set tanggal diubah
+        //     ]);
+        // }
+        $data['title'] = 'Edit Surat Masuk'; // set judul halaman
+        $data['surat_masuk'] = $data_disposisi; // mengambil data surat masuk berdasarkan id
+        $data['active'] = 'Disposisi'; // set active menu
+        $data['validation'] = \Config\Services::validation(); // set validasi
+        // dd($data);
+        return view('User/Disposisi/detail', $data); // tampilkan view edit surat masuk
+    }
+
+    public function Balasan() // menyimpan data surat masuk
+    {
+        $model = new suratMasukModel(); // membuat objek model surat masuk
+        $disposisiModel = new disposisiModel(); // membuat objek model disposisi
+        $validation = \Config\Services::validation(); // membuat objek validasi
+        // dd($this->request->getPost());
+        $validation->setRules([ // set rules validasi
+            'jawaban_disposisi' => 'required',
+        ]);
+        
+        if (!$validation->withRequest($this->request)->run()) { // jika validasi tidak terpenuhi
+            session()->setFlashdata('errors', $validation->getErrors()); // set flashdata error
+            return redirect()->to('/Disposisi/detail/'.$this->request->getPost('id_disposisi'))->withInput(); // redirect ke halaman tambah surat masuk
+        }
+        $id_disposisi = $this->request->getPost('id_disposisi'); // mengambil id disposisi
+        $disposisiModel->update($id_disposisi, [ // update data disposisi
+            'jawaban_disposisi' => $this->request->getPost('jawaban_disposisi'), // set jawaban disposisi
+            'status_disposisi' => '1', // set status disposisi
+            'updated_at' => date('Y-m-d H:i:s') // set tanggal diubah
+        ]);
+        
+        session()->setFlashdata('success', 'Balasan Disposisi berhasil dikirim'); // set flashdata success
+        return redirect()->to('/Disposisi/detail/'.$id_disposisi); // redirect ke halaman surat masuk
+    }
 }
 ?>

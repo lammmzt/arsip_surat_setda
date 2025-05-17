@@ -4,16 +4,10 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Daftar Jenis Surat</h4>
+                <h4 class="card-title">Daftar Surat</h4>
             </div>
             <div class="header-title">
-                <a href="<?= base_url('Jenis_surat/tambah'); ?>" class="btn btn-primary">
-                    <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M7.33 2H16.66C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2ZM12.82 12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83Z"
-                            fill="currentColor"></path>
-                    </svg> Tambah
-                </a>
+
             </div>
         </div>
         <div class="card-body px-0">
@@ -62,9 +56,11 @@
                     <thead>
                         <tr class="ligth">
                             <th>#</th>
-                            <th>Nama Jenis SUrat</th>
-                            <th>Kode Surat</th>
-                            <th>Ket</th>
+                            <th>Judul</th>
+                            <th>Tanggal</th>
+                            <th>Nomor</th>
+                            <th>Keterangan</th>
+                            <th>Status</th>
                             <th style="min-width: 100px">Action</th>
                         </tr>
                     </thead>
@@ -72,39 +68,86 @@
                         <?php 
                         $no = 1;
                         ?>
-                        <?php foreach($jenis_surat as $jns): ?>
+                        <?php foreach($surat_keluar as $jns): ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $jns['nama_jenis_surat']; ?></td>
-                            <td><?= $jns['kode_surat']; ?></td>
-                            <td><?= $jns['ket_jenis_surat']; ?></td>
+                            <td><?= ($jns['judul_surat_keluar'] != null) ? $jns['judul_surat_keluar'] : '-'; ?></td>
+                            <td><?= ($jns['tanggal_surat_keluar'] != null) ? date('d-m-Y', strtotime($jns['tanggal_surat_keluar'])) : '-'; ?>
+                            </td>
+                            <td><?=  ($jns['nomor_surat_keluar'] != null) ? $jns['kode_surat'].'/'.$jns['nomor_surat_keluar'] : '-'; ?>
+                            <td><?= ($jns['keterangan_surat_keluar'] != null) ? $jns['keterangan_surat_keluar'] : '-'; ?>
+                            </td>
+                            <td>
+                                <?php if($jns['status_detail_surat_keluar'] == '0'): ?>
+                                <span class="badge bg-danger">Blum dibaca</span>
+                                <?php else: ?>
+                                <span class="badge bg-success">Sudah dibaca</span>
+                                <?php endif; ?>
+                            </td>
                             <td>
                                 <div class="flex align-items-center list-user-action">
-                                    <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip"
-                                        data-bs-placement="top" title="Edit"
-                                        href="<?= base_url('Jenis_surat/edit/'.$jns['id_jenis_surat']); ?>">
+                                    <!-- detail -->
+                                    <a class="btn btn-sm btn-icon btn-info" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Detail"
+                                        href="<?= base_url('Surat/detail/'.$jns['id_detail_surat_keluar']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path
-                                                    d="M11.4925 2.78906H7.75349C4.67849 2.78906 2.75049 4.96606 2.75049 8.04806V16.3621C2.75049 19.4441 4.66949 21.6211 7.75349 21.6211H16.5775C19.6625 21.6211 21.5815 19.4441 21.5815 16.3621V12.3341"
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                    d="M15.1614 12.0531C15.1614 13.7991 13.7454 15.2141 11.9994 15.2141C10.2534 15.2141 8.83838 13.7991 8.83838 12.0531C8.83838 10.3061 10.2534 8.89111 11.9994 8.89111C13.7454 8.89111 15.1614 10.3061 15.1614 12.0531Z"
                                                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                                     stroke-linejoin="round"></path>
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M8.82812 10.921L16.3011 3.44799C17.2321 2.51799 18.7411 2.51799 19.6721 3.44799L20.8891 4.66499C21.8201 5.59599 21.8201 7.10599 20.8891 8.03599L13.3801 15.545C12.9731 15.952 12.4211 16.181 11.8451 16.181H8.09912L8.19312 12.401C8.20712 11.845 8.43412 11.315 8.82812 10.921Z"
+                                                    d="M11.998 19.355C15.806 19.355 19.289 16.617 21.25 12.053C19.289 7.48898 15.806 4.75098 11.998 4.75098H12.002C8.194 4.75098 4.711 7.48898 2.75 12.053C4.711 16.617 8.194 19.355 12.002 19.355H11.998Z"
                                                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                                     stroke-linejoin="round"></path>
-                                                <path d="M15.1655 4.60254L19.7315 9.16854" stroke="currentColor"
-                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                                </path>
                                             </svg>
                                         </span>
                                     </a>
-                                    <a class="btn btn-sm btn-icon btn-secondary" title="Copy" data-bs-toggle="modal"
-                                        href="#" data-bs-target="#copyModal<?= $jns['id_jenis_surat']; ?>">
+                                    <!-- preview -->
+                                    <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip"
+                                        data-bs-placement="top" title="Preview Surat"
+                                        href="<?= base_url('Surat/preview/'.$jns['id_detail_surat_keluar']); ?>"
+                                        target="_blank">
+
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
+                                                <mask maskUnits="userSpaceOnUse" x="3" y="0" width="18" height="24"
+                                                    fill="black">
+                                                    <rect fill="white" x="3" width="18" height="24"></rect>
+                                                    <path
+                                                        d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z">
+                                                    </path>
+                                                </mask>
+                                                <path
+                                                    d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z"
+                                                    stroke="#fff" stroke-width="2" mask="url(#path-1-outside-1)">
+                                                </path>
+                                                <mask mask-type="alpha" maskUnits="userSpaceOnUse" x="3" y="0"
+                                                    width="18" height="24">
+                                                    <mask mask-type="luminance" maskUnits="userSpaceOnUse" x="3" y="0"
+                                                        width="18" height="24" fill="black">
+                                                        <rect fill="white" x="3" width="18" height="24"></rect>
+                                                        <path
+                                                            d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z">
+                                                        </path>
+                                                    </mask>
+                                                    <path
+                                                        d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z"
+                                                        fill="#fff"></path>
+                                                    <path
+                                                        d="M4 3.00004C4 1.89547 4.89543 1.00004 6 1.00004H13.0801C13.664 1.00004 14.2187 1.25517 14.5986 1.69845L19.5185 7.43826C19.8292 7.80075 20 8.26243 20 8.73985V21C20 22.1046 19.1046 23 18 23H6C4.89543 23 4 22.1046 4 21V3.00004Z"
+                                                        stroke="#fff" stroke-width="2" mask="url(#path-2-outside-2)">
+                                                    </path>
+                                                </mask>
+                                                <path d="M14 6V0L21 8H16C14.8954 8 14 7.10457 14 6Z" stroke="#fff">
+                                                </path>
+                                                <mask fill="white">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M7 14.5945L8.99429 12.1334C9.12172 11.9761 9.34898 11.9549 9.50189 12.0859C9.6548 12.217 9.67546 12.4507 9.54804 12.6079L7.93828 14.5945L9.54804 16.581C9.67546 16.7383 9.6548 16.972 9.50189 17.103C9.34898 17.2341 9.12172 17.2128 8.99429 17.0556L7 14.5945Z">
+                                                    </path>
+                                                </mask>
                                                 <path d="M15.7161 16.2234H8.49609" stroke="currentColor"
                                                     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                                 </path>
@@ -114,16 +157,13 @@
                                                 <path d="M11.2521 7.86011H8.49707" stroke="currentColor"
                                                     stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                                                 </path>
-                                                <path fill-rule="evenodd" clip-rule="evenodd"
-                                                    d="M15.909 2.74976C15.909 2.74976 8.23198 2.75376 8.21998 2.75376C5.45998 2.77076 3.75098 4.58676 3.75098 7.35676V16.5528C3.75098 19.3368 5.47298 21.1598 8.25698 21.1598C8.25698 21.1598 15.933 21.1568 15.946 21.1568C18.706 21.1398 20.416 19.3228 20.416 16.5528V7.35676C20.416 4.57276 18.693 2.74976 15.909 2.74976Z"
-                                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                                    stroke-linejoin="round"></path>
+
                                             </svg>
                                         </span>
                                     </a>
                                     <!-- <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Delete"
-                                        href="<?= base_url('Jenis_surat/delete/'.$jns['id_jenis_surat']); ?>">
+                                        href="<?= base_url('Surat_keluar/delete/'.$jns['id_detail_surat_keluar']); ?>">
                                         <span class="btn-inner">
                                             <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
@@ -150,26 +190,4 @@
         </div>
     </div>
 </div>
-<!-- modal copyy template -->
-<?php 
-foreach($jenis_surat as $jns): ?>
-<div class="modal fade" id="copyModal<?= $jns['id_jenis_surat']; ?>" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Copy Template</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Apakah anda yakin ingin menyalin template ini?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="<?= base_url('Jenis_surat/copy/'.$jns['id_jenis_surat']); ?>" class="btn btn-primary">Copy</a>
-            </div>
-        </div>
-    </div>
-</div>
-<?php endforeach; ?>
 <?= $this->endSection('konten'); ?>

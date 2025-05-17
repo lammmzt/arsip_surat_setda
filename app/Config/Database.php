@@ -28,13 +28,13 @@ class Database extends Config
         'DSN'          => '',
         'hostname'     => 'localhost',
 
-        // 'username'     => 'root',
-        // 'password'     => '',
-        // 'database'     => 'arsip_surat',
-
-        'username'     => 'arsip-surat',
-        'password'     => 'arsip-surat321',
+        'username'     => 'root',
+        'password'     => '',
         'database'     => 'arsip_surat',
+
+        // 'username'     => 'arsip-surat',
+        // 'password'     => 'arsip-surat321',
+        // 'database'     => 'arsip_surat',
 
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',

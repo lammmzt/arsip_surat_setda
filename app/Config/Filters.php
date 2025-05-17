@@ -88,7 +88,7 @@ class Filters extends BaseFilters
                 '/', 'Auth/logout', 'Auth/login','Data_instansi', 'Data_instansi/*', 'External', 'External/*', 'Home', 'Home/*', 'Jenis_surat', 'Jenis_surat/*', 'Pegawai', 'Pegawai/*', 'Surat_masuk', 'Surat_masuk/*', 'Surat_keluar', 'Surat_keluar/*', 'Users', 'Users/*', 
             ]],
             'filterKadin' => ['except' => [ 
-                '/', 'Auth/logout', 'Auth/login', 'Home', 'Home/*', 'Jenis_surat', 'Jenis_surat/*', 'Surat_masuk', 'Surat_masuk/*', 'Surat_keluar', 'Surat_keluar/*', 'Users', 'Users/*', 
+                '/', 'Auth/logout', 'Auth/login', 'Home', 'Home/*', 'Jenis_surat', 'Jenis_surat/*', 'Surat_masuk', 'Surat_masuk/*', 'Surat_keluar', 'Surat_keluar/*', 'Users', 'Users/*', 'Surat', 'Surat/*', 
             ]],
             // 'secureheaders',
         ],

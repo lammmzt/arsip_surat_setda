@@ -6,7 +6,7 @@
             <div class="header-title">
                 <h4 class="card-title">Detail Surat Keluar</h4>
             </div>
-            <a href="<?= base_url('Surat_keluar'); ?>" class="btn btn-secondary btn-sm">
+            <a href="<?= base_url('Surat'); ?>" class="btn btn-secondary btn-sm">
                 <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4.25 12.2744L19.25 12.2744" stroke="currentColor" stroke-width="1.5"
                         stroke-linecap="round" stroke-linejoin="round"></path>
@@ -55,22 +55,7 @@
                 <?php endif; ?>
             </div>
             <div class="mt-2 mx-3">
-                <!-- <div class="row mb-3">
-                    <form action="<?= base_url('Surat_keluar/tambah'); ?>" method="post" enctype="multipart/form-data"
-                        class="needs-validation" novalidate id="form_filter">
-                        <div class="col-md-6">
-                            <label for="id_jenis_surat" class="form-label">Jenis Surat</label>
-                            <select class="form-select select2" id="id_jenis_surat" name="id_jenis_surat" required
-                                style="width: 100%;">
-                                <option selected>Pilih Jenis Surat</option>
-                                <?php foreach($jenis_surat as $js): ?>
-                                <option value="<?= $js['id_jenis_surat']; ?>" <?= $id_jenis_surat == $js['id_jenis_surat'] ?
-                                    'selected' : ''; ?>><?= $js['nama_jenis_surat']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </form>
-                </div> -->
+
 
                 <input type="hidden" name="id_surat_keluar" value="<?= $surat_keluar['id_surat_keluar']; ?>"
                     id="id_surat_keluar">
@@ -169,158 +154,11 @@
                         </div>
                     </div>
                 </div>
-
-
-                <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
-                <!-- acordion -->
-                <div class="accordion accordion-flush bg-white" id="accordionExample">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <h5 class="card-title">Penerima Surat</h5>
-                            </button>
-                        </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse bg-white" aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body bg-white">
-
-                                <!-- table -->
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col" width="5%" class="text-center">#</th>
-                                                <th scope="col">Penerima</th>
-                                                <th scope="col">Status</th>
-                                                <th scope="col">Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="penerima">
-                                            <?php 
-                                            if($detail_surat_keluar):
-                                                $no = 1;
-                                                foreach($detail_surat_keluar as $row): ?>
-                                            <tr>
-                                                <th scope="row" class="text-center"><?= $no++; ?></th>
-                                                <td><?= $row['nama_user']; ?></td>
-                                                <td>
-                                                    <?php if($row['status_detail_surat_keluar'] == '1'): ?>
-                                                    <span class="badge bg-success">Dibaca</span>
-                                                    <?php else: ?>
-                                                    <span class="badge bg-danger">Belum Dibaca</span>
-                                                    <?php endif; ?>
-
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#detailDisposisi<?= $row['id_detail_surat_keluar']; ?>">
-                                                        Detail
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <?php endforeach; ?>
-                                            <?php else: ?>
-                                            <tr class="text-center" id="belum_penerima">
-                                                <td colspan="4" class="text-center">Belum ada penerima</td>
-                                            </tr>
-                                            <?php endif; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
         </div>
     </div>
 </div>
 
-<?php if($detail_surat_keluar):
-    foreach($detail_surat_keluar as $row): ?>
-<div class="modal fade" id="detailDisposisi<?= $row['id_detail_surat_keluar']; ?>" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog  modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Detail Disposisi</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label for="id_detail_surat_keluar" class="form-label">No. Surat</label>
-                    <input type="text" class="form-control" id="id_detail_surat_keluar" name="id_detail_surat_keluar"
-                        value="<?= $row['kode_surat'].'/'.$row['nomor_surat_keluar']; ?>" placeholder="No Surat"
-                        readonly>
-                </div>
-                <div class="accordion accordion-flush bg-white" id="detailDisposisi">
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#detailDisposisibody" aria-expanded="true"
-                                aria-controls="detailDisposisibody">
-                                <h5 class="card-title">Timeline</h5>
-                            </button>
-                        </h2>
-                        <div id="detailDisposisibody" class="accordion-collapse collapse bg-white"
-                            aria-labelledby="headingOne" data-bs-parent="#detailDisposisi">
-                            <div class="accordion-body bg-white">
-                                <div
-                                    class="iq-timeline m-0 d-flex align-items-center justify-content-between position-relative">
-                                    <ul class="list-inline p-0 m-0 w-100">
-                                        <li>
-                                            <div class="time">
-                                                <span><?= date('Y-m-d', strtotime($row['tanggal_surat_keluar'])); ?></span>
-                                            </div>
-                                            <div class="content">
-                                                <div class="timeline-dots new-timeline-dots"></div>
-                                                <h6 class="mb-1"><?= $surat_keluar['nama_user']; ?></h6>
-                                                <div class="d-inline-block w-100">
-                                                    <p style="text-align: justify;">
-                                                        <?= $row['keterangan_surat_keluar']; ?> dikirim ke
-                                                        <?= $row['nama_user']; ?>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <?php if($row['status_detail_surat_keluar'] == '1'): ?>
-                                        <li>
-                                            <div class="time bg-success">
-                                                <span><?= date('Y-m-d', strtotime($row['updated_at'])); ?></span>
-                                            </div>
-                                            <div class="content">
-                                                <div class="timeline-dots new-timeline-dots border-success"></div>
-                                                <h6 class="mb-1"><?= $row['nama_user']; ?></h6>
-                                                <div class="d-inline-block w-100">
-                                                    <p style="text-align: justify;">
-                                                        <?= $row['keterangan_detail_surat_keluar']; ?> dibaca oleh
-                                                        <?= $row['nama_user']; ?>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <?php endif; ?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-            </div>
-        </div>
-    </div>
-</div>
-<?php 
-endforeach; 
-endif;
-?>
 <?= $this->endSection('konten'); ?>
 <?= $this->section('script'); ?>
 <script style="text/javascript">

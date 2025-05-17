@@ -12,7 +12,7 @@ class Pegawai extends BaseController
         $PegawaiModel = new pegawaiModel(); // membuat objek model pegawai
         $data['title'] = 'Pegawai'; // set judul halaman
         $data['active'] = 'Pegawai';    // set active menu
-        $data['pegawai'] = $PegawaiModel->findAll(); // mengambil semua data pegawai
+        $data['pegawai'] = $PegawaiModel->getPegawai(); // mengambil semua data pegawai
         $data['validation'] = \Config\Services::validation(); // set validasi
         
         return view('Admin/Pegawai/index', $data); // tampilkan view pegawai
@@ -97,6 +97,7 @@ class Pegawai extends BaseController
     public function update() // mengupdate data pegawai
     {
         $model = new pegawaiModel(); // membuat objek model pegawai
+        $userModel = new usersModel(); // membuat objek model user
         $id = $this->request->getPost('id_pegawai'); // mengambil data id pegawai
         $validation = \Config\Services::validation(); // membuat objek validasi
         $validation->setRules([ // set rules validasi
@@ -120,7 +121,6 @@ class Pegawai extends BaseController
                 return redirect()->to('/Pegawai')->withInput(); // redirect ke halaman pegawai
             }
             // update username 
-            $userModel = new usersModel(); // membuat objek model user
             $data_user = $userModel->where('id_user', $data_pegawai['id_user'])->first(); // mengambil data user berdasarkan id
             $check_usernames = $userModel->where('username', $nip)  ->countAllResults(); // cek username sudah digunakan
             if ($check_usernames > 0) { // jika username sudah digunakan
@@ -131,7 +131,13 @@ class Pegawai extends BaseController
             $data_user['nama_user'] = ucwords($this->request->getPost('nama_pegawai')); // set nama user
             $userModel->update($data_pegawai['id_user'], $data_user);   // update data user
         }
+        $detail_user = $userModel->where('id_user', $data_pegawai['id_user'])->first(); // mengambil data user berdasarkan id
         // update nama pegawai
+        if($this->request->getPost('password') != null || $this->request->getPost('password') != ''){ // jika password tidak kosong
+            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT); // set password dengan password baru
+        }else{ // jika password kosong
+            $password = $detail_user['password']; // set password dengan password sebelumnya
+        }
         $data_user['nama_user'] = ucwords($this->request->getPost('nama_pegawai')); // set nama user
         $data_user['status_user'] = $this->request->getPost('status_pegawai'); // set status user
         $userModel->update($data_pegawai['id_user'], $data_user); // update data user
@@ -145,6 +151,7 @@ class Pegawai extends BaseController
             'jabatan_pegawai' => $this->request->getPost('jabatan_pegawai'),
             'updated_at' => date('Y-m-d H:i:s'),
             'status_pegawai' => $this->request->getPost('status_pegawai'),
+            'password' => $password,
             'updated_at' => date('Y-m-d H:i:s')
         ];  
         $model->update($id, $data); // update data pegawai

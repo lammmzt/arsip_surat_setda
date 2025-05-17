@@ -24,6 +24,15 @@ class pegawaiModel extends Model
                 ->first();
         }   
     }
+
+    public function getPegwaiByIdUser($id_user)
+    {
+        return $this
+            ->select('pegawai.*, users.username')
+            ->join('users', 'users.id_user = pegawai.id_user')
+            ->where(['pegawai.id_user' => $id_user])
+            ->first();
+    }
 }
 
 ?>

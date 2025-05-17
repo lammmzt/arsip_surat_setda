@@ -12,7 +12,7 @@ class Users extends BaseController
         if(session()->get('role') == 'Kadin') { // jika session role kosong
             $data_user = $usersModel->like('role', 'Kadin')->orlike('role', 'Admin')->findAll(); // mengambil data users
         }else {
-            $data_user = $usersModel->where('role !=', 'Kadin')->orwhere('role !=', 'Admin')->findAll(); // mengambil data users
+            $data_user = $usersModel->like('role', 'Pegawai')->orlike('role', 'External')->findAll(); // mengambil data users
         }
         $data['title'] = 'Users'; // set judul halaman
         $data['active'] = 'Users'; // set active menu

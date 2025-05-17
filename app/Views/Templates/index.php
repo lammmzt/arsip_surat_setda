@@ -2,6 +2,7 @@
     use App\Models\Data_instansiModel;
     $instansi = new Data_instansiModel();
     $data_instansi = $instansi->first();
+    
 ?>
 <!doctype html>
 <html lang="en" dir="ltr">

@@ -12,7 +12,7 @@ class External extends BaseController
         $externalModel = new externalModel(); // membuat objek model external
         $data['title'] = 'external'; // set judul halaman
         $data['active'] = 'external';    // set active menu
-        $data['external'] = $externalModel->findAll(); // mengambil semua data external
+        $data['external'] = $externalModel->getexternal(); // mengambil semua data external
         $data['validation'] = \Config\Services::validation(); // set validasi
         
         return view('Admin/External/index', $data); // tampilkan view external
@@ -102,6 +102,13 @@ class External extends BaseController
             }
         }
         $userModel = new usersModel(); // membuat objek model user
+        $detail_user = $userModel->where('id_user', $data_external['id_user'])->first(); // mengambil data user berdasarkan id
+        if ($this->request->getPost('password') != '' || $this->request->getPost('password') != null) { // jika password diubah
+            $password = password_hash($this->request->getPost('password'), PASSWORD_DEFAULT); // hash password
+        }else { // jika password tidak diubah
+            $password = $detail_user['password']; // ambil password lama
+        }
+        
         $data_user['status_user'] = $this->request->getPost('status_external'); // set status user
         $userModel->update($data_external['id_user'], $data_user); // update data user
         $data = [   // set data external
@@ -112,6 +119,7 @@ class External extends BaseController
             'no_tlp_external' => $this->request->getPost('no_tlp_external'),
             'updated_at' => date('Y-m-d H:i:s'),
             'status_external' => $this->request->getPost('status_external'),
+            'password' => $password,
             'updated_at' => date('Y-m-d H:i:s')
         ];  
         $model->update($id, $data); // update data external

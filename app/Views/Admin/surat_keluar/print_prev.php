@@ -4,9 +4,9 @@ var str = document.body.innerHTML;
 var detailDataSuratKeluar = <?= json_encode($detail_surat_keluar); ?>;
 
 
-console.log(detailDataSuratKeluar);
+// console.log(detailDataSuratKeluar);
 
-if (detailDataSuratKeluar != null) {
+if (detailDataSuratKeluar != null && detailDataSuratKeluar.length > 0) {
     // add data nama_user to {}
     if (detailDataSuratKeluar.length > 1) {
         // add ul list angka 1. nama_user, 2. nama_user dst

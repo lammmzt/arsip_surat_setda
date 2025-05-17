@@ -110,7 +110,7 @@
                                             </svg>
                                         </span>
                                     </a>
-                                    <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
+                                    <!-- <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Delete"
                                         href="<?= base_url('Users/delete/'.$user['id_user']); ?>">
                                         <span class="btn-inner">
@@ -128,7 +128,7 @@
                                                     stroke-linejoin="round"></path>
                                             </svg>
                                         </span>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </td>
                         </tr>

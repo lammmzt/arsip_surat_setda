@@ -62,6 +62,7 @@
                     <thead>
                         <tr class="ligth">
                             <th>#</th>
+                            <th>Username</th>
                             <th>Nama Pegawai</th>
                             <th>NIP</th>
                             <th>Jabatan</th>
@@ -76,6 +77,7 @@
                         <?php foreach($pegawai as $pgw): ?>
                         <tr>
                             <td><?= $no++; ?></td>
+                            <td><?= $pgw['username']; ?></td>
                             <td><?= $pgw['nama_pegawai']; ?></td>
                             <td><?= $pgw['nip_pegawai']; ?></td>
                             <td><?= $pgw['jabatan_pegawai']; ?></td>
@@ -107,7 +109,7 @@
                                             </svg>
                                         </span>
                                     </a>
-                                    <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
+                                    <!-- <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Delete"
                                         href="<?= base_url('Pegawai/delete/'.$pgw['id_pegawai']); ?>">
                                         <span class="btn-inner">
@@ -125,7 +127,7 @@
                                                     stroke-linejoin="round"></path>
                                             </svg>
                                         </span>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </td>
                         </tr>
@@ -222,6 +224,11 @@
                         <div class="invalid-feedback">
                             <?= $validation->getError('nip_pegawai'); ?>
                         </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for=" password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                            value="<?= old('password'); ?>">
                     </div>
                     <div class="form-group mb-3">
                         <label for="jabatan_pegawai" class="form-label">Jabatan</label>
