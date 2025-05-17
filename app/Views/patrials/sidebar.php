@@ -6,7 +6,7 @@
     use App\Models\pegawaiModel;
     use App\Models\disposisiModel;
     $instansi = new Data_instansiModel();
-    $suratKeluarModel = new SuratKeluarModel();
+    $suratKeluarModel = new suratKeluarModel();
     $suratMasukModel = new SuratMasukModel();
     $pegawaiModel = new pegawaiModel();
     $disposisiModel = new disposisiModel();
