@@ -1,13 +1,13 @@
 <?php 
     use App\Models\Data_instansiModel;
     use App\Models\suratKeluarModel;
-    use App\Models\SuratMasukModel;
+    use App\Models\suratMasukModel;
     use App\Models\detailSuratKeluarModel;
     use App\Models\pegawaiModel;
     use App\Models\disposisiModel;
     $instansi = new Data_instansiModel();
     $suratKeluarModel = new suratKeluarModel();
-    $suratMasukModel = new SuratMasukModel();
+    $suratMasukModel = new suratMasukModel();
     $pegawaiModel = new pegawaiModel();
     $disposisiModel = new disposisiModel();
     $detailSuratKeluarModel = new detailSuratKeluarModel();
