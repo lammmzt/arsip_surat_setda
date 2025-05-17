@@ -95,7 +95,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-12 col-lg-8">
+<!-- <div class="col-md-12 col-lg-8">
     <div class="row">
         <div class="col-md-12">
             <div class="card" data-aos="fade-up" data-aos-delay="800">
@@ -571,5 +571,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <?= $this->endSection('konten'); ?>
