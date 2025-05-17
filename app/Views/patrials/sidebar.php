@@ -1,6 +1,6 @@
 <?php 
     use App\Models\Data_instansiModel;
-    use App\Models\SuratKeluarModel;
+    use App\Models\suratKeluarModel;
     use App\Models\SuratMasukModel;
     use App\Models\detailSuratKeluarModel;
     use App\Models\pegawaiModel;
