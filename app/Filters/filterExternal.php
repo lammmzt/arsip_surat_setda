@@ -6,7 +6,7 @@ use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class filterPegawai implements FilterInterface
+class filterExternal implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -17,7 +17,7 @@ class filterPegawai implements FilterInterface
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        if (session()->get('role') == 'Pegawai') {
+        if (session()->get('role') == 'External') {
             return redirect()->to('/');
         }
     }

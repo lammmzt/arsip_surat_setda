@@ -11,6 +11,14 @@
     $pegawaiModel = new pegawaiModel();
     $disposisiModel = new disposisiModel();
     $detailSuratKeluarModel = new detailSuratKeluarModel();
+    $data_pegawai = $pegawaiModel->getPegwaiByIdUser(session()->get('id_user')); // mengambil data pegawai berdasarkan id user
+    if($data_pegawai != null) { // jika data pegawai tidak kosong
+        $id_pegawai = $data_pegawai['id_pegawai']; // set id pegawai
+    } else {
+        $id_pegawai = 0; // set id pegawai 0
+    }
+    $jml_disposisi = $disposisiModel->getDisposisiByIdPegawai($id_pegawai)->where('disposisi.status_disposisi', '0')->countAllResults(); // menghitung jumlah disposisi
+   
     $data_instansi = $instansi->first();
     if(session()->get('role') == 'Admin' ) {
         $jml_surat_keluar = $suratKeluarModel->getSuratkeluar()->where('surat_keluar.status_surat_keluar !=', '3')->countAllResults(); // menghitung jumlah surat keluar
@@ -424,7 +432,17 @@
                                     </svg>
                                 </i>
                                 <i class="sidenav-mini-icon"></i>
-                                <span class="item-name">Disposisi</span>
+                                <span class="item-name">Disposisi
+                                    <?php 
+                                if($jml_disposisi > 0) :
+                                ?>
+                                    <span class="badge bg-danger item-name">
+                                        <?= $jml_disposisi; ?>
+                                    </span>
+                                    <?php
+                                endif;
+                                ?>
+                                </span>
                             </a>
                         </li>
                         <?php
