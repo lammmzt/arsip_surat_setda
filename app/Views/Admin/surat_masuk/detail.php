@@ -215,7 +215,7 @@
                                     <ul class="list-inline p-0 m-0 w-100">
                                         <li>
                                             <div class="time">
-                                                <span><?= date('Y-m-d', strtotime($row['created_at'])); ?></span>
+                                                <span><?= date('Y-m-d', strtotime($row['disposisi.created_at'])); ?></span>
                                             </div>
                                             <div class="content">
                                                 <div class="timeline-dots new-timeline-dots"></div>
@@ -233,7 +233,7 @@
                                         <?php if($row['status_disposisi'] == '1'): ?>
                                         <li>
                                             <div class="time bg-success">
-                                                <span><?= date('Y-m-d', strtotime($row['updated_at'])); ?></span>
+                                                <span><?= date('Y-m-d', strtotime($row['disposisi.updated_at'])); ?></span>
                                             </div>
                                             <div class="content">
                                                 <div class="timeline-dots new-timeline-dots border-success"></div>
