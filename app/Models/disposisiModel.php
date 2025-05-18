@@ -24,7 +24,7 @@ class disposisiModel extends Model
     public function getDisposisiById($id_disposisi)
     {
         return $this
-            ->select('disposisi.*, surat_masuk.*, pegawai.nama_pegawai, pegawai.id_pegawai')
+            ->select('disposisi.*, surat_masuk.*, pegawai.nama_pegawai, pegawai.id_pegawai, disposisi.created_at as tgl_disposisi, disposisi.updated_at as tgl_update_disposisi')
             ->join('pegawai', 'pegawai.id_pegawai = disposisi.id_pegawai')
             ->join('surat_masuk', 'surat_masuk.id_surat_masuk = disposisi.id_surat_masuk')
             ->where('disposisi.id_disposisi', $id_disposisi)
