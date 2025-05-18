@@ -275,8 +275,7 @@
                          </div>
                      </a>
                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                         <li><a class="dropdown-item"
-                                 href="<?= base_url('Assets/hope-ui-html-2.0/html/'); ?>/dashboard/app/user-profile.html">Profile</a>
+                         <li><a class="dropdown-item" href="<?= base_url('/'); ?>">Profile</a>
                          </li>
                          <!-- <li><a class="dropdown-item"
                                  href="<?= base_url('Assets/hope-ui-html-2.0/html/'); ?>/dashboard/app/user-privacy-setting.html">Privacy
