@@ -127,7 +127,8 @@
                                                 <option selected>Pilih Pegawai</option>
                                                 <?php foreach($pegawai as $p): ?>
                                                 <option value="<?= $p['id_pegawai']; ?>" <?= old('pegawai_disposisi') == $p['id_pegawai'] ?
-                                    'selected' : ''; ?>><?= $p['nama_pegawai']; ?></option>
+                                    'selected' : ''; ?>><?= $p['nama_pegawai']; ?>(<?= $p['jabatan_pegawai']; ?>)
+                                                </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>

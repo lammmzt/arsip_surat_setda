@@ -131,7 +131,8 @@
                                                 <option selected>Pilih Pegawai</option>
                                                 <?php foreach($pegawai as $p): ?>
                                                 <option value="<?= $p['id_pegawai']; ?>" <?= old('pegawai_disposisi') == $p['id_pegawai'] ?
-                                    'selected' : ''; ?>><?= $p['nama_pegawai']; ?></option>
+                                    'selected' : ''; ?>><?= $p['nama_pegawai']; ?> (<?= $p['jabatan_pegawai']; ?>)
+                                                </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -189,7 +190,8 @@ $(document).ready(function() {
     for (var i = 0; i < data_disposisi.length; i++) {
         var data = {
             id_pegawai: data_disposisi[i].id_pegawai,
-            nama_pegawai: data_disposisi[i].nama_pegawai,
+            nama_pegawai: data_disposisi[i].nama_pegawai.
+            ' (' + data_disposisi[i].jabatan_pegawai + ')',
             ket_disposisi: data_disposisi[i].ket_disposisi
         };
         data_disposisi_pegawai.push(data);
