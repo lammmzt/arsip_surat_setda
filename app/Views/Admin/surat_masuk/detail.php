@@ -141,7 +141,8 @@
 
                                                 <tr>
                                                     <td class="text-center"><?= $no++; ?></td>
-                                                    <td><?= $row['nama_pegawai']; ?></td>
+                                                    <td><?= $row['nama_pegawai']; ?>(<?= $row['jabatan_pegawai']; ?>)
+                                                    </td>
                                                     <td><?= $row['ket_disposisi']; ?></td>
                                                     <td>
                                                         <span
