@@ -68,9 +68,10 @@
                     <thead>
                         <tr class="ligth">
                             <th>#</th>
+                            <th>Nomor Surat</th>
+                            <th>Tanggal Surat</th>
                             <th>Pengirim</th>
                             <th>Perihal</th>
-                            <th>Kode</th>
                             <th>Ket</th>
                             <th style="min-width: 100px">Action</th>
                         </tr>
@@ -82,9 +83,10 @@
                         <?php foreach($surat_masuk as $jns): ?>
                         <tr>
                             <td><?= $no++; ?></td>
+                            <td><?= $jns['no_surat_masuk']; ?></td>
+                            <td><?= date('d-m-Y', strtotime($jns['tgl_surat_masuk'])); ?></td>
                             <td><?= $jns['pengirim_surat_masuk']; ?></td>
                             <td><?= $jns['perihal_surat_masuk']; ?></td>
-                            <td><?= $jns['no_surat_masuk']; ?></td>
                             <td><?= $jns['ket_surat_masuk']; ?></td>
                             <td>
                                 <div class="flex align-items-center list-user-action">

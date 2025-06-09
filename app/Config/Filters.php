@@ -85,10 +85,10 @@ class Filters extends BaseFilters
         ],
         'after' => [
             'filterAdmin' => ['except' => [ 
-                '/', 'Auth/logout', 'Auth/login','Data_instansi', 'Data_instansi/*', 'External', 'External/*', 'Home', 'Home/*', 'Jenis_surat', 'Jenis_surat/*', 'Pegawai', 'Pegawai/*', 'Surat_masuk', 'Surat_masuk/*', 'Surat_keluar', 'Surat_keluar/*', 'Users', 'Users/*', 
+                '/', 'Auth/logout', 'Auth/login','Data_instansi', 'Data_instansi/*', 'External', 'External/*', 'Home', 'Home/*', 'Jenis_surat', 'Jenis_surat/*', 'Pegawai', 'Pegawai/*', 'Surat_masuk', 'Surat_masuk/*', 'Surat_keluar', 'Surat_keluar/*', 'Users', 'Users/*', 'Laporan', 'Laporan/*', 
             ]],
             'filterKadin' => ['except' => [ 
-                '/', 'Auth/logout', 'Auth/login', 'Home', 'Home/*', 'Jenis_surat', 'Jenis_surat/*', 'Surat_masuk', 'Surat_masuk/*', 'Surat_keluar', 'Surat_keluar/*', 'Users', 'Users/*', 'Surat', 'Surat/*', 
+                '/', 'Auth/logout', 'Auth/login', 'Home', 'Home/*', 'Jenis_surat', 'Jenis_surat/*', 'Surat_masuk', 'Surat_masuk/*', 'Surat_keluar', 'Surat_keluar/*', 'Users', 'Users/*', 'Surat', 'Surat/*', 'Laporan', 'Laporan/*',
             ]],
             'filterPegawai' => ['except' => [ 
                 '/', 'Auth/logout', 'Auth/login', 'Home', 'Home/*', 'Surat', 'Surat/*', 'Disposisi', 'Disposisi/*',

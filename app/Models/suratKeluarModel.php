@@ -38,6 +38,19 @@ class suratKeluarModel extends Model
         ->orderBy('nomor_surat_keluar', 'DESC')
         ->first();
     }
+
+    public function getSuratByDateRange($startDate, $endDate)
+    {
+        return $this
+        ->select('surat_keluar.*, users.nama_user, jenis_surat.*')
+        ->join('jenis_surat', 'jenis_surat.id_jenis_surat = surat_keluar.id_jenis_surat')
+        ->join('users', 'users.id_user = surat_keluar.id_user')
+        ->where('surat_keluar.tanggal_surat_keluar >=', $startDate)
+        ->where('surat_keluar.tanggal_surat_keluar <=', $endDate)
+        ->where('surat_keluar.status_surat_keluar', '3') // hanya ambil surat keluar yang sudah diverifikasi
+        ->orderBy('surat_keluar.tanggal_surat_keluar', 'DESC')
+        ->findAll();
+    }
 }
 
 ?>
