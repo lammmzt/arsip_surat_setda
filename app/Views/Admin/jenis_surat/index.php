@@ -166,7 +166,8 @@ foreach($jenis_surat as $jns): ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="<?= base_url('Jenis_surat/copy/'.$jns['id_jenis_surat']); ?>" class="btn btn-primary">Copy</a>
+                <a href="<?= base_url('Jenis_surat/Duplicated/'.$jns['id_jenis_surat']); ?>"
+                    class="btn btn-primary">Copy</a>
             </div>
         </div>
     </div>

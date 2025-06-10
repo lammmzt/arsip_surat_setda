@@ -173,7 +173,7 @@
                         </div>
                     </div>
                     <div class="text-start mt-4">
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <!-- <button type="submit" class="btn btn-primary">Simpan</button> -->
                         <a href="<?= base_url('Surat_masuk'); ?>" class="btn btn-secondary">Kembali</a>
                     </div>
                 </form>
