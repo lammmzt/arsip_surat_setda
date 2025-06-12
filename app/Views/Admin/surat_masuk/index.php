@@ -70,6 +70,13 @@
                             <th>#</th>
                             <th>Nomor Surat</th>
                             <th>Tanggal Surat</th>
+                            <?php 
+                            if(session()->get('role') == 'Kadin') :
+                            ?>
+                            <th>Status</th>
+                            <?php 
+                            endif;
+                            ?>
                             <th>Pengirim</th>
                             <th>Perihal</th>
                             <th>Ket</th>
@@ -85,14 +92,27 @@
                             <td><?= $no++; ?></td>
                             <td><?= $jns['no_surat_masuk']; ?></td>
                             <td><?= date('d-m-Y', strtotime($jns['tgl_surat_masuk'])); ?></td>
+                            <?php
+                            if(session()->get('role') == 'Kadin') :
+                            ?>
+                            <td>
+                                <?php if($jns['status_surat_masuk'] == '0'): ?>
+                                <span class="badge bg-danger">Belum dibaca</span>
+                                <?php else: ?>
+                                <span class="badge bg-success">Sudah dibaca</span>
+                                <?php endif; ?>
+                            </td>
+                            <?php
+                            endif;
+                            ?>
                             <td><?= $jns['pengirim_surat_masuk']; ?></td>
                             <td><?= $jns['perihal_surat_masuk']; ?></td>
                             <td><?= $jns['ket_surat_masuk']; ?></td>
                             <td>
                                 <div class="flex align-items-center list-user-action">
                                     <?php 
-                                    if(session()->get('role') == 'Admin') :
-                                ?>
+                                        if(session()->get('role') == 'Admin') :
+                                    ?>
                                     <a class="btn btn-sm btn-icon btn-warning"
                                         href="<?= base_url('Surat_masuk/edit/'.$jns['id_surat_masuk']); ?>">
                                         <span class="btn-inner">

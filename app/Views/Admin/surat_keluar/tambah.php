@@ -68,11 +68,7 @@
                     class="needs-validation" novalidate>
                     <?= csrf_field(); ?>
                     <div class="row">
-                        <div class="col-md-6 mt-3">
-                            <label for="judul_surat_keluar" class="form-label">Judul Surat</label>
-                            <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
-                                value="<?= old('judul_surat_keluar'); ?>" required placeholder="Judul Surat">
-                        </div>
+
                         <?php 
                         if($dataDetailJenisSurat != null):
                             
@@ -81,7 +77,12 @@
                         <?php 
                         if($djs['tipe_referensi_jenis_surat'] == 'input'):
                         ?>
-                        <div class="col-md-6 mt-3">
+                        <div class="col-md-6 mt-2 mb-2">
+                            <label for="judul_surat_keluar" class="form-label">Judul Surat</label>
+                            <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
+                                value="<?= old('judul_surat_keluar'); ?>" required placeholder="Judul Surat">
+                        </div>
+                        <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
                                 <?= $djs['nama_referensi_jenis_surat']; ?></label>
                             <input type="text" class="form-control" id="<?= $djs['kode_referensi_jenis_surat']; ?>"
@@ -92,7 +93,7 @@
                         <?php
                         elseif($djs['tipe_referensi_jenis_surat'] == 'number'):
                         ?>
-                        <div class="col-md-6 mt-3">
+                        <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
                                 <?= $djs['nama_referensi_jenis_surat']; ?></label>
                             <input type="number" class="form-control" id="<?= $djs['kode_referensi_jenis_surat']; ?>"
@@ -103,7 +104,7 @@
                         <?php
                         elseif($djs['tipe_referensi_jenis_surat'] == 'textarea'):
                         ?>
-                        <div class="col-md-6 mt-3">
+                        <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
                                 <?= $djs['nama_referensi_jenis_surat']; ?></label>
                             <textarea class="form-control" id="<?= $djs['kode_referensi_jenis_surat']; ?>"
@@ -113,7 +114,7 @@
                         <?php
                         elseif($djs['tipe_referensi_jenis_surat'] == 'date'):
                         ?>
-                        <div class="col-md-6 mt-3">
+                        <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
                                 <?= $djs['nama_referensi_jenis_surat']; ?></label>
                             <input type="date" class="form-control" id="<?= $djs['kode_referensi_jenis_surat']; ?>"
@@ -124,7 +125,7 @@
                         <?php
                         elseif($djs['tipe_referensi_jenis_surat'] == 'datetime'):
                         ?>
-                        <div class="col-md-6 mt-3">
+                        <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
                                 <?= $djs['nama_referensi_jenis_surat']; ?></label>
                             <input type="datetime-local" class="form-control"
@@ -136,7 +137,7 @@
                         <?php
                         elseif($djs['tipe_referensi_jenis_surat'] == 'time'):
                         ?>
-                        <div class="col-md-6 mt-3">
+                        <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
                                 <?= $djs['nama_referensi_jenis_surat']; ?></label>
                             <input type="time" class="form-control" id="<?= $djs['kode_referensi_jenis_surat']; ?>"
@@ -147,7 +148,7 @@
                         <?php
                         elseif($djs['tipe_referensi_jenis_surat'] == 'ckeditor'):
                         ?>
-                        <div class="col-md-6 mt-3">
+                        <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
                                 <?= $djs['nama_referensi_jenis_surat']; ?></label>
                             <textarea class="form-control" id="<?= $djs['kode_referensi_jenis_surat']; ?>"
@@ -171,7 +172,7 @@
                             placeholder="Keterangan Surat"><?= old('keterangan_surat_keluar'); ?></textarea>
                     </div>
                     <input type="hidden" name="id_jenis_surat" value="<?= $id_jenis_surat; ?>">
-                    <div class="mt-3">
+                    <div class="mt-2 mb-2">
                         <label for="tipe_lampiran_surat_keluar" class="form-label">Lampiran</label>
                         <select class="form-select" id="tipe_lampiran_surat_keluar" name="tipe_lampiran_surat_keluar">
                             <option selected>Pilih Tipe File</option>
@@ -181,13 +182,13 @@
                             </option>
                         </select>
                     </div>
-                    <div class="mt-3" id="file_lampiran_container" style="display: none;">
+                    <div class="mt-2 mb-2" id="file_lampiran_container" style="display: none;">
                         <label for="file_lampiran" class="form-label">File Surat</label>
                         <input type="file" class="form-control" id="file_lampiran" name="file_lampiran"
                             value="<?= old('file_lampiran'); ?>" placeholder="File Surat">
                     </div>
                     <!-- preview  -->
-                    <div class="mt-3" id="preview" style="display: none;">
+                    <div class="mt-2 mb-2" id="preview" style="display: none;">
                         <label for="preview" class="form-label">Preview Lampiran</label>
                         <img src="" id="img-preview" class="img-fluid" alt="preview" style="display: none;">
                         <embed src="" id="pdf-preview" type="application/pdf" width="100%" height="600px"
@@ -209,7 +210,7 @@
                                 aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                 <div class="accordion-body bg-white">
                                     <div class="row mb-3">
-                                        <div class="col-md-3 mt-3">
+                                        <div class="col-md-3 mt-2 mb-2">
                                             <label for="jenis_penerima" class="form-label">Jenis Penerima</label>
                                             <select class="form-select" id="jenis_penerima" name="jenis_penerima"
                                                 required style="width: 100%;">
@@ -218,7 +219,7 @@
                                                 <option value="External">External</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6 mt-3">
+                                        <div class="col-md-6 mt-2 mb-2">
                                             <label for="id_penerima" class="form-label">Penerima</label>
                                             <select class="form-select select2" id="id_penerima" name="id_penerima"
                                                 required style="width: 100%;">
@@ -226,7 +227,7 @@
                                             </select>
                                         </div>
                                         <!-- button plus -->
-                                        <div class="col-md-3 mt-3 d-flex align-items-end">
+                                        <div class="col-md-3 mt-2 mb-2 d-flex align-items-end">
                                             <button type="button" class="btn btn-primary " id="tambahPenerima">
                                                 <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
                                                     xmlns="http://www.w3.org/2000/svg">

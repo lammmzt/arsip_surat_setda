@@ -175,7 +175,7 @@ class Surat_keluar extends BaseController
         $isian['nama_instansi'] = $dataInstansi['nama_instansi'];
         $isian['nama_kepala_instansi'] = $dataInstansi['nama_kepala_instansi'];
         $isian['nip_kepala_instansi'] = $dataInstansi['nip_kepala_instansi'];
-        $isian['ttd_kepala'] = '<img src="' . base_url('Assets/ttd_surat/coba_ttd.png') . '" width="150px">';
+        // $isian['ttd_kepala'] = '<img src="' . base_url('Assets/ttd_surat/coba_ttd.png') . '" width="150px">';
     
         // Ganti {placeholder} di template
         foreach ($isian as $key => $val) {
@@ -680,6 +680,7 @@ class Surat_keluar extends BaseController
         if($dataDetailSurat == null || $dataDetailSurat == ''){ // jika data detail surat keluar tidak ada
             return redirect()->to('Surat'); // redirect ke halaman surat keluar
         }
+        
         $data_surat_keluar = $suratKeluarModel->getSuratkeluar($dataDetailSurat['id_surat_keluar'])->first(); // mengambil data surat keluar berdasarkan id
         if($dataDetailSurat['status_detail_surat_keluar'] == '0'){ // jika status detail surat keluar 1
             $detailSuratKeluar->update($id, ['status_detail_surat_keluar' => '1', 'updated_at' => date('Y-m-d H:i:s')]); // update status detail surat keluar
@@ -742,6 +743,9 @@ class Surat_keluar extends BaseController
         $data_jenis_surat = $jenisSuratModel->find($id_jenis_surat); // mengambil data jenis surat keluar berdasarkan id
         $dataDetailJenisSurat = $detailJenisSuratModel->geDetailByJenisSurat($id_jenis_surat); // mengambil data detail jenis surat keluar berdasarkan id
         
+        if($dataDetailSurat['status_detail_surat_keluar'] == '0'){ // jika status detail surat keluar 1
+            $detailSuratKeluar->update($id, ['status_detail_surat_keluar' => '1', 'updated_at' => date('Y-m-d H:i:s')]); // update status detail surat keluar
+        }
     
         $dataInstansi = $dataInstansiModel->first();
     

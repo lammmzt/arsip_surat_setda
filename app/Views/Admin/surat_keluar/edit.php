@@ -327,9 +327,15 @@
                                 <option value="2" <?= $surat_keluar['status_surat_keluar'] == '2' ? 'selected' : ''; ?>>
                                     Persetujuan & TTD
                                 </option>
+                                <?php 
+                                if($surat_keluar['status_surat_keluar'] == '0'):
+                                ?>
                                 <option value="0" <?= $surat_keluar['status_surat_keluar'] == '0' ? 'selected' : ''; ?>>
                                     Revisi
                                 </option>
+                                <?php 
+                                endif;
+                                ?>
                             </select>
                         </div>
                         <div class="col-md-9 mt-3">

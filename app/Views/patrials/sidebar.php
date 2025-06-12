@@ -329,7 +329,28 @@
                                     </svg>
                                 </i>
                                 <i class="sidenav-mini-icon"></i>
-                                <span class="item-name">Surat Masuk</span>
+
+                                <?php 
+                                if(session()->get('role') == 'Kadin'):
+                                    
+                                ?>
+                                <span class="item-name">Surat masuk
+                                    <?php 
+                                if($jumlah_surat_masuk > 0) :
+                                ?>
+                                    <span class="badge bg-danger item-name">
+                                        <?= $jumlah_surat_masuk; ?>
+                                    </span>
+                                    <?php
+                                endif;
+                                else:
+                                ?>
+                                    <span class="item-name">Surat Masuk</span>
+                                    <?php
+                                endif;
+                                ?>
+
+                                </span>
                             </a>
                         </li>
                         <li class="nav-item">

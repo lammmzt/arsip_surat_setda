@@ -176,8 +176,25 @@ class Surat_masuk extends BaseController
         $model = new suratMasukModel(); // membuat objek model surat masuk
         $disposisiModel = new disposisiModel(); // membuat objek model disposisi
         $pegawaiModel = new pegawaiModel(); // membuat objek model pegawai
+        $data_surat_masuk = $model->find($id); // mengambil data surat masuk berdasarkan id
+        // dd($data_surat_masuk);
+        if($data_surat_masuk == null) { // jika data surat masuk tidak ada
+            session()->setFlashdata('errors', 'Data Surat Masuk tidak ditemukan'); // set flashdata error
+            return redirect()->to('/surat_masuk'); // redirect ke halaman surat masuk
+        }
+        
+        if(session()->get('role') == 'Kadin') { // jika role user dan data surat masuk tidak ada
+            if($data_surat_masuk['status_surat_masuk'] == '0') { // jika status surat masuk belum dibaca
+                // dd($data_surat_masuk);
+                $model->update($id, [ // update status surat masuk
+                    'status_surat_masuk' => '1', // set status surat masuk
+                    'updated_at' => date('Y-m-d H:i:s') // set tanggal diubah
+                ]);
+            }
+        }
+        
         $data['title'] = 'Edit Surat Masuk'; // set judul halaman
-        $data['surat_masuk'] = $model->find($id); // mengambil data surat masuk berdasarkan id
+        $data['surat_masuk'] = $data_surat_masuk;
         $data['pegawai'] = $pegawaiModel->where('status_pegawai', '1')->findAll(); // mengambil semua data pegawai yang statusnya aktif
         $data['disposisi'] = $disposisiModel->getDisposisiBySurat($id); // mengambil data disposisi berdasarkan id surat masuk
         $data['active'] = 'surat_masuk'; // set active menu

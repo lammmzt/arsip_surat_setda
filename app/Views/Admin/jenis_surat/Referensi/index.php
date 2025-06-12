@@ -76,8 +76,8 @@
                         <?php foreach($referensi as $rf): ?>
                         <tr>
                             <td><?= $no++; ?></td>
-                            <td><?= $rf['kode_referensi_jenis_surat']; ?></td>
                             <td><?= $rf['nama_referensi_jenis_surat']; ?></td>
+                            <td><?= $rf['kode_referensi_jenis_surat']; ?></td>
                             <td>
                                 <?php if($rf['tipe_referensi_jenis_surat'] != ''): ?>
                                 <?= $rf['tipe_referensi_jenis_surat']; ?>

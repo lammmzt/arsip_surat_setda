@@ -172,7 +172,7 @@
 
                 <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
                 <!-- acordion -->
-                <div class="accordion accordion-flush bg-white" id="accordionExample">
+                <!-- <div class="accordion accordion-flush bg-white" id="accordionExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button collapsed bg-white" type="button" data-bs-toggle="collapse"
@@ -183,8 +183,6 @@
                         <div id="collapseOne" class="accordion-collapse collapse bg-white" aria-labelledby="headingOne"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body bg-white">
-
-                                <!-- table -->
                                 <div class="table-responsive">
                                     <div class="table-responsive">
                                         <table class="table table-bordered table-striped">
@@ -226,8 +224,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4">
+                </div> -->
+                <!-- <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;" class="mt-4"> -->
                 <!-- kiri slect status kanan update -->
                 <form action="<?= base_url('Surat_keluar/aproveSurat'); ?>" method="post" enctype="multipart/form-data"
                     class="needs-validation" novalidate id="form_aprove">
