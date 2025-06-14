@@ -199,7 +199,7 @@ class Surat_masuk extends BaseController
         $data['disposisi'] = $disposisiModel->getDisposisiBySurat($id); // mengambil data disposisi berdasarkan id surat masuk
         $data['active'] = 'surat_masuk'; // set active menu
         $data['validation'] = \Config\Services::validation(); // set validasi
-        dd($data);
+        // dd($data);
         return view('Admin/surat_masuk/detail', $data); // tampilkan view edit surat masuk
     }
 
