@@ -51,7 +51,7 @@
             </div>
 
             <div class="table-responsive">
-                <table id="user-list-table" class="table table-striped data_tables" role="grid"
+                <table id="user-list-table" class="table table-striped data_tables py-2" role="grid"
                     data-bs-toggle="data-table">
                     <thead>
                         <tr class="ligth">

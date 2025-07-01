@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
+use App\Models\detailSuratKeluarModel;
+
+$detailSuratKeluarModel = new detailSuratKeluarModel();
+?>
 
 <head>
     <meta charset="UTF-8">
@@ -83,7 +88,7 @@
 
     /* media a4 */
     @page {
-        size: A4;
+        size: 297mm 210mm;
     }
     </style>
     <script>
@@ -120,15 +125,17 @@
                 <th>Judul</th>
                 <th style="text-align: center">Tanggal</th>
                 <th style="text-align: center">Nomor</th>
-                <th style="text-align: center">Pembuat</th>
                 <th>Keterangan</th>
+                <th style="text-align: center">Penerima</th>
             </tr>
         </thead>
         <tbody>
             <?php 
             $no = 1;
             ?>
-            <?php foreach($surat_keluar as $jns): ?>
+            <?php foreach($surat_keluar as $jns): 
+            $detail = $detailSuratKeluarModel->getDetailSuratKeluarByIdSuratKeluar($jns['id_surat_keluar']);
+            ?>
             <tr>
                 <td style="text-align: center"><?= $no++; ?></td>
                 <td><?= ($jns['judul_surat_keluar'] != null) ? $jns['judul_surat_keluar'] : '-'; ?></td>
@@ -138,8 +145,22 @@
                 <td style="text-align: center">
                     <?=  ($jns['nomor_surat_keluar'] != null) ? $jns['kode_surat'].'/'.$jns['nomor_surat_keluar'] : '-'; ?>
                 </td>
-                <td style="text-align: center"><?= $jns['nama_user']; ?></td>
                 <td><?= ($jns['keterangan_surat_keluar'] != null) ? $jns['keterangan_surat_keluar'] : '-'; ?>
+                <td>
+                    <?php if($detail): ?>
+                    <ul style="list-style-type: none; padding: 0; margin: 0;">
+                        <?php foreach($detail as $d): ?>
+                        <li style="margin-bottom: 5px;">
+                            <?= $d['nama_user']; ?>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php else: ?>
+                    <span class="text-muted ">Tidak ada tujuan</span>
+                    <?php endif; ?>
+                </td>
+
+
             </tr>
 
             <?php endforeach; ?>

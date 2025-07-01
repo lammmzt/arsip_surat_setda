@@ -14,6 +14,7 @@ class Users extends BaseController
         }else {
             $data_user = $usersModel->like('role', 'Pegawai')->orlike('role', 'External')->findAll(); // mengambil data users
         }
+        
         $data['title'] = 'Users'; // set judul halaman
         $data['active'] = 'Users'; // set active menu
         $data['users'] =  $data_user; // set data users

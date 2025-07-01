@@ -25,7 +25,7 @@ class External extends BaseController
         $validation = \Config\Services::validation(); // membuat objek validasi
         // dd($this->request->getPost());
         $validation->setRules([ // set rules validasi
-            'nama_external' => 'required',
+            'nama_external' => 'required|is_unique[external.nama_external]',
             'kota_external' => 'required',
             'alamat_external' => 'required',
             'kota_external' => 'required',
@@ -43,7 +43,16 @@ class External extends BaseController
             return redirect()->to('/External')->withInput(); // redirect ke halaman external
         }
         $id_user = Uuid::uuid4()->toString(); // generate id user
-        $username = $this->request->getPost('username'); // mengambil data username
+        $username = $this->request->getPost('username'); // mengambil data username 
+        if ($username == '') { // jika username kosong
+            $username = strtolower(str_replace(' ', '', $nama_external)); // set username menjadi nama external tanpa spasi
+        } else { // jika username diisi
+            $checkUsername = $userModel->where('username', $username)->countAllResults(); // cek username sudah digunakan
+            if ($checkUsername > 0) { // jika username sudah digunakan
+                session()->setFlashdata('errors', 'Username sudah digunakan'); // set flashdata error
+                return redirect()->to('/External')->withInput(); // redirect ke halaman external
+            }
+        }
         // save user
         $data_user = [ // set data user
             'id_user' => $id_user,
@@ -80,6 +89,18 @@ class External extends BaseController
         $model = new externalModel(); // membuat objek model external
         $id = $this->request->getPost('id_external'); // mengambil data id external
         $validation = \Config\Services::validation(); // membuat objek validasi
+        $dataExternal = $model->where('id_external', $id)->first(); // mengambil data external berdasarkan id
+        if (!$dataExternal) { // jika data external tidak ditemukan
+            session()->setFlashdata('errors', 'Data external tidak ditemukan'); // set flashdata error
+            return redirect()->to('/External'); // redirect ke halaman external
+        }
+        if($this->request->getPost('nama_external') != $dataExternal['nama_external'] ){ // jika nama external diubah
+            $checkNama = $model->where('nama_external', $this->request->getPost('nama_external'))->countAllResults(); // cek nama external sudah digunakan
+            if ($checkNama > 0) { // jika nama external sudah digunakan
+                session()->setFlashdata('errors', 'Nama external sudah digunakan'); // set flashdata error
+                return redirect()->to('/External')->withInput(); // redirect ke halaman external
+            }
+        }
         $validation->setRules([ // set rules validasi
             'nama_external' => 'required', // nama external wajib diisi
             'kota_external' => 'required',

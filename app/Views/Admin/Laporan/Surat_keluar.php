@@ -1,5 +1,10 @@
 <?= $this->extend('Templates/index') ?>
 <?= $this->section('konten') ?>
+<?php 
+use App\Models\detailSuratKeluarModel;
+
+$detailSuratKeluarModel = new detailSuratKeluarModel();
+?>
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
@@ -25,12 +30,18 @@
                     </form>
                 </div>
             </div>
+            <?php 
+            if($surat_keluar != null) :
+            ?>
             <div class="row m-2">
                 <div class="col-12">
                     <a href="<?= base_url('Laporan/cetakSuratKeluar/' . $tanggal_awal . '/' . $tanggal_akhir); ?>"
                         class="btn btn-primary mb-3" target="_blank">Cetak Laporan</a>
                 </div>
             </div>
+            <?php 
+            endif;
+            ?>
             <div class="bd-example mx-3">
                 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
                     <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -78,23 +89,40 @@
                             <th>Judul</th>
                             <th>Tanggal</th>
                             <th>Nomor</th>
-                            <th>Pembuat</th>
+                            <!-- <th>Pembuat</th> -->
                             <th>Keterangan</th>
+                            <th>Penerima</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
                         $no = 1;
                         ?>
-                        <?php foreach($surat_keluar as $jns): ?>
+                        <?php foreach($surat_keluar as $jns): 
+                        $detail = $detailSuratKeluarModel->getDetailSuratKeluarByIdSuratKeluar($jns['id_surat_keluar']);    
+                        ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td><?= ($jns['judul_surat_keluar'] != null) ? $jns['judul_surat_keluar'] : '-'; ?></td>
                             <td><?= ($jns['tanggal_surat_keluar'] != null) ? date('d-m-Y', strtotime($jns['tanggal_surat_keluar'])) : '-'; ?>
                             </td>
                             <td><?=  ($jns['nomor_surat_keluar'] != null) ? $jns['kode_surat'].'/'.$jns['nomor_surat_keluar'] : '-'; ?>
-                            <td><?= $jns['nama_user']; ?></td>
+
                             <td><?= ($jns['keterangan_surat_keluar'] != null) ? $jns['keterangan_surat_keluar'] : '-'; ?>
+
+                            <td>
+                                <?php if($detail): ?>
+                                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                                    <?php foreach($detail as $d): ?>
+                                    <li style="margin-bottom: 5px;">
+                                        <?= $d['nama_user']; ?>
+                                    </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <?php else: ?>
+                                <span class="text-muted ">-</span>
+                                <?php endif; ?>
+                            </td>
 
                         </tr>
                         <?php endforeach; ?>

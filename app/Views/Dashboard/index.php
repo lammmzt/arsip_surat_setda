@@ -1,5 +1,7 @@
 <?= $this->extend('Templates/index'); ?>
 <?= $this->section('konten'); ?>
+<?php 
+if(session()->get('role') == 'Admin'  || session()->get('role') == 'Kadin'): ?>
 <div class="col-md-12 col-lg-12">
     <div class="row row-cols-1">
         <div class="overflow-hidden d-slider1 ">
@@ -143,6 +145,9 @@
         </div>
     </div>
 </div>
+<?php else: ?>
+
+<?php endif; ?>
 <?= $this->endSection('konten'); ?>
 <?= $this->section('script'); ?>
 <script>

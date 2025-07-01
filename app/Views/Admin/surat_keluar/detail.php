@@ -88,7 +88,7 @@
                     <div class="col-md-6 mt-3">
                         <label for="nomor_surat_keluar" class="form-label">No Surat</label>
                         <input type="text" class="form-control" id="nomor_surat_keluar" name="nomor_surat_keluar"
-                            value="<?= $surat_keluar['kode_surat'].'/'.$surat_keluar['nomor_surat_keluar']; ?>"
+                            value="<?=  ($surat_keluar['nomor_surat_keluar'] != null) ? $surat_keluar['kode_surat'].'/'.$surat_keluar['nomor_surat_keluar'] : '-'; ?>"
                             placeholder="No Surat" readonly>
                     </div>
                     <div class="col-md-6 mt-3">
@@ -251,11 +251,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <?php
+                if($row['nomor_surat_keluar'] != null): ?>
                 <div class="mb-3">
                     <label for="id_detail_surat_keluar" class="form-label">No. Surat</label>
                     <input type="text" class="form-control" id="id_detail_surat_keluar" name="id_detail_surat_keluar"
-                        value="<?= $row['kode_surat'].'/'.$row['nomor_surat_keluar']; ?>" placeholder="No Surat"
-                        readonly>
+                        value="<?=  ($surat_keluar['nomor_surat_keluar'] != null) ? $surat_keluar['kode_surat'].'/'.$surat_keluar['nomor_surat_keluar'] : '-'; ?>"
+                        placeholder="No Surat" readonly>
                 </div>
                 <div class="accordion accordion-flush bg-white" id="detailDisposisi">
                     <div class="accordion-item">
@@ -272,6 +274,8 @@
                                 <div
                                     class="iq-timeline m-0 d-flex align-items-center justify-content-between position-relative">
                                     <ul class="list-inline p-0 m-0 w-100">
+                                        <?php 
+                                        if($row['tanggal_surat_keluar'] != null): ?>
                                         <li>
                                             <div class="time">
                                                 <span><?= date('Y-m-d', strtotime($row['tanggal_surat_keluar'])); ?></span>
@@ -287,6 +291,7 @@
                                                 </div>
                                             </div>
                                         </li>
+                                        <?php endif; ?>
                                         <?php if($row['status_detail_surat_keluar'] == '1'): ?>
                                         <li>
                                             <div class="time bg-success">
@@ -310,6 +315,11 @@
                         </div>
                     </div>
                 </div>
+                <?php 
+                else:
+                    echo '<div class="alert-danger" role="alert">Proses Surat Belum Selsai</div>';
+                endif; 
+                ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>

@@ -22,7 +22,7 @@ class Jenis_surat extends BaseController
     public function tambah() // menampilkan form tambah jenis surat
     {
         $referensiJenisSuratModel = new referensiJenisSuratModel(); // membuat objek model referensi jenis surat
-        $data['referensi'] = $referensiJenisSuratModel->getRefereni(); // mengambil semua data referensi jenis surat
+        $data['referensi'] = $referensiJenisSuratModel->where('status_referensi_jenis_surat', '1')->findAll(); // mengambil semua data referensi jenis surat yang statusnya aktif
         $data['title'] = 'Tambah Jenis Surat'; // untuk set judul halaman
         $data['active'] = 'jenis_surat';  // set active menu
         $data['validation'] = \Config\Services::validation(); // set validasi
@@ -87,7 +87,7 @@ class Jenis_surat extends BaseController
             $data['detail_jenis_surat'] = [];
         }
         
-        $data['referensi_jenis_surat'] = $referensiJenisSuratModel->getRefereni(); // mengambil semua data referensi jenis surat
+        $data['referensi_jenis_surat'] = $referensiJenisSuratModel->where('status_referensi_jenis_surat', '1')->findAll(); // mengambil semua data referensi jenis surat yang statusnya aktif
         $data['jenis_surat'] = $model->find($id); // mengambil data jenis surat berdasarkan id
         $data['title'] = 'Edit Jenis Surat'; // set judul halaman
         $data['active'] = 'jenis_surat'; // set active menu
@@ -101,9 +101,20 @@ class Jenis_surat extends BaseController
         $id = $this->request->getPost('id_jenis_surat'); // mengambil data id jenis surat
         $modelDetailJenisurat = new detailJenisSuratModel(); // membuat objek model detail jenis surat
         $model = new jenisSuratModel(); // membuat objek model jenis surat
+        $data_jenis_surat = $model->find($id); // mengambil data jenis surat berdasarkan id
+        if ($data_jenis_surat == null) { // jika data jenis surat tidak ada
+            session()->setFlashdata('errors', 'Data Jenis Surat tidak ditemukan'); // set flashdata error
+            return redirect()->to('/Jenis_surat'); // redirect ke halaman jenis surat
+        }
+        // check jika nama jenis surat yang diinputkan sama dengan nama jenis surat yang sudah ada
+        if ($this->request->getPost('nama_jenis_surat') == $data_jenis_surat['nama_jenis_surat']) { // jika nama jenis surat sama
+            $rule_nama_jenis_surat = 'required'; // set rule nama jenis surat wajib diisi
+        } else {
+            $rule_nama_jenis_surat = 'required|is_unique[jenis_surat.nama_jenis_surat]'; // set rule nama jenis surat wajib diisi dan harus unik
+        }
         $validation = \Config\Services::validation(); // membuat objek validasi
         $validation->setRules([ // set rules validasi
-            'nama_jenis_surat' => 'required', // nama jenis surat wajib diisi
+            'nama_jenis_surat' => $rule_nama_jenis_surat, // nama jenis surat wajib diisi dan harus unik
             'kode_surat' => 'required', // kode surat wajib diisi
             'ket_jenis_surat' => 'required', // keterangan jenis surat wajib diisi
             'template_jenis_surat' => 'required' // template jenis surat wajib diisi
@@ -185,6 +196,23 @@ class Jenis_surat extends BaseController
         session()->setFlashdata('success', 'Data Jenis Surat berhasil dihapus'); // set flashdata success
         return redirect()->to('/Jenis_surat'); // redirect ke halaman jenis surat
     }
+
+    public function ubahStatus($id) // mengubah status data jenis surat
+    {
+        $model = new jenisSuratModel(); // membuat objek model jenis surat
+        $data_jenis_surat = $model->find($id); // mengambil data jenis surat berdasarkan id
+        if($data_jenis_surat == null){ // jika data jenis surat tidak ada
+            session()->setFlashdata('errors', 'Data Jenis Surat tidak ditemukan'); // set flashdata error
+            return redirect()->to('/Jenis_surat'); // redirect ke halaman jenis surat
+        }
+        $data = [ // set data jenis surat
+            'status_jenis_surat' => $data_jenis_surat['status_jenis_surat'] == '1' ? '0' : '1', // jika status jenis surat 1 maka ubah menjadi 0, jika tidak maka ubah menjadi 1
+            'updated_at' => date('Y-m-d H:i:s') // mengambil data template jenis surat
+        ];
+        $model->update($id, $data); // update data jenis surat
+        session()->setFlashdata('success', 'Data Jenis Surat berhasil diubah'); // set flashdata success
+        return redirect()->to('/Jenis_surat'); // redirect ke halaman jenis surat
+    }
     
     public function Referensi() // menampilkan data referensi jenis surat
     {
@@ -259,5 +287,35 @@ class Jenis_surat extends BaseController
         session()->setFlashdata('success', 'Data Referensi Jenis Surat berhasil diubah'); // set flashdata success
         return redirect()->to('/Jenis_surat/Referensi'); // redirect ke halaman referensi jenis surat
     }
+
+    public function deleteReferensi($id) // menghapus data referensi jenis surat
+    {
+        $model = new referensiJenisSuratModel(); // membuat objek model referensi jenis surat
+        $model->delete($id); // hapus data referensi jenis surat
+        session()->setFlashdata('success', 'Data Referensi Jenis Surat berhasil dihapus'); // set flashdata success
+        return redirect()->to('/Jenis_surat/Referensi'); // redirect ke halaman referensi jenis surat
+    }
+
+    public function ubahStatusReferensi($id) // menghapus data referensi jenis surat
+    {
+        $model = new referensiJenisSuratModel(); // membuat objek model referensi jenis surat
+        $data_referensi = $model->getRefereni($id); // mengambil data referensi jenis surat berdasarkan id
+        if($data_referensi == null){ // jika data referensi jenis surat tidak ada
+            session()->setFlashdata('errors', 'Data Referensi Jenis Surat tidak ditemukan'); // set flashdata error
+            return redirect()->to('/Jenis_surat/Referensi'); // redirect ke halaman referensi jenis surat
+        }
+        $data = [ // set data referensi jenis surat
+            'status_referensi_jenis_surat' => $data_referensi['status_referensi_jenis_surat'] == '1' ? '0' : '1', // jika status referensi jenis surat 1 maka ubah menjadi 0, jika tidak maka ubah menjadi 1
+            'updated_at' => date('Y-m-d H:i:s') // mengambil data template jenis surat
+        ];
+        // dd($data);
+        $model->update($id, $data); // update data referensi jenis surat
+         // dd($data);
+        session()->setFlashdata('success', 'Data Referensi Jenis Surat berhasil diubah'); // set flashdata success
+         // dd($data);
+        return redirect()->to('/Jenis_surat/Referensi'); // redirect ke halaman referensi jenis surat
+    }
+
+
 }
 ?>

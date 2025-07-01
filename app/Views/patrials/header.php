@@ -275,18 +275,17 @@
                          </div>
                      </a>
                      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                         <li><a class="dropdown-item" href="<?= base_url('/'); ?>">Profile</a>
-                         </li>
+                         <!-- <li><a class="dropdown-item" href="<?= base_url('/'); ?>">Profile</a>
+                         </li> -->
                          <!-- <li><a class="dropdown-item"
                                  href="<?= base_url('Assets/hope-ui-html-2.0/html/'); ?>/dashboard/app/user-privacy-setting.html">Privacy
                                  Setting</a></li>
                          <li> -->
-                         <hr class="dropdown-divider">
+                         <!-- <hr class="dropdown-divider"> -->
+                         <li><a class="dropdown-item" href="<?= base_url('Auth/logout'); ?>">Logout</a>
+                         </li>
+                     </ul>
                  </li>
-                 <li><a class="dropdown-item" href="<?= base_url('Auth/logout'); ?>">Logout</a>
-                 </li>
-             </ul>
-             </li>
              </ul>
          </div>
      </div>

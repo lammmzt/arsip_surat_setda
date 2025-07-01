@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php 
+use App\Models\disposisiModel;
+
+$disposisiModel = new disposisiModel();
+?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,7 +89,7 @@
 
     /* media a4 */
     @page {
-        size: A4;
+        size: 297mm 210mm;
     }
     </style>
     <script>
@@ -123,13 +129,16 @@
                 <th>Pengirim</th>
                 <th>Perihal</th>
                 <th>Ket</th>
+                <th style="text-align: center;">Disposisi</th>
             </tr>
         </thead>
         <tbody>
             <?php 
             $no = 1;
             ?>
-            <?php foreach($surat_masuk as $jns): ?>
+            <?php foreach($surat_masuk as $jns): 
+             $dataDisposisi = $disposisiModel->getDisposisiBySurat($jns['id_surat_masuk']); 
+            ?>
             <tr>
                 <td style="text-align: center;"><?= $no++; ?></td>
                 <td style="text-align: center;"><?= ($jns['no_surat_masuk'] != null) ? $jns['no_surat_masuk'] : '-'; ?>
@@ -143,6 +152,19 @@
                 <td><?= ($jns['pengirim_surat_masuk'] != null) ? $jns['pengirim_surat_masuk'] : '-'; ?></td>
                 <td><?= ($jns['perihal_surat_masuk'] != null) ? $jns['perihal_surat_masuk'] : '-'; ?></td>
                 <td><?= ($jns['ket_surat_masuk'] != null) ? $jns['ket_surat_masuk'] : '-'; ?></td>
+                <td>
+                    <?php if($dataDisposisi): ?>
+                    <ul class="" style="list-style-type: none; padding-left: 0;">
+                        <?php foreach($dataDisposisi as $disposisi): ?>
+                        <li>
+                            <?= $disposisi['nama_pegawai']; ?> (<?= $disposisi['jabatan_pegawai']; ?>)
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                    <?php else: ?>
+                    <span class="text-muted">Tidak ada disposisi</span>
+                    <?php endif; ?>
+                </td>
             </tr>
             <?php endforeach; ?>
 

@@ -56,7 +56,7 @@ class Surat_keluar extends BaseController
         $pegawaiModel = new jenissuratModel(); // membuat objek model jenis surat
         $data['title'] = 'Tambah Surat keluar'; // untuk set judul halaman
         $data['active'] = 'Surat_keluar'; // set active menu  
-        $data['jenis_surat'] = $jenisSuratModel->findAll(); // mengambil semua data jenis surat yang statusnya aktif
+        $data['jenis_surat'] = $jenisSuratModel->where('status_jenis_surat', '1')->findAll(); // mengambil semua data jenis surat yang statusnya aktif
         $data['data_jenis_surat'] = $data_jenis_surat; // set jenis surat keluar
         $data['dataDetailJenisSurat'] = $dataDetailJenisSurat; // set data detail jenis surat keluar
         $data['id_jenis_surat'] = $id_jenis_surat; // set id jenis surat keluar

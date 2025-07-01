@@ -1,5 +1,10 @@
 <?= $this->extend('Templates/index') ?>
 <?= $this->section('konten') ?>
+<?php 
+use App\Models\disposisiModel;
+
+$disposisiModel = new disposisiModel();
+?>
 <div class="col-sm-12">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
@@ -26,10 +31,16 @@
                 </div>
             </div>
             <div class="row m-2">
+                <?php 
+               if($surat_masuk != null) :
+               ?>
                 <div class="col-12">
                     <a href="<?= base_url('Laporan/cetakSuratMasuk/' . $tanggal_awal . '/' . $tanggal_akhir); ?>"
                         class="btn btn-primary mb-3" target="_blank">Cetak Laporan</a>
                 </div>
+                <?php
+               endif;
+                ?>
             </div>
             <div class="bd-example mx-3">
                 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -81,13 +92,16 @@
                             <th>Pengirim</th>
                             <th>Perihal</th>
                             <th>Ket</th>
+                            <th>Disposisi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
                         $no = 1;
                         ?>
-                        <?php foreach($surat_masuk as $jns): ?>
+                        <?php foreach($surat_masuk as $jns): 
+                         $dataDisposisi = $disposisiModel->getDisposisiBySurat($jns['id_surat_masuk']); 
+                         ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td><?= ($jns['no_surat_masuk'] != null) ? $jns['no_surat_masuk'] : '-'; ?></td>
@@ -97,6 +111,19 @@
                             <td><?= ($jns['pengirim_surat_masuk'] != null) ? $jns['pengirim_surat_masuk'] : '-'; ?></td>
                             <td><?= ($jns['perihal_surat_masuk'] != null) ? $jns['perihal_surat_masuk'] : '-'; ?></td>
                             <td><?= ($jns['ket_surat_masuk'] != null) ? $jns['ket_surat_masuk'] : '-'; ?>
+                            </td>
+                            <td>
+                                <?php if($dataDisposisi): ?>
+                                <ul class="" style="list-style-type: none; padding-left: 0;">
+                                    <?php foreach($dataDisposisi as $disposisi): ?>
+                                    <li>
+                                        <?= $disposisi['nama_pegawai']; ?> (<?= $disposisi['jabatan_pegawai']; ?>)
+                                    </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <?php else: ?>
+                                <span class="text-muted">Tidak ada disposisi</span>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
