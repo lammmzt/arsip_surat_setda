@@ -571,7 +571,7 @@ $('#tambahPenerima').click(function() {
                     sweetalert('success', 'Berhasil', 'Penerima berhasil ditambahkan');
                     $('#id_penerima').val('Pilih penerima');
                 } else {
-                    alert(data.message);
+                    sweetalert('warning', 'Peringatan', data.message);
                 }
             },
             error: function(xhr, status, error) {

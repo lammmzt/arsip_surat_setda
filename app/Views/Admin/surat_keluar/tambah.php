@@ -400,7 +400,7 @@ $('#jenis_penerima').change(function() {
                             '">' + data.data[i].nama_user + '</option>');
                     }
                 } else {
-                    alert(data.message);
+                    sweetalert('warning', 'Peringatan', data.message);
                 }
             }
         });
