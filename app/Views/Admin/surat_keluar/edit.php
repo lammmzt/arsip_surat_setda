@@ -603,7 +603,7 @@ $(document).on('click', '.hapus_penerima', function() {
                 sweetalert('success', 'Berhasil', 'Penerima berhasil dihapus');
                 generatePenerima();
             } else {
-                alert(data.message);
+                sweetalert('warning', 'Peringatan', data.message);
             }
         }
     });
