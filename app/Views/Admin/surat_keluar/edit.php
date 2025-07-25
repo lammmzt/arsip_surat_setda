@@ -586,6 +586,10 @@ $('#tambahPenerima').click(function() {
 // fungsi untuk menghapus data penerima yang akan di penerima
 $(document).on('click', '.hapus_penerima', function() {
     var id_penerima = $(this).data('id');
+    // jika pnerima hanya ada 1 maka tidak bisa dihapus
+    if (data_penerima_penerima.length == 1) {
+        sweetalert('warning', 'Peringatan', 'Penerima harus ada minimal 1');
+    }
     $.ajax({
         url: '<?= base_url('Surat_keluar/deleteDetailSuratKeluar'); ?>',
         type: 'POST',
