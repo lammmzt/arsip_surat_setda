@@ -170,6 +170,9 @@
                                             </svg>
                                         </span>
                                     </a>
+                                    <?php 
+                                   if($jns['status_surat_keluar'] == '3'):
+                                   ?>
                                     <!-- preview -->
                                     <a class="btn btn-sm btn-icon btn-primary" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Preview Surat"
@@ -227,6 +230,9 @@
                                             </svg>
                                         </span>
                                     </a>
+                                    <?php 
+                                    endif;
+                                    ?>
                                     <!-- <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                         data-bs-placement="top" title="Delete"
                                         href="<?= base_url('Surat_keluar/delete/'.$jns['id_surat_keluar']); ?>">

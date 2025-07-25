@@ -318,7 +318,7 @@
                     <input type="hidden" name="id_surat_keluar" value="<?= $surat_keluar['id_surat_keluar']; ?>">
                     <div class="row mb-3">
                         <div class="col-md-3 mt-3">
-                            <label for="status_surat_keluar" class="form-label">Proses Surat</label>
+                            <label for="status_surat_keluar" class="form-label">Status Surat</label>
                             <select class="form-select" name="status_surat_keluar" required style="width: 100%;">
                                 <option selected>Pilih Proses
                                 <option value="1" <?= $surat_keluar['status_surat_keluar'] == '1' ? 'selected' : ''; ?>>
