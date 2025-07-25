@@ -59,7 +59,7 @@ class Data_instansi extends Controller
                 ]
             ]
         ])){ // jika validasi tidak terpenuhi
-            session()->setFlashdata('errors', 'Data gagal diubah'); // set flashdata error
+            session()->setFlashdata('error', 'Data gagal diubah'); // set flashdata error
             return redirect()->to('/Data_instansi')->withInput(); // redirect ke halaman data instansi
         }
 
@@ -108,7 +108,7 @@ class Data_instansi extends Controller
             ]);
         }
         
-        session()->setFlashdata('pesan', 'Data berhasil diubah'); // set flashdata success
+        session()->setFlashdata('success', 'Data berhasil diubah'); // set flashdata success
         return redirect()->to('/Data_instansi'); // redirect ke halaman data instansi
 
     }
