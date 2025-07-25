@@ -73,7 +73,7 @@
                 </div> -->
                 <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;">
                 <form action="<?= base_url('Surat_keluar/updateDataIsian'); ?>" method="post"
-                    enctype="multipart/form-data" class="needs-validation" novalidate>
+                    enctype="multipart/form-data" class="needs-validation" novalidate id="form_edit_surat">
                     <?= csrf_field(); ?>
                     <div class="row">
                         <div class="col-md-6 mt-3">

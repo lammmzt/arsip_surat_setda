@@ -65,7 +65,7 @@
                 </div>
                 <hr style="border-top: 1px solid; width: 100%; margin: 1rem 0;">
                 <form action="<?= base_url('Surat_keluar/save'); ?>" method="post" enctype="multipart/form-data"
-                    class="needs-validation" novalidate>
+                    class="needs-validation" novalidate id="form_surat_keluar">
                     <?= csrf_field(); ?>
                     <div class="row">
 
@@ -457,6 +457,25 @@ $(document).on('focusout', '.keterangan_detail_surat_keluar', function() {
         }
     }
     render_penerima();
+});
+
+// jika penerima kosong maka akan menampilkan swall penerima harus dipilih
+function check_penerima() {
+    if (data_penerima_penerima.length == 0) {
+        sweetalert('warning', 'Peringatan', 'Penerima harus dipilih');
+        return false;
+    } else {
+        return true;
+    }
+}
+
+// when submit the form
+$('#form').submit(function() {
+    if (check_penerima()) {
+        return true;
+    } else {
+        return false;
+    }
 });
 </script>
 <?= $this->endSection('script'); ?>
