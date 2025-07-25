@@ -530,7 +530,7 @@ $('#jenis_penerima').change(function() {
                             '">' + data.data[i].nama_user + '</option>');
                     }
                 } else {
-                    alert(data.message);
+                    sweetalert('warning', 'Peringatan', data.message);
                 }
             }
         });
@@ -546,12 +546,12 @@ $('#tambahPenerima').click(function() {
     var nama_penerima = $('#id_penerima option:selected').text();
     // console.log(id_penerima, nama_penerima, id_surat_keluar);
     if (id_penerima == 'Pilih penerima') {
-        alert('Pilih penerima');
+        sweetalert('warning', 'Peringatan', 'Pilih penerima terlebih dahulu');
     } else {
         // jika data penerima sudah ada
         for (var i = 0; i < data_penerima_penerima.length; i++) {
             if (data_penerima_penerima[i].id_user == id_penerima) {
-                alert('penerima sudah ada');
+                sweetalert('warning', 'Peringatan', 'penerima sudah ada');
                 return false;
             }
         }
@@ -576,7 +576,7 @@ $('#tambahPenerima').click(function() {
             },
             error: function(xhr, status, error) {
                 console.log(xhr.responseText);
-                alert('Terjadi kesalahan');
+                sweetalert('warning', 'Peringatan', xhr.responseText);
             }
         });
     }
@@ -589,6 +589,7 @@ $(document).on('click', '.hapus_penerima', function() {
     // jika pnerima hanya ada 1 maka tidak bisa dihapus
     if (data_penerima_penerima.length == 1) {
         sweetalert('warning', 'Peringatan', 'Penerima harus ada minimal 1');
+        return false;
     }
     $.ajax({
         url: '<?= base_url('Surat_keluar/deleteDetailSuratKeluar'); ?>',

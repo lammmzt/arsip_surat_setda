@@ -415,12 +415,12 @@ $('#tambahPenerima').click(function() {
     var id_penerima = $('#id_penerima').val();
     var nama_penerima = $('#id_penerima option:selected').text();
     if (id_penerima == 'Pilih penerima') {
-        alert('Pilih penerima');
+        sweetalert('warning', 'Peringatan', 'Pilih penerima terlebih dahulu');
     } else {
         // jika data penerima sudah ada
         for (var i = 0; i < data_penerima_penerima.length; i++) {
             if (data_penerima_penerima[i].id_penerima == id_penerima) {
-                alert('penerima sudah ada');
+                sweetalert('warning', 'Peringatan', 'penerima sudah ada');
                 return false;
             }
         }
