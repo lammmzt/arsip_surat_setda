@@ -316,6 +316,22 @@
                     enctype="multipart/form-data" class="needs-validation" novalidate>
                     <?= csrf_field(); ?>
                     <input type="hidden" name="id_surat_keluar" value="<?= $surat_keluar['id_surat_keluar']; ?>">
+                    <div class="row">
+                        <!-- jika status revisi maka tampilkan catatan_persetujuan_surat_keluar jika ada -->
+                        <?php 
+                        if($surat_keluar['status_surat_keluar'] == '0' && $surat_keluar['catatan_persetujuan_surat_keluar'] != null):
+                        ?>
+                        <div class="col-md-12 mt-3">
+                            <label for="catatan_persetujuan_surat_keluar" class="form-label">Catatan
+                                Persetujuan Surat</label>
+                            <textarea class="form-control" id="catatan_persetujuan_surat_keluar"
+                                name="catatan_persetujuan_surat_keluar" required
+                                placeholder="Catatan Persetujuan Surat"><?= $surat_keluar['catatan_persetujuan_surat_keluar']; ?></textarea>
+                        </div>
+                        <?php 
+                        endif;
+                        ?>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-md-3 mt-3">
                             <label for="status_surat_keluar" class="form-label">Status Surat</label>
