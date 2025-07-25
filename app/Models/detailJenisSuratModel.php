@@ -32,6 +32,7 @@ class detailJenisSuratModel extends Model
             ->join('jenis_surat', 'detail_jenis_surat.id_jenis_surat = jenis_surat.id_jenis_surat')
             ->join('referensi_jenis_surat', 'detail_jenis_surat.id_referensi_jenis_surat = referensi_jenis_surat.id_referensi_jenis_surat')
             ->where(['detail_jenis_surat.id_jenis_surat' => $id_jenis_surat])
+            ->where(['referensi_jenis_surat.status_referensi_jenis_surat' => '1'])
             ->findAll();
     }
 }
