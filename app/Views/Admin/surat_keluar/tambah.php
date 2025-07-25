@@ -470,7 +470,7 @@ function check_penerima() {
 }
 
 // when submit the form
-$('#form').submit(function() {
+$('#form_surat_keluar').submit(function() {
     if (check_penerima()) {
         return true;
     } else {
