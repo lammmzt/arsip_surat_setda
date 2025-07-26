@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Detail Surat Masuk</h4>
+                <h4 class="card-title">Detail Disposisi</h4>
             </div>
         </div>
         <div class="card-body px-0">
@@ -127,7 +127,7 @@
                     </div>
                     <div class="text-start mt-4">
                         <?= ($surat_masuk['status_disposisi'] == '0') ? '<button type="submit" class="btn btn-primary">Balas</button>' : ''; ?>
-                        <a href="<?= base_url('Surat_masuk'); ?>" class="btn btn-secondary">Kembali</a>
+                        <a href="<?= base_url('Disposisi'); ?>" class="btn btn-secondary">Kembali</a>
                     </div>
                 </form>
             </div>
