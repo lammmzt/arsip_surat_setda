@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <div class="header-title">
-                <h4 class="card-title">Detail Surat Keluar</h4>
+                <h4 class="card-title">Detail Surat</h4>
             </div>
             <a href="<?= base_url('Surat'); ?>" class="btn btn-secondary btn-sm">
                 <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
