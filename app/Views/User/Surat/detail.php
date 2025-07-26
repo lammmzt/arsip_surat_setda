@@ -65,11 +65,7 @@
                         <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
                             value="<?= $surat_keluar['judul_surat_keluar']; ?>" placeholder="No Surat" readonly>
                     </div>
-                    <div class="col-md-6 mt-3">
-                        <label for="nama_user" class="form-label">Konseptor</label>
-                        <input type="text" class="form-control" id="nama_user" name="nama_user"
-                            value="<?= $surat_keluar['nama_user']; ?>" placeholder="No Surat" readonly>
-                    </div>
+
                     <div class="col-md-6 mt-3">
                         <label for="nomor_surat_keluar" class="form-label">No Surat</label>
                         <input type="text" class="form-control" id="nomor_surat_keluar" name="nomor_surat_keluar"
