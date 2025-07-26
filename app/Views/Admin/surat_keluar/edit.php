@@ -79,7 +79,8 @@
                         <div class="col-md-6 mt-3">
                             <label for="judul_surat_keluar" class="form-label">Judul Surat</label>
                             <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
-                                value="<?= $surat_keluar['judul_surat_keluar']; ?>" required placeholder="Judul Surat">
+                                value="<?= $surat_keluar['judul_surat_keluar']; ?>" required placeholder="Judul Surat"
+                                required>
                         </div>
                         <?php 
                         if($dataDetailJenisSurat != null):

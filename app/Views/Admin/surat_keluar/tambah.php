@@ -80,7 +80,7 @@
                         <div class="col-md-6 mt-2 mb-2">
                             <label for="judul_surat_keluar" class="form-label">Judul Surat</label>
                             <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
-                                value="<?= old('judul_surat_keluar'); ?>" required placeholder="Judul Surat">
+                                value="<?= old('judul_surat_keluar'); ?>" required placeholder="Judul Surat" required>
                         </div>
                         <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
@@ -468,6 +468,7 @@ function check_penerima() {
         return true;
     }
 }
+
 
 // when submit the form
 $('#form_surat_keluar').submit(function() {
