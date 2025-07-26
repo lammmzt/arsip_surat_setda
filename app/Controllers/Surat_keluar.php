@@ -613,7 +613,7 @@ class Surat_keluar extends BaseController
             }
 
             // hapus text yang dibungkus {...} 
-            $template = preg_replace('/\{.*?\}/', '-', $template);
+            // $template = preg_replace('/\{.*?\}/', '-', $template);
             // dd($template);
             $nama_file = 'Assets/ttd_surat/' . $id_surat_keluar . '.png'; // set nama file surat keluar
             if (file_exists($nama_file)) { // jika file sudah ada
@@ -680,7 +680,9 @@ class Surat_keluar extends BaseController
         $detailSuratKeluar = new detailSuratKeluarModel(); // membuat objek model detail jenis surat
         $dataInstansiModel = new Data_instansiModel();
         $dataDetailSurat = $detailSuratKeluar->getDetailSuratKeluar($id); // mengambil data detail surat keluar berdasarkan id
-        if($dataDetailSurat == null || $dataDetailSurat == ''){ // jika data detail surat keluar tidak ada
+        $id_user = session()->get('id_user');
+        if($dataDetailSurat == null || $dataDetailSurat == '' || $dataDetailSurat['id_user'] != $id_user){
+            session()->setFlashdata('error', 'Data surat keluar tidak ditemukan');
             return redirect()->to('Surat'); // redirect ke halaman surat keluar
         }
         
