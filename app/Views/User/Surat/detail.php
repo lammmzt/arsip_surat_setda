@@ -77,7 +77,7 @@
                         <input type="date" class="form-control" id="tanggal_surat_keluar" name="tanggal_surat_keluar"
                             value="<?= $surat_keluar['tanggal_surat_keluar']; ?>" placeholder="Tanggal Surat" readonly>
                     </div>
-                    <div class="col-md-12 mt-3">
+                    <div class="col-md-6 mt-3">
                         <label for="keterangan_surat_keluar" class="form-label">Keterangan</label>
                         <textarea class="form-control" id="keterangan_surat_keluar" name="keterangan_surat_keluar"
                             readonly
