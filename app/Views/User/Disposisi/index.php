@@ -59,6 +59,7 @@
                             <th>Pengirim</th>
                             <th>Perihal</th>
                             <th>Kode</th>
+                            <th>Status</th>
                             <th>Ket</th>
                             <th style="min-width: 100px">Action</th>
                         </tr>
@@ -73,6 +74,13 @@
                             <td><?= $jns['pengirim_surat_masuk']; ?></td>
                             <td><?= $jns['perihal_surat_masuk']; ?></td>
                             <td><?= $jns['no_surat_masuk']; ?></td>
+                            <td>
+                                <?php if($jns['status_disposisi'] == '1'): ?>
+                                <span class="badge bg-success">Dibaca</span>
+                                <?php else: ?>
+                                <span class="badge bg-danger">Belum Dibaca</span>
+                                <?php endif; ?>
+                            </td>
                             <td><?= $jns['ket_surat_masuk']; ?></td>
                             <td>
                                 <div class="flex align-items-center list-user-action">
