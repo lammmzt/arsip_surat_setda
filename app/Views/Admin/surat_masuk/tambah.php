@@ -95,7 +95,7 @@
                     <div class="mb-3" id="file_surat_masuk_container" style="display: none;">
                         <label for="file_surat_masuk" class="form-label">File Surat</label>
                         <input type="file" class="form-control" id="file_surat_masuk" name="file_surat_masuk"
-                            value="<?= old('file_surat_masuk'); ?>" required placeholder="File Surat">
+                            value="<?= old('file_surat_masuk'); ?>" placeholder="File Surat">
                     </div>
                     <!-- preview  -->
                     <div class="mb-3" id="preview" style="display: none;">
