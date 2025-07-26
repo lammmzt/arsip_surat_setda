@@ -48,7 +48,7 @@
             </div>
             <div class="mt-2 mx-3">
                 <form action="<?= base_url('Surat_masuk/update'); ?>" method="post" enctype="multipart/form-data"
-                    class="needs-validation" novalidate>
+                    class="needs-validation" novalidate id="form_surat_masuk">
                     <?= csrf_field(); ?>
                     <input type="hidden" name="id_surat_masuk" value="<?= $surat_masuk['id_surat_masuk']; ?>">
                     <div class="row mb-3">
@@ -320,12 +320,12 @@ $('#tambah_disposisi').click(function() {
     var id_pegawai = $('#pegawai_disposisi').val();
     var nama_pegawai = $('#pegawai_disposisi option:selected').text();
     if (id_pegawai == 'Pilih Pegawai') {
-        alert('Pilih Pegawai');
+        sweetalert('warning', 'Peringatan', 'Pilih Pegawai terlebih dahulu');
     } else {
         // jika data pegawai sudah ada
         for (var i = 0; i < data_disposisi_pegawai.length; i++) {
             if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
-                alert('Pegawai sudah ada');
+                sweetalert('warning', 'Peringatan', 'pegawai sudah ada');
                 return false;
             }
         }
@@ -343,6 +343,11 @@ $('#tambah_disposisi').click(function() {
 // fungsi untuk menghapus data pegawai yang akan di disposisi
 $(document).on('click', '.hapus_disposisi', function() {
     var id_pegawai = $(this).data('id');
+    // check apaka pegawai tidak kosong
+    if (data_disposisi_pegawai.length == 1) {
+        sweetalert('warning', 'Peringatan', 'Pegawai minimal 1');
+        return false;
+    }
     for (var i = 0; i < data_disposisi_pegawai.length; i++) {
         if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
             data_disposisi_pegawai.splice(i, 1);

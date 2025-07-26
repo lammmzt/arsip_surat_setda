@@ -48,7 +48,7 @@
             </div>
             <div class="mt-2 mx-3">
                 <form action="<?= base_url('Surat_masuk/save'); ?>" method="post" enctype="multipart/form-data"
-                    class="needs-validation" novalidate>
+                    class="needs-validation" novalidate id="form_surat_masuk">
                     <?= csrf_field(); ?>
 
                     <div class="row mb-3">
@@ -85,7 +85,7 @@
                     <div class="mb-3">
                         <label for="tipe_file_surat_masuk" class="form-label">Tipe File</label>
                         <select class="form-select" id="tipe_file_surat_masuk" name="tipe_file_surat_masuk" required>
-                            <option selected>Pilih Tipe File</option>
+                            <option value="" selected>Pilih Tipe File</option>
                             <option value="img" <?= old('tipe_file_surat_masuk') == 'img' ? 'selected' : ''; ?>>IMG
                             </option>
                             <option value="pdf" <?= old('tipe_file_surat_masuk') == 'pdf' ? 'selected' : ''; ?>>PDF
@@ -277,12 +277,12 @@ $('#tambah_disposisi').click(function() {
     var id_pegawai = $('#pegawai_disposisi').val();
     var nama_pegawai = $('#pegawai_disposisi option:selected').text();
     if (id_pegawai == 'Pilih Pegawai') {
-        alert('Pilih Pegawai');
+        sweetalert('warning', 'Peringatan', 'Pilih Pegawai terlebih dahulu');
     } else {
         // jika data pegawai sudah ada
         for (var i = 0; i < data_disposisi_pegawai.length; i++) {
             if (data_disposisi_pegawai[i].id_pegawai == id_pegawai) {
-                alert('Pegawai sudah ada');
+                sweetalert('warning', 'Peringatan', 'pegawai sudah ada');
                 return false;
             }
         }
@@ -319,6 +319,14 @@ $(document).on('focusout', '.ket_disposisi', function() {
         }
     }
     render_disposisi_pegawai();
+});
+
+// ketika post form_surat_masuk check apakah sduah ada yang di disposisi
+$(document).on('submit', '#form_surat_masuk', function() {
+    if (data_disposisi_pegawai.length == 0) {
+        sweetalert('warning', 'Peringatan', 'Pilih Pegawai terlebih dahulu');
+        return false;
+    }
 });
 </script>
 <?= $this->endSection('script'); ?>
