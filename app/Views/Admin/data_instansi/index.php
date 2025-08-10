@@ -119,19 +119,19 @@
                     </div>
                 </div>
                 <div class="form-group row mt-2">
-                    <label for="nama_kepala_instansi" class="col-sm-2 col-form-label">Nama Kepala Instansi</label>
+                    <label for="nama_kepala_instansi" class="col-sm-2 col-form-label">Nama kepala bagian ekonomi</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="nama_kepala_instansi" name="nama_kepala_instansi"
                             value="<?= ($data_instansi) ? $data_instansi['nama_kepala_instansi'] : old('nama_kepala_instansi') ?>"
-                            required placeholder="Nama Kepala Instansi">
+                            required placeholder="Nama kepala bagian ekonomi">
                     </div>
                 </div>
                 <div class="form-group row mt-2">
-                    <label for="nip_kepala_instansi" class="col-sm-2 col-form-label">NIP Kepala Instansi</label>
+                    <label for="nip_kepala_instansi" class="col-sm-2 col-form-label">NIP kepala bagian ekonomi</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="nip_kepala_instansi" name="nip_kepala_instansi"
                             value="<?= ($data_instansi) ? $data_instansi['nip_kepala_instansi'] : old('nip_kepala_instansi') ?>"
-                            required placeholder="NIP Kepala Instansi">
+                            required placeholder="NIP kepala bagian ekonomi">
                     </div>
                 </div>
                 <div class="form-group row mt-4">

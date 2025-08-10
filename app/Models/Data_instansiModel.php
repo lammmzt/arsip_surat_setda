@@ -17,7 +17,7 @@ class Data_instansiModel extends Model
         if($id == false){
             return $this->findAll();
         }
-        return $this->where(['id_instansi' => $id])->first();
+        return $this->where(['id_data_instansi' => $id])->first();
     }
 }
 ?>

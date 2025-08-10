@@ -71,17 +71,17 @@
 
                         <?php 
                         if($dataDetailJenisSurat != null):
-                            
-                            foreach($dataDetailJenisSurat as $djs): 
-                        ?>
-                        <?php 
-                        if($djs['tipe_referensi_jenis_surat'] == 'input'):
-                        ?>
+                         ?>
                         <div class="col-md-6 mt-2 mb-2">
                             <label for="judul_surat_keluar" class="form-label">Judul Surat</label>
                             <input type="text" class="form-control" id="judul_surat_keluar" name="judul_surat_keluar"
                                 value="<?= old('judul_surat_keluar'); ?>" required placeholder="Judul Surat" required>
                         </div>
+                        <?php 
+                        foreach($dataDetailJenisSurat as $djs): 
+                        if($djs['tipe_referensi_jenis_surat'] == 'input'):
+                        ?>
+
                         <div class="col-md-6 mt-2 mb-2">
                             <label for="<?= $djs['kode_referensi_jenis_surat']; ?>" class="form-label">
                                 <?= $djs['nama_referensi_jenis_surat']; ?></label>
@@ -174,7 +174,8 @@
                     <input type="hidden" name="id_jenis_surat" value="<?= $id_jenis_surat; ?>">
                     <div class="mt-2 mb-2">
                         <label for="tipe_lampiran_surat_keluar" class="form-label">Lampiran</label>
-                        <select class="form-select" id="tipe_lampiran_surat_keluar" name="tipe_lampiran_surat_keluar">
+                        <select class="form-select" id="tipe_lampiran_surat_keluar" name="tipe_lampiran_surat_keluar"
+                            required>
                             <option selected>Pilih Tipe File</option>
                             <option value="img" <?= old('tipe_lampiran_surat_keluar') == 'img' ? 'selected' : ''; ?>>IMG
                             </option>
