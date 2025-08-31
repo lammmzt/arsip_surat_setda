@@ -119,10 +119,16 @@
                             value="<?= (old('id_disposisi')) ? old('id_disposisi') : $surat_masuk['id_disposisi']; ?>">
                         <div class="col-md-6">
                             <label for="tgl_surat_masuk" class="form-label">Jawaban Disposisi</label>
-                            <input type="text" class="form-control" id="jawaban_disposisi" name="jawaban_disposisi"
-                                value="<?= (old('jawaban_disposisi')) ? old('jawaban_disposisi') : $surat_masuk['jawaban_disposisi']; ?>"
-                                placeholder="Jawaban Disposisi"
-                                <?= ($surat_masuk['status_disposisi'] == '1') ? 'disabled' : ''; ?>>
+                            <select class="form-select" id="jawaban_disposisi" name="jawaban_disposisi"
+                                <?= ($surat_masuk['status_disposisi'] == '0') ? '' : 'disabled'; ?>>
+                                <option vlue="">Pilih Jawaban Disposisi</option>
+                                <option value="Terima"
+                                    <?= ($surat_masuk['jawaban_disposisi'] == 'Terima') ? 'selected' : ''; ?>>Terima
+                                </option>
+                                <option value="Tolak"
+                                    <?= ($surat_masuk['jawaban_disposisi'] == 'Tolak') ? 'selected' : ''; ?>>Tolak
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div class="text-start mt-4">
